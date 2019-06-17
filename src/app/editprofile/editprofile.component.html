@@ -1,0 +1,87 @@
+<!-- edit profile form -->
+<form class="form-container container" id="editProfile_form" action="coursePage.html" method="POST" onsubmit='return checkForm()'>
+  <h1 class="text-center form-header">Edit Profile</h1>
+
+  <div class="form-group row">
+          <label for="name" class="col-sm-2 col-form-label">Name</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" id="name" name="name" title="Enter your full name"
+            pattern="[a-zA-Z][a-zA-Z ]+" placeholder="Enter your full name e.g jay patel">
+          </div>
+  </div>
+
+  <div class="form-group row">
+    <label for="email" class="col-sm-2 col-form-label">Email</label>
+    <div class="col-sm-10">
+      <input type="email" class="form-control" id="email" name="email" title="Enter valid email-id"
+      placeholder="email@example.com">
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label for="Password" class="col-sm-2 col-form-label">Password</label>
+    <div class="col-sm-10">
+      <input type="password" class="form-control" id="Password" name="Password" 
+      title="Enter password with minimum 8 characters"
+      placeholder="Enter new password">
+    </div>
+  </div>
+
+  <div class="form-group row">
+      <label  class="col-sm-2">Confirm Password</label>
+      <div class="col-sm-10">
+            <input type="password" class="form-control" id="cpassword" name="cpassword" 
+            title="Enter password with minimum 8 characters"
+            placeholder="Confirm the password">
+      </div>
+  </div>
+  
+  <div class="form-group row">
+          <label class="col-sm-2 col-form-label">Courses</label>
+          <div class="col-sm-5">
+              <div class="input-group-prepend ">
+                  <div class="addPrepend input-group-text bg-success">
+                  Add
+                  </div>
+              <select class="selectpicker" multiple data-live-search="true">
+                  <option>Course-1</option>
+                  <option>Course-2</option>
+                  <option>Course-3</option>
+              </select>
+          </div>
+          </div>
+
+          <div class="col-sm-5">
+              <div class="input-group-prepend ">
+                      <div class="dropPrepend input-group-text bg-danger">
+                      Drop
+                      </div>
+              <select class="selectpicker" multiple data-live-search="true">
+                  <option>Course-1</option>
+                  <option>Course-2</option>
+                  <option>Course-3</option>
+              </select>
+              </div>
+        </div>
+  </div>
+  <div class="form-group row">
+      <label  class="col-sm-2 ">Level</label>
+      <div class="col-sm-10">
+          <div class="form-check-inline">
+              <label class="form-check-label">
+                <input type="radio" class="form-check-input" name="level" id="Undergraduate">Undergraduate
+              </label>
+            </div>
+            <div class="form-check-inline">
+              <label class="form-check-label">
+                <input type="radio" class="form-check-input" name="level" id="Graduate">Graduate
+              </label>
+            </div>
+      </div>
+  </div>
+  <div class="form-button">
+      <button type="submit" class="btn btn-primary">Update Details</button>
+  </div>
+  <div id="msg2" class="text-center"></div>
+</form>
+<!-- edit profile form completed -->

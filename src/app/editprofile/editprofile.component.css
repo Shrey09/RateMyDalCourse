@@ -1,0 +1,46 @@
+.form-container{
+    position: relative;
+    top:5vh;
+    background: #fff;
+    padding:30px;
+    height:100%;
+    width: 50%;
+    border-radius:15px;
+    border: 1px solid;
+    box-shadow: 0px 10px 10px 0px black;
+}
+.form-header{
+    padding-bottom: 20px;
+}
+.navbar-dark .navbar-nav .nav-link {
+    color: white;
+}
+.form-button{
+    text-align: center;
+}
+.addPrepend{
+    color: white;
+}
+.dropPrepend{
+    color: white;
+}
+.tab{
+    color: white;
+}
+.nav-item:hover{
+    background: darkblue;
+}
+.form-container{
+    position: relative;
+    top:15vh;
+    background: #fff;
+    padding:30px;
+    border-radius:15px;
+    border: 1px solid;
+    box-shadow: 5px 5px 5px 5px darkblue;
+}
+
+#editProfile_form {
+    margin-top: 6rem;
+    margin-bottom: 6rem;
+}

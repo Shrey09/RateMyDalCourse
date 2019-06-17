@@ -1,0 +1,67 @@
+.firstsection{
+    margin-top: 3rem;
+  }
+  
+  .image1{
+    display: table;
+    opacity:0.4;
+    height:660px;
+    position: relative;
+    width:100%;
+    overflow-x:hidden;
+    background-size:cover;
+  }
+  
+  .landing-text{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    vertical-align: middle;
+    font-size: 50px;
+    width: 100%;
+    font-weight:700;
+  }
+  
+  .main-text{
+    color: black;
+  }
+  
+  h1{
+    font-size:40px;
+  }
+  
+  .rateImage{
+    height: 50%;
+    width:40%;
+    padding-top: 30px;
+  
+  }
+  
+  .rateImage:hover{
+    cursor: default;
+    transform: rotate(360deg);
+    transition: all 0.3s ease-in-out 0s;
+  }
+  
+  .forumImage{
+    height: 50%;
+    width:40%;
+    padding-top: 30px;
+  }
+  
+  .forumImage:hover{
+    cursor: default;
+    transform: rotate(360deg);
+    transition: all 0.3s ease-in-out 0s;
+  }
+  
+  .feature{
+    background: darkblue;
+    color: white;
+  }
+  
+  .featureHead{
+    padding-top: 30px;
+  }

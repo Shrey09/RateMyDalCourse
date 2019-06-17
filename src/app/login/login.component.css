@@ -1,0 +1,27 @@
+.form-container{
+    position: relative;
+    top:5vh;
+    background: #fff;
+    padding:30px;
+    border-radius:15px;
+    border: 1px solid;
+    box-shadow: 0px 10px 10px 0px black;
+  }
+  
+  .form-heading{
+    text-align: center;
+  }
+  
+  .form-button{
+    text-align: center;
+  }
+  
+  .forgot-password{
+    margin-top: 20px;
+    text-align: right;
+  }
+  
+  #login-form {
+    margin-top: 6rem;
+    margin-bottom: 6rem;
+  }
