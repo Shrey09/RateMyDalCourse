@@ -11,7 +11,7 @@ const routes: Routes = [
 
   {
     path: '', component:HomepageComponent
-  }, 
+  },
   {
     path: 'home', component:HomepageComponent
   },
@@ -19,7 +19,7 @@ const routes: Routes = [
     path: 'login', component:LoginComponent
   },
   {
-    path: 'Register' , component:RegistrationComponent
+    path: 'register' , component:RegistrationComponent
   },
   {
     path: 'dashboard' , component:DashboardComponent
