@@ -26,7 +26,7 @@ const routes: Routes = [
     path: 'dashboard' , component:DashboardComponent
   },
   {
-    path: 'editProfile' , component:EditprofileComponent
+    path: 'editprofile' , component:EditprofileComponent
   },
   {
     path: 'discussion' , component:DiscussionforumComponent
