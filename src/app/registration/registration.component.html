@@ -39,12 +39,10 @@
                       title="It should match the password" required ngModel name="cpassword" minlength="8"><div id="message"></div>
                       <div *ngIf="cpassword.errors && (cpassword.valid || cpassword.touched)">
                           <small class="text-danger" *ngIf="cpassword.errors.required" >Confirm Password is required</small>
-                          <small class="text-danger" *ngIf="cpassword.errors.minlength">Length of confirm password should be greater than 8</small>
 
                       </div>
                       <div *ngIf="cpassword.errors && (cpassword.valid || cpassword.touched)">
-                              <small class="text-danger" *ngIf="cpassword.errors.minlength">Length of confirm password should be greater than 8</small>
-                              <small class="text-danger" *ngIf="!cpassword.errors.notequal" >Password and Confirm password does not match </small>
+                              <small class="text-danger" *ngIf="!cpassword.errors.notequal && !cpassword.errors.required && !password.errors.required && !password.errors.minlength" >Password and Confirm password does not match </small>
                       </div>
 
               </div>

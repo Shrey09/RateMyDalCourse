@@ -69,10 +69,7 @@
     transition: all 0.3s ease-in-out 0s;
   }
 
-  .feature{
-    background: darkblue;
-    color: white;
-  }
+
 
   .featureHead{
     padding-top: 30px;
