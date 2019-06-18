@@ -14,6 +14,8 @@ import { EditprofileComponent } from './editprofile/editprofile.component';
 import { DiscussionforumComponent } from './discussionforum/discussionforum.component';
 import {ConfirmValidatorDirective} from './registration/confirm-equal-validator.directive';
 import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
+import { UrlSerializer } from '@angular/router';
+import { LowerCaseUrlSerializer } from './lowerCaseUrlSerializer';
 // import {LoginValidatorDirective} from './login/login-validator.directive';
 // import {EmailValidatorDirective} from './login/login-email-validator.directive';
 
@@ -35,9 +37,14 @@ import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule   
+    FormsModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide:UrlSerializer,
+      useClass:LowerCaseUrlSerializer
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
