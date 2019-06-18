@@ -13,6 +13,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { EditprofileComponent } from './editprofile/editprofile.component';
 import { DiscussionforumComponent } from './discussionforum/discussionforum.component';
 import {ConfirmValidatorDirective} from './registration/confirm-equal-validator.directive';
+import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
 // import {LoginValidatorDirective} from './login/login-validator.directive';
 // import {EmailValidatorDirective} from './login/login-email-validator.directive';
 
@@ -29,6 +30,7 @@ import {ConfirmValidatorDirective} from './registration/confirm-equal-validator.
     EditprofileComponent,
     DiscussionforumComponent,
     ConfirmValidatorDirective,
+    PagenotfoundComponent,
   ],
   imports: [
     BrowserModule,

@@ -6,6 +6,7 @@ import { RegistrationComponent } from './registration/registration.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { EditprofileComponent } from './editprofile/editprofile.component';
 import { DiscussionforumComponent } from './discussionforum/discussionforum.component';
+import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
 
 const routes: Routes = [
 
@@ -31,7 +32,7 @@ const routes: Routes = [
     path: 'discussion' , component:DiscussionforumComponent
   },
   {
-    path: '**', component:HomepageComponent
+    path: '**', component:PagenotfoundComponent
   }
 
 ];

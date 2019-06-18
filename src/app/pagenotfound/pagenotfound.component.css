@@ -1,0 +1,17 @@
+.firstsection{
+  margin-top: 3rem;
+}
+
+.image1{
+  display: table;
+  height:500px;
+  position: relative;
+  width:100%;
+  overflow-x:hidden;
+  background-size:cover;
+}
+
+.justify-content-center {
+  text-align: center;
+  margin-bottom: 2rem;
+}
