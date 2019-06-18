@@ -37,8 +37,8 @@
   }
 
   .rateImage{
-    height: 50%;
-    width:40%;
+    height: 12rem;
+    width: 12rem;
     padding-top: 30px;
 
   }
@@ -50,8 +50,8 @@
   }
 
   .forumImage{
-    height: 50%;
-    width:40%;
+    height: 12rem;
+    width: 12rem;
     padding-top: 30px;
   }
 
@@ -70,4 +70,8 @@
   .team-section{
     padding: 0rem !important;
     margin: 0rem !important;
+  }
+
+  .aboutus, .testimonial, .featureHead {
+    margin-top: 3rem !important;
   }
