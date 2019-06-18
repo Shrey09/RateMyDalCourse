@@ -8,7 +8,6 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { FooterComponent } from './footer/footer.component';
 import { LoginComponent } from './login/login.component';
 import { RegistrationComponent } from './registration/registration.component';
-import { UserprofileComponent } from './userprofile/userprofile.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { EditprofileComponent } from './editprofile/editprofile.component';
 import { DiscussionforumComponent } from './discussionforum/discussionforum.component';
@@ -27,7 +26,6 @@ import { LowerCaseUrlSerializer } from './lowerCaseUrlSerializer';
     FooterComponent,
     LoginComponent,
     RegistrationComponent,
-    UserprofileComponent,
     DashboardComponent,
     EditprofileComponent,
     DiscussionforumComponent,

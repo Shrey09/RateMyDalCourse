@@ -5,3 +5,12 @@
 .navbar-brand {
   font-family: cursive;
 }
+
+.nav-link {
+  color: #ffffff !important;
+}
+
+.nav-link:hover {
+  color: #000000 !important;
+  background: #ffffff !important;
+}
