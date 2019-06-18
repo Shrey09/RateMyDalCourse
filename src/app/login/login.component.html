@@ -2,21 +2,31 @@
     <div class="row justify-content-center">
         <div class="col-12 col-sm-9 col-md-6 col-lg-4">
   
-        <form class="form-container" action="coursePage.html" method="POST" onsubmit="return checkForm()">
+        <form #userForm="ngForm" class="form-container" action="coursePage.html" method="POST">
             <div class="form-heading">
                 <h2>Login</h2>
             </div>
             <div class="form-group">
                 <label>Email address</label>
-                <input type="email" class="form-control" id="email" placeholder="Enter Your Email" required>
+                <input type="email" #email="ngModel" class="form-control" id="email" [class.is-invalid]="email.invalid && email.touched" 
+                placeholder="Enter Your Email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" required ngModel name="email">
+                <div *ngIf="email.errors && (email.valid || email.touched)">
+                        <small class="text-danger" *ngIf="email.errors.required" >Email is required</small>
+                        <small class="text-danger" *ngIf="email.errors.pattern">Invalid email</small>
+                </div>
             </div>
             <div class="form-group">
                 <label>Password</label>
-                <input type="password" class="form-control" id="password" placeholder="Enter your password" required>
+                <input type="password" #password="ngModel" [class.is-invalid]="password.invalid && password.touched" class="form-control" id="password" title="Password should contian minimum 8 characters"
+                placeholder="Enter your password"  required ngModel name="password" minlength="8">
+                <div *ngIf="password.errors && (password.valid || password.touched)">
+                    <small class="text-danger" *ngIf="password.errors.required" >Password is required</small>
+                    <small class="text-danger" *ngIf="password.errors.minlength">Length of password should be greater than 8</small>
+                </div>
             </div>
             <div class="form-button">
-                <button type="submit" class="btn btn-primary">Submit</button>
-            </div>
+                <button [disabled]="userForm.form.invalid" [class.btn-danger]="userForm.form.invalid" onclick="alert('Successfully Logged in.')" type="submit" class="btn btn-primary">Submit</button>
+            </div><div id="msg2" class="text-center"></div>
             <br>
             <div class="text-center" id="errormsg"></div>
             <div class="forgot-password ">
