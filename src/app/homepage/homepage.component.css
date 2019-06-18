@@ -14,7 +14,7 @@
 
   .landing-text{
     position: absolute;
-    top: 30%;
+    top: 55%;
     left: 50%;
     transform: translate(-50%, -50%);
     text-align: center;
@@ -24,16 +24,8 @@
     font-weight:700;
   }
 
-  .landing-text2{
-    position: absolute;
-    top: 65%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    text-align: center;
-    vertical-align: middle;
-    font-size: 30px;
-    width: 100%;
-    font-weight:700;
+  .aboutus, .p-about, .aboutusImage{
+      margin-top: 3rem;
   }
 
   .main-text{
@@ -72,5 +64,10 @@
 
 
   .featureHead{
-    padding-top: 30px;
+    padding-top: 0px;
+  }
+
+  .team-section{
+    padding: 0rem !important;
+    margin: 0rem !important;
   }
