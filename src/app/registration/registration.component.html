@@ -63,7 +63,7 @@
 
 
               <div class="form-button">
-                  <button [disabled]="userForm.form.invalid" [class.btn-danger]="userForm.form.invalid" type="submit" onclick="alert('Successfully Registered.')" class="btn btn-primary">Submit</button>
+                  <button [disabled]="userForm.form.invalid" [class.btn-danger]="userForm.form.invalid" type="submit" onclick="alert('Successfully Registered.'); window.location.href='editprofile'" class="btn btn-primary">Submit</button>
               </div><div id="msg2" class="text-center"></div>
               <div class="forgot-password ">
                   <a href="login">Already a member?</a>
