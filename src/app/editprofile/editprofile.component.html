@@ -3,14 +3,15 @@
         <div class="col-12 col-sm-9 col-md-8 col-lg-6">
 
 <!-- edit profile form -->
-<form class="form-container container"  action="coursePage.html" method="POST" onsubmit='return checkForm()'>
+<form class="form-container container" #userForm="ngForm" action="coursePage.html" method="POST" onsubmit='return checkForm()'>
   <h1 class="text-center form-header">Edit Profile</h1>
 
   <div class="form-group row">
           <label for="name" class="col-sm-2 col-form-label">Name</label>
           <div class="col-sm-10">
-            <input type="text" class="form-control" id="name" name="name" title="Enter your full name"
-            pattern="[a-zA-Z][a-zA-Z ]+" value="Chintan Patel">
+              <input type="text" #name="ngModel" [class.is-invalid]="name.invalid && name.touched" class="form-control" id="name"  placeholder="Enter Your Full Name e.g Chintan Patel"
+              pattern="[a-zA-Z][a-zA-Z ]+" title="Enter full name" required ngModel name="name">
+              <small class="text-danger" [class.d-none]="name.valid || name.untouched" >Name is requried</small>
           </div>
   </div>
 
@@ -24,18 +25,27 @@
   <div class="form-group row">
     <label for="Password" class="col-sm-2 col-form-label">Password</label>
     <div class="col-sm-10">
-      <input type="password" class="form-control" id="Password" name="Password"
-      title="Enter password with minimum 8 characters"
-      placeholder="Enter new password">
+        <input type="password" #password="ngModel" [class.is-invalid]="password.invalid && password.touched" class="form-control" id="password" title="Password should contian minimum 8 characters"
+        placeholder="Enter your password"  required ngModel name="password" minlength="8">
+        <div *ngIf="password.errors && (password.valid || password.touched)">
+            <small class="text-danger" *ngIf="password.errors.required" >Password is required</small>
+            <small class="text-danger" *ngIf="password.errors.minlength">Length of password should be greater than 8</small>
+        </div>
     </div>
   </div>
 
   <div class="form-group row">
       <label  class="col-sm-2">Confirm Password</label>
       <div class="col-sm-10">
-            <input type="password" class="form-control" id="cpassword" name="cpassword"
-            title="Enter password with minimum 8 characters"
-            placeholder="Confirm the password">
+          <input type="password"  appConfirmEqualValidator="password" #cpassword="ngModel"  [class.is-invalid]="cpassword.invalid && cpassword.touched" class="form-control"  id="cpassword" placeholder="Confirm your password"
+          title="It should match the password" required ngModel name="cpassword" minlength="8"><div id="message"></div>
+          <div *ngIf="cpassword.errors && (cpassword.valid || cpassword.touched)">
+              <small class="text-danger" *ngIf="cpassword.errors.required" >Confirm Password is required</small>
+
+          </div>
+          <div *ngIf="cpassword.errors && (cpassword.valid || cpassword.touched)">
+                  <small class="text-danger" *ngIf="!cpassword.errors.notequal && !cpassword.errors.required && !password.errors.required && !password.errors.minlength" >Password and Confirm password does not match </small>
+          </div>
       </div>
   </div>
 
@@ -71,9 +81,8 @@
 
 
   <div class="form-button">
-      <button type="submit" class="btn btn-primary">Update Details</button>
-  </div>
-  <div id="msg2" class="text-center"></div>
+      <button [disabled]="userForm.form.invalid" [class.btn-danger]="userForm.form.invalid" type="submit" onclick="alert('Successfully Updated the profile.'); window.location.href='editprofile'" class="btn btn-primary">Submit</button>
+  </div><div id="msg2" class="text-center"></div>
 </form>
 <!-- edit profile form completed -->
 
