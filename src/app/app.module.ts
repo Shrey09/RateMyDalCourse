@@ -15,6 +15,7 @@ import {ConfirmValidatorDirective} from './registration/confirm-equal-validator.
 import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
 import { UrlSerializer } from '@angular/router';
 import { LowerCaseUrlSerializer } from './lowerCaseUrlSerializer';
+import { AuthenticationService } from './authentication/authentication.service';
 // import {LoginValidatorDirective} from './login/login-validator.directive';
 // import {EmailValidatorDirective} from './login/login-email-validator.directive';
 
@@ -41,7 +42,7 @@ import { LowerCaseUrlSerializer } from './lowerCaseUrlSerializer';
     {
       provide:UrlSerializer,
       useClass:LowerCaseUrlSerializer
-    }
+    },  AuthenticationService,
   ],
   bootstrap: [AppComponent]
 })

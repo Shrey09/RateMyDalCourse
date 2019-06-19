@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { NavbarComponent } from '../navbar/navbar.component';
+import { AuthenticationService } from '../authentication/authentication.service';
+
 
 @Component({
   selector: 'app-homepage',
@@ -7,13 +10,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomepageComponent implements OnInit {
 
-  
-
   ngOnInit() {
-    
-    console.log("here");
-
-   
+    this.authenticationService.deauthenticate();
   }
 
+  constructor(
+    public authenticationService: AuthenticationService,
+  ) {
+  }
 }
