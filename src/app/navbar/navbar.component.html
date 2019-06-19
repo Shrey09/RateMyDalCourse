@@ -1,13 +1,13 @@
 <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark static-top">
 
-    <a class="navbar-brand" href="/"> <img src="assets/image/images_logo.jpg" alt="" style="width:2rem; margin-right: 0.5rem;"> RateMyDalCourse </a>
+    <a class="navbar-brand" routerLink="/"> <img src="assets/image/images_logo.jpg" alt="" style="width:2rem; margin-right: 0.5rem;"> RateMyDalCourse </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarResponsive">
       <ul class="navbar-nav ml-auto">
         <li class="nav-item mr-2">
-          <a class="nav-link" href="/home"> Home </a>
+          <a class="nav-link" routerLink="/home"> Home </a>
         </li>
 
 
@@ -19,7 +19,7 @@
           <a class="nav-link" routerLink='/login'>Login</a>
         </li>
         <li id="reigster-icon" class="nav-item mr-2" *ngIf="(authenticationService.isUserAuthenticated$ | async) === false">
-          <a class="nav-link" href='/register'>Register</a>
+          <a class="nav-link" routerLink='/register'>Register</a>
         </li>
 
 
@@ -30,7 +30,7 @@
           </li>
         <form class="form-inline py-lg-0 py-pd-2 py-sm-2 py-xs-2 ml-auto mr-2" id="search-form" *ngIf="(authenticationService.isUserAuthenticated$ | async) === true">
             <input class="form-control mr-sm-2" type="search" placeholder="Search Courses" aria-label="Search">
-           <a class="btn btn-outline-primary nav-link-btn mt-2 mt-sm-0" href="/dashboard"> Search </a>
+           <a class="btn btn-outline-primary nav-link-btn mt-2 mt-sm-0" routerLink="/dashboard"> Search </a>
       </form>
 
       <ul id="profile-drop" class="navbar-nav ml-auto" *ngIf="(authenticationService.isUserAuthenticated$ | async) === true">
@@ -39,9 +39,9 @@
               Profile
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="/editprofile"> Edit Profile </a>
+              <a class="dropdown-item" routerLink="/editprofile"> Edit Profile </a>
               <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="/"> Logout </a>
+              <a class="dropdown-item" routerLink="/"> Logout </a>
             </div>
         </li>
       </ul>
