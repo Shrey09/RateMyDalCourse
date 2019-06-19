@@ -9,7 +9,7 @@
   <div class="form-group row">
           <label for="name" class="col-sm-3 col-form-label">Name</label>
           <div class="col-sm-9">
-              <input type="text" #name="ngModel" [class.is-invalid]="name.invalid && name.touched" class="form-control" id="name"  placeholder="Enter Your Full Name e.g Chintan Patel"
+              <input type="text" #name="ngModel" [class.is-invalid]="name.invalid && name.touched" class="form-control" id="name"  placeholder="Enter Your Full Name"
               pattern="[a-zA-Z][a-zA-Z ]+" title="Enter full name" required ngModel name="name">
               <small class="text-danger" [class.d-none]="name.valid || name.untouched" >Name is required</small>
           </div>
@@ -18,7 +18,8 @@
   <div class="form-group row">
     <label for="email" class="col-sm-3 col-form-label">Email</label>
     <div class="col-sm-9">
-        <label for="user_email" class="col-sm-2 col-form-label">example@dal.ca</label>
+        <input type="text" class="form-control" id="email"  placeholder="Enter your email"
+         title="Enter your email" name="email" disabled value="harsh@gmail.com">
     </div>
   </div>
 
