@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthenticationService } from '../authentication/authentication.service';
 
 @Component({
   selector: 'app-discussionforum',
@@ -6,10 +7,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./discussionforum.component.css']
 })
 export class DiscussionforumComponent implements OnInit {
-
-  constructor() { }
-
   ngOnInit() {
+    this.authenticationService.authenticate();
   }
+
+  constructor(
+    public authenticationService: AuthenticationService,
+  ) {
+  }
+
 
 }
