@@ -7,6 +7,8 @@ import { AuthenticationService } from '../authentication/authentication.service'
   styleUrls: ['./editprofile.component.css']
 })
 export class EditprofileComponent implements OnInit {
+  public username = "Harsh Pamnani";
+
   ngOnInit() {
     this.authenticationService.authenticate();
   }
