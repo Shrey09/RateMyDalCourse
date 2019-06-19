@@ -11,7 +11,7 @@
                   <label>Name</label>
                   <input type="text" #name="ngModel" [class.is-invalid]="name.invalid && name.touched" class="form-control" id="name"  placeholder="Enter Your Full Name e.g Chintan Patel"
                   pattern="[a-zA-Z][a-zA-Z ]+" title="Enter full name" required ngModel name="name">
-                  <small class="text-danger" [class.d-none]="name.valid || name.untouched" >Name is requried</small>
+                  <small class="text-danger" [class.d-none]="name.valid || name.untouched" >Name is required</small>
               </div>
 
               <div class="form-group">
@@ -42,7 +42,7 @@
 
                       </div>
                       <div *ngIf="cpassword.errors && (cpassword.valid || cpassword.touched)">
-                              <small class="text-danger" *ngIf="!cpassword.errors.notequal && !cpassword.errors.required && !password.errors.required && !password.errors.minlength" >Password and Confirm password does not match </small>
+                              <small class="text-danger" *ngIf="!cpassword.errors.notequal && !cpassword.errors.required && !password.errors.required && !password.errors.minlength || password != cpassword" >Password and Confirm password does not match </small>
                       </div>
 
               </div>
@@ -63,7 +63,7 @@
 
 
               <div class="form-button">
-                  <button [disabled]="userForm.form.invalid" [class.btn-danger]="userForm.form.invalid" type="submit" onclick="alert('Successfully Registered.'); window.location.href='editprofile'" class="btn btn-primary">Submit</button>
+                  <button [disabled]="userForm.form.invalid" [class.btn-danger]="userForm.form.invalid" type="submit" onclick="alert('Successfully Registered.'); window.location.href='dashboard'" class="btn btn-primary">Submit</button>
               </div><div id="msg2" class="text-center"></div>
               <div class="forgot-password ">
                   <a href="login">Already a member?</a>
