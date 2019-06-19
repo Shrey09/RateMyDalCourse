@@ -14,3 +14,22 @@
   color: #000000 !important;
   background: #ffffff !important;
 }
+
+.nav-link-btn {
+	color: #E0E0E0;
+	padding-left: 1rem;
+	border: 2px solid #E0E0E0;
+	border-radius: 25px;
+}
+
+.nav-link-btn:hover {
+	background: #dff9fb;
+	color: #000000;
+	border-color: #dff9fb;
+	padding-left: 1rem;
+	border-radius: 25px;
+}
+
+#profile-drop, #reigster-icon {
+  margin-right: 4rem !important;
+}
