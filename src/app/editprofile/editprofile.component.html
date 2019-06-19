@@ -10,7 +10,7 @@
           <label for="name" class="col-sm-3 col-form-label">Name</label>
           <div class="col-sm-9">
               <input type="text" #name="ngModel" [class.is-invalid]="name.invalid && name.touched" class="form-control" id="name"  placeholder="Enter Your Full Name"
-              pattern="[a-zA-Z][a-zA-Z ]+" title="Enter full name" required ngModel name="name">
+              pattern="[a-zA-Z][a-zA-Z ]+" title="Enter full name" required ngModel name="name" value="Harsh Pamnani">
               <small class="text-danger" [class.d-none]="name.valid || name.untouched" >Name is required</small>
           </div>
   </div>
@@ -27,7 +27,7 @@
       <label for="old_Password" class="col-sm-3 col-form-label">Old Password</label>
       <div class="col-sm-9">
           <input type="password" #old_password="ngModel" [class.is-invalid]="old_password.invalid && old_password.touched" class="form-control" id="old_password" title="Password should contian minimum 8 characters"
-          placeholder="Enter your password"  required ngModel name="old_password" minlength="8">
+          placeholder="Enter your password"  required ngModel name="old_password" minlength="8" value="Harsh@123">
           <div *ngIf="old_password.errors && (old_password.valid || old_password.touched)">
               <small class="text-danger" *ngIf="old_password.errors.required" >Old Password is required</small>
               <small class="text-danger" *ngIf="old_password.errors.minlength">Length of password should be greater than 8</small>
