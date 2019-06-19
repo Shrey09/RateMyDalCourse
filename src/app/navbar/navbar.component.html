@@ -26,6 +26,9 @@
 
 
         <!-- NavBar for logged-in users -->
+        <li class="nav-item mr-2" *ngIf="(authenticationService.isUserAuthenticated$ | async) === true">
+            <a class="nav-link" routerLink='/dashboard'>Dashboard</a>
+          </li>
         <form class="form-inline py-lg-0 py-pd-2 py-sm-2 py-xs-2 ml-auto mr-2" id="search-form" *ngIf="(authenticationService.isUserAuthenticated$ | async) === true">
             <input class="form-control mr-sm-2" type="search" placeholder="Search Courses" aria-label="Search">
            <a class="btn btn-outline-primary nav-link-btn mt-2 mt-sm-0" href="/dashboard"> Search </a>
