@@ -3,13 +3,13 @@ import { BehaviorSubject } from 'rxjs';
 
 @Injectable()
 export class AuthenticationService {
-  authenticated$: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  isUserAuthenticated$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   public authenticate() {
-    this.authenticated$.next(true);
+    this.isUserAuthenticated$.next(true);
   }
 
   public deauthenticate() {
-    this.authenticated$.next(false);
+    this.isUserAuthenticated$.next(false);
   }
 }
