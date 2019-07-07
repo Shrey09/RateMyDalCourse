@@ -8,7 +8,10 @@ import {RegisterService} from '../register.service';
   styleUrls: ['./registration.component.css']
 })
 export class RegistrationComponent implements OnInit {
+  // user model for new user 
   userModel=new User('shrey','x@gmail.com','12345678','12345678','Course-1');
+  // course list to populate dropdown menu
+  Courses : any = ['Web Technology', 'Data Science', 'Cloud Computing', 'Machine Learning','Quality Assurance'];
   showErrorMessage: boolean = false;
   showMessage: boolean = false;
   message: string = null;
