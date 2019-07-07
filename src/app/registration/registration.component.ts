@@ -42,7 +42,12 @@ export class RegistrationComponent implements OnInit {
         this.message=data["Message"];
       }      
     },
-     error=>console.log("Error",error));
+     error=>{
+       console.log("Error",error);
+       this.showErrorMessage=true;
+        this.showMessage=false;
+        this.message="Improper network connection. Please try after sometime";
+      });
     
   }
 
