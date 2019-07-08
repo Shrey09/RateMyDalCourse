@@ -52,7 +52,7 @@
                 <label class="form-label">Courses</label>
                   <div class="input-group-prepend ">
                       <select class="selectpicker" multiple data-live-search="true" (ngModel)="courses" name="courses" #courses="ngModel">
-                          <option *ngFor="let course of Courses" [ngValue]="course._id">{{course.Name}}</option>
+                          <option *ngFor="let course of Courses" [value]="course._id">{{course.Name}}</option>
                       </select>
                   </div>
               </div>

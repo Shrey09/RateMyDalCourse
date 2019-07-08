@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {User} from './user';
+import {Course} from './course';
 import {RegisterService} from '../register.service';
 import {CourseService} from '../course.service';
 
@@ -12,30 +13,39 @@ export class RegistrationComponent implements OnInit {
   // user model for new user 
   userModel=new User('shrey','x@gmail.com','12345678','12345678','Course-1');
   // course list to populate dropdown menu
-  Courses:any = [];
+  Courses:any=[{"_id":"1","Name":"Data Science"},
+  {"_id":"2","Name":"Cloud Computing"},
+  {"_id":"3","Name":"Quality Assurance"},
+  {"_id":"4","Name":"Mobile Computing"},
+  {"_id":"5","Name":"Web Technology"}];  
+
   showCourses=false;
   showErrorMessage: boolean = false;
   showMessage: boolean = false;
   message: string = null;
 
-
+  // initalise the web service to send request to the server
   constructor(private _registerService:RegisterService,private _courseService:CourseService) { 
     
   }
 
   ngOnInit() {
+    // fetching the courses from the database to create option into dropdown
     console.log("event loaded");
+    // calling the web service and getting observable reponse
     this._courseService.getCourse().
     subscribe(courses=>{
       console.log("Courses fetched",courses["Courses"]);
       this.Courses=courses["Courses"];
-      console.log(this.Courses);
+      console.log(courses);
       
     },
     error=>console.log("error",error));
   }
+
+  // method for sending form data to the server
   onSubmit(form){
-    // create model for the new user 
+    // create usermodel for the new user and stroing the details
     this.userModel.name=form.name;
     this.userModel.email=form.email;
     this.userModel.password=form.password;
