@@ -42,11 +42,23 @@
           <div class="card col-md-9">
             <div class="row my-4">
         <div class="col-sm-12">
-          <form>
+          <form #createPostForm="ngForm" method="POST" novalidate (ngSubmit)="onSubmit(createPostForm.value)">
             <div class="md-form amber-textarea active-amber-textarea-2">
                 <span><i class="fas fa-pencil-alt prefix mb-2"></i></span>
-                <textarea class="form-control md-textarea" id="exampleFormControlTextarea1" rows="3" placeholder="Write a review or ask question about this course"></textarea>
-                <button class="btn-success mt-3"><span><i class="far fa-comments"></i></span> Add Comment </button>
+
+                <textarea #postContent="ngModel" class="form-control md-textarea" id="exampleFormControlTextarea1"
+                  rows="3" placeholder="Write a review or ask question about this course"
+                  (ngModel)="postContent" name="postContent"></textarea>
+
+                <button class="btn-success mt-3" type="submit" action="/submitPost"><span><i class="far fa-comments"></i></span> Add Comment </button>
+
+                <div class="alert alert-danger mt-2" *ngIf="isErrorPresent">
+                  <b> {{ postMessage }} </b>
+                </div>
+
+                <div class="alert alert-success mt-2" *ngIf="isSuccess">
+                  <b> {{ postMessage }} </b>
+                </div>
             </div>
           </form>
         </div>
