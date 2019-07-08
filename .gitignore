@@ -1,21 +1,28 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
 # compiled output
+/Group3_Tech_Intellect/dist
 /dist
+/Group3_Tech_Intellect/tmp
 /tmp
+/Group3_Tech_Intellect/out-tsc
 /out-tsc
 # Only exists if Bazel was run
+/Group3_Tech_Intellect/bazel-out
 /bazel-out
 
 # dependencies
+/Group3_Tech_Intellect/node_modules
 /node_modules
 
 # profiling files
+/Group3_Tech_Intellect/chrome-profiler-events.json
+/Group3_Tech_Intellect/speed-measure-plugin.json
 chrome-profiler-events.json
 speed-measure-plugin.json
 
 # IDEs and editors
-/.idea
+/Group3_Tech_Intellect/.idea
 .project
 .classpath
 .c9/
@@ -32,13 +39,22 @@ speed-measure-plugin.json
 .history/*
 
 # misc
+/Group3_Tech_Intellect/.sass-cache
+/Group3_Tech_Intellect/connect.lock
+/Group3_Tech_Intellect/coverage
+/Group3_Tech_Intellect/libpeerconnection.log
 /.sass-cache
+
 /connect.lock
+
 /coverage
+
 /libpeerconnection.log
+
 npm-debug.log
 yarn-error.log
 testem.log
+/Group3_Tech_Intellect/typings
 /typings
 
 # System Files
