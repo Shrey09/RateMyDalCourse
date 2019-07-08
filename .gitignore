@@ -12,6 +12,7 @@
 /bazel-out
 
 # dependencies
+/Group3_Tech_Intellect/server/node_modules
 /Group3_Tech_Intellect/node_modules
 /node_modules
 
