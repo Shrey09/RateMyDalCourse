@@ -1,6 +1,10 @@
 export class Post {
   constructor(
-      public email: string,
-      public postContent: string
+      public postContent: string,
+      public postedByEmail: string,
+      public postedByName: string,
+      public courseId: string,
+      public likedByUsers: Array<string>,
+      public postedTime: Date
   ) {}
 }

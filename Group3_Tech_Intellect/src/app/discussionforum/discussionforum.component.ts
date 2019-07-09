@@ -10,7 +10,7 @@ import { CreatePostService } from '../create-post.service';
   styleUrls: ['./discussionforum.component.css']
 })
 export class DiscussionforumComponent implements OnInit {
-  postModel = new Post('abcd@fake.com', 'this is the new post');
+  postModel = new Post('This is a new post.', 'harsh@gmail.com', 'Harsh Pamnani', 'CSCI5408', new Array(), new Date());
   postMessage: string = null;
   isErrorPresent = false;
   isSuccess = false;
@@ -25,9 +25,9 @@ export class DiscussionforumComponent implements OnInit {
   }
 
   onSubmit(form) {
-    // Once the log in functionality is implemented, this email address will be taken from the user's session.
-    this.postModel.email = 'harshpam1993@gmail.com';
     this.postModel.postContent = form.postContent;
+    // Other attributes for post like emailId, username, postTime, and course
+    // will be added once the login and session management feature is implemented.
 
     this.createPostService.createPost(this.postModel)
     .subscribe (
@@ -35,7 +35,6 @@ export class DiscussionforumComponent implements OnInit {
         this.postMessage = data.responseMessage;
         console.log('Response from server : ' + this.postMessage);
 
-        // handle the error or successful message response for the server
         if (this.postMessage === 'Please enter some content for the post.') {
           this.isErrorPresent = true;
           this.isSuccess = false;
@@ -46,6 +45,10 @@ export class DiscussionforumComponent implements OnInit {
           this.isErrorPresent = false;
           this.isSuccess = true;
           (document.getElementById('postContentTextArea') as HTMLInputElement).value = '';
+
+          var oldHtmlContent = (document.getElementById('comments') as HTMLInputElement).innerHTML;
+          var newHtmlContent = this.generateHtmlForPost(this.postModel);
+          (document.getElementById('comments') as HTMLInputElement).innerHTML = newHtmlContent + oldHtmlContent;
         }
       },
        error => {
@@ -56,5 +59,13 @@ export class DiscussionforumComponent implements OnInit {
                             + 'Please try again after some time.';
         }
     );
+  }
+
+  generateHtmlForPost(post) {
+    var htmlPost = '<div class="row"><div class="card-body comment"><h5 class="card-title">';
+    htmlPost += post.postedByName;
+    htmlPost += '</h5><p class="card-text">' + post.postContent;
+    htmlPost += '</p><div class="card-text helpful"><span><i class="fas fa-thumbs-up"></i></span> Mark as Helpful (0) </div></div></div>'
+    return htmlPost;
   }
 }

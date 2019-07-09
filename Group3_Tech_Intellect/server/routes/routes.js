@@ -3,14 +3,13 @@ var router = express.Router();
 var MongoClient = require('mongodb').MongoClient;
 var mongoDbUrl="mongodb+srv://shrey:web12345@ratemydalcourse-rqsoy.mongodb.net/test?retryWrites=true&w=majority";
 
-// endpoint handling request for user registration
 router.post('/createPost', function(req,res) {
     // console.log(req.body);
 
     post = req.body;
 
     console.log('New post received on server:')
-    console.log('User email: ' + post.email);
+    console.log('User email: ' + post.postedByEmail);
     console.log('Post content: ' + post.postContent + '\r\n');
 
     if (post.postContent == null || post.postContent === '') {
