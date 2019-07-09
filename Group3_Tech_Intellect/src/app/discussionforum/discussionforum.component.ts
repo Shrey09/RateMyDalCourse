@@ -47,8 +47,8 @@ export class DiscussionforumComponent implements OnInit {
           this.isSuccess = true;
           (document.getElementById('postContentTextArea') as HTMLInputElement).value = '';
 
-          var oldHtmlContent = (document.getElementById('commentsSection') as HTMLInputElement).innerHTML;
-          var newHtmlContent = this.generateHtmlForPost(this.postModel);
+          const oldHtmlContent = (document.getElementById('commentsSection') as HTMLInputElement).innerHTML;
+          const newHtmlContent = this.generateHtmlForPost(this.postModel);
           (document.getElementById('commentsSection') as HTMLInputElement).innerHTML = newHtmlContent + oldHtmlContent;
         }
       },
@@ -63,7 +63,7 @@ export class DiscussionforumComponent implements OnInit {
   }
 
   generateHtmlForPost(post) {
-    var htmlPost = '<div class="row"><div class="card-body comment"><h5 class="card-title">';
+    let htmlPost = '<div class="row"><div class="card-body comment"><h5 class="card-title">';
     htmlPost += post.postedByName;
     htmlPost += '</h5><p class="card-text">' + post.postContent;
     htmlPost += '</p><div class="card-text helpful"><span><i class="fas fa-thumbs-up"></i></span> Mark as Helpful (0) </div></div></div>'
