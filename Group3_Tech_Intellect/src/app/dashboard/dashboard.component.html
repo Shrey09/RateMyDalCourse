@@ -129,71 +129,19 @@
 
             <div class="col-sm-12" >
                     <p class= "Subject" style="margin-bottom:1rem; margin-top: 2rem"> <strong><h3>Other courses</h3></strong></p>
-
-
                      </div>
             
-            <div class="col-sm-6 col-md-4 col-lg-3 mb-3">
-                <div class="transform-on-hover card ">
-                    <a class="lightbox"><img src="assets/image/gallery1.jpg" class="card-img-top" style="max-height:130px; width:100%" alt="error loading image"></a>
-                    <div class="card-body">
-                    <h6>CSCI-003 Visual Analytics</h6>
-                    <a type="button" class="btn btn-dark" href="discussion">Discuss</a>
+            
+                <div *ngFor="let course of coursesList" class="col-sm-6 col-md-4 col-lg-3 mb-3">
+                    <div class="transform-on-hover card ">
+                        <a class="lightbox"><img src="assets/image/gallery1.jpg" class="card-img-top" style="max-height:130px; width:100%" alt="error loading image"></a>
+                        <div class="card-body">
+                        <h6>{{course.Code}} {{course.Name}}</h6>
+                        <a type="button" class="btn btn-dark" href="discussion">Discuss</a>
+                        </div>
                     </div>
                 </div>
-            </div>
-
-            <div class="col-sm-6 col-md-4 col-lg-3 mb-3">
-                <div class="transform-on-hover card ">
-                    <a class="lightbox"><img src="assets/image/gallery1.jpg" class="card-img-top" style="max-height:130px; width:100%" alt="error loading image"></a>
-                    <div class="card-body">
-                        <h6>CSCI-002 Network Security</h6>
-                    <a type="button" class="btn btn-dark" href="discussion">Discuss</a>
-
-                    </div>
-                </div>
-            </div>
-
-             <div class="col-sm-6 col-md-4 col-lg-3 mb-3">
-                <div class="transform-on-hover card ">
-                    <a class="lightbox"><img src="assets/image/gallery1.jpg" class="card-img-top" style="max-height:130px; width:100%" alt="error loading image"></a>
-                    <div class="card-body">
-                        <h6>CSCI-001 Adv Network</h6>
-                    <a type="button" class="btn btn-dark" href="discussion">Discuss</a>
-                    </div>
-                </div>
-            </div>
-
-             <div class="col-sm-6 col-md-4 col-lg-3 mb-3">
-                <div class="transform-on-hover card ">
-                    <a class="lightbox"><img src="assets/image/gallery1.jpg" class="card-img-top" style="max-height:130px; width:100%" alt="error loading image"></a>
-                    <div class="card-body">
-                            <h6>CSCI-001 HCI</h6>
-                            <a type="button" class="btn btn-dark" href="discussion">Discuss</a>
-                    </div>
-                </div>
-            </div>
-
-             <div class="col-sm-6 col-md-4 col-lg-3 mb-3">
-                <div class="transform-on-hover card ">
-                    <a class="lightbox"><img src="assets/image/gallery1.jpg" class="card-img-top" style="max-height:130px; width:100%" alt="error loading image"></a>
-                    <div class="card-body">
-                              <h6>CSCI-001 USP</h6>
-                    <a type="button" class="btn btn-dark" href="discussion">Discuss</a>
-                    </div>
-                </div>
-            </div>
-
-             <div class="col-sm-6 col-md-4 col-lg-3 mb-3">
-                <div class="transform-on-hover card ">
-                    <a class="lightbox"><img src="assets/image/gallery1.jpg" class="card-img-top" style="max-height:130px; width:100%" alt="error loading image"></a>
-                    <div class="card-body">
-                            <h6>CSCI-001 Quality Assurance</h6>
-                    <a type="button" class="btn btn-dark" href="discussion">Discuss</a>
-                    </div>
-                </div>
-            </div>
-
+            
 
         </div>
 

@@ -14,7 +14,7 @@ export class DashboardComponent implements OnInit {
     public authenticationService: AuthenticationService, public getCoursesService: GetCoursesService
   ) {
   }
-
+  coursesList : any[];
   ngOnInit() {
     console.log("dashboard loaded");
 
@@ -22,7 +22,8 @@ export class DashboardComponent implements OnInit {
     subscribe(
       data =>{
         console.log("Courses fetched");
-        console.log(data);
+        console.log(data["Courses"]);
+        this.coursesList = data["Courses"];
       },
       error=>{
         console.log("error in connecting to server service",error)
