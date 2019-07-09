@@ -1,49 +1,32 @@
 var express = require('express');
 var router = express.Router();
 var MongoClient = require('mongodb').MongoClient;
-var url="mongodb+srv://shrey:web12345@ratemydalcourse-rqsoy.mongodb.net/test?retryWrites=true&w=majority";
+var mongoDbUrl="mongodb+srv://shrey:web12345@ratemydalcourse-rqsoy.mongodb.net/test?retryWrites=true&w=majority";
 
 // endpoint handling request for user registration
-router.post('/register_user',function(req,res)
-{
-    console.log(req.body);
-    // fetching data from the request body
-    user=req.body;
-    MongoClient.connect(url,function(err,client) 
-    {
+router.post('/createPost', function(req,res) {
+    // console.log(req.body);
+
+    post = req.body;
+
+    console.log('New post received on server:')
+    console.log('User email: ' + post.email);
+    console.log('Post content: ' + post.postContent + '\r\n');
+
+    if (post.postContent == null || post.postContent === '') {
+      res.send({"responseMessage":"Please enter some content for the post."});
+    } else if (post.postContent.length < 20) {
+      res.send({"responseMessage":"Please enter at least 20 characters for the post."});
+    } else {
+      MongoClient.connect(mongoDbUrl, function(err,client) {
         if(err){
-            res.status(501).send({"Error":"error in connecting to database"});
+          res.status(501).send({"responseMessage":"We could not connect to our database. Please try again later."});
+        } else {
+          client.db("RateMyDalCourse").collection('Posts').insertOne(post);
+          res.status(200).send({"responseMessage":"Post successfully created on discussion forum."});
         }
-        //check if user has already resgistered or not
-        else
-        {  
-            // check username or email already exists or not
-            client.db("RateMyDalCourse").collection('User').findOne({
-                "$or": [{
-                    "email": user.email
-                }, {
-                    "name": user.name
-                }]
-            }, function(err, result) {
-                if(err) 
-                {
-                    console.log("error");
-                    res.send({"Message":"error in connecting to database"});
-                }
-                if(result) 
-                {
-                    res.send({"Message":"Entered email or username already exist"});
-                } 
-                // Add details of the new user in the mongodb database
-                else 
-                {
-                    client.db("RateMyDalCourse").collection('User').insertOne(user);
-                    console.log("User profile added to database");
-                    res.status(200).send({"Message":"Registration successful. Please login to continue"});
-                }
-             }); 
-        }
-    }); 
+      });
+    }
 })
 
 module.exports = router;

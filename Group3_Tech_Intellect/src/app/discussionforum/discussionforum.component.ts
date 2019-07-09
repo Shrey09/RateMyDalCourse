@@ -29,27 +29,32 @@ export class DiscussionforumComponent implements OnInit {
     this.postModel.email = 'harshpam1993@gmail.com';
     this.postModel.postContent = form.postContent;
 
-    if (this.postModel.postContent == null) {
-      console.log('Please enter some content for the post');
-      this.isSuccess = false;
-      this.isErrorPresent = true;
-      this.postMessage = 'Please enter some content for the post';
-    } else if (this.postModel.postContent.length < 20) {
-      console.log('Please enter at least 20 characters for the post.');
-      this.isSuccess = false;
-      this.isErrorPresent = true;
-      this.postMessage = 'Please enter at least 20 characters for the post.';
-    } else {
-      this.isErrorPresent = false;
-      this.isSuccess = true;
-      console.log(this.postModel);
-      this.postMessage = 'Post successfully created on discussion forum.';
+    this.createPostService.createPost(this.postModel)
+    .subscribe (
+      data => {
+        this.postMessage = data.responseMessage;
+        console.log('Response from server : ' + this.postMessage);
 
-      this.createPostService.createPost(this.postModel)
-      .subscribe (
-        data => console.log('Success HP!', data),
-        error => console.error('Error HP!', error)
-      );
-    }
+        // handle the error or successful message response for the server
+        if (this.postMessage === 'Please enter some content for the post.') {
+          this.isErrorPresent = true;
+          this.isSuccess = false;
+        } else if (this.postMessage === 'Please enter at least 20 characters for the post.') {
+          this.isErrorPresent = true;
+          this.isSuccess = false;
+        } else if (this.postMessage === 'Post successfully created on discussion forum.') {
+          this.isErrorPresent = false;
+          this.isSuccess = true;
+          (document.getElementById('postContentTextArea') as HTMLInputElement).value = '';
+        }
+      },
+       error => {
+         console.log('Some error occured: ', error);
+         this.isErrorPresent = true;
+         this.isSuccess = false;
+         this.postMessage = 'We could not reach our server. '
+                            + 'Please try again after some time.';
+        }
+    );
   }
 }

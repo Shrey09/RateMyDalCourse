@@ -11,10 +11,11 @@ app.use(cors());
 var routes=require('./routes/routes');
 app.use('/',routes);
 
-app.post('/createPost', function (req, res) {
-  console.log(req.body);
-  res.status(200).send({"message": "Data received"});
-})
+
+// app.post('/createPost', function (req, res) {
+//   console.log(req.body);
+//   res.status(200).send({"message": "HP Data received"});
+// })
 
 // creating the server
 app.listen(port,function(){
