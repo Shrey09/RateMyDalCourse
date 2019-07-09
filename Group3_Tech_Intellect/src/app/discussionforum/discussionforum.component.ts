@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { AuthenticationService } from '../authentication/authentication.service';
 import { Post } from './post';
 import { CreatePostService } from '../create-post.service';
@@ -7,7 +7,8 @@ import { CreatePostService } from '../create-post.service';
 @Component({
   selector: 'app-discussionforum',
   templateUrl: './discussionforum.component.html',
-  styleUrls: ['./discussionforum.component.css']
+  styleUrls: ['./discussionforum.component.css'],
+  encapsulation: ViewEncapsulation.None
 })
 export class DiscussionforumComponent implements OnInit {
   postModel = new Post('This is a new post.', 'harsh@gmail.com', 'Harsh Pamnani', 'CSCI5408', new Array(), new Date());
@@ -46,9 +47,9 @@ export class DiscussionforumComponent implements OnInit {
           this.isSuccess = true;
           (document.getElementById('postContentTextArea') as HTMLInputElement).value = '';
 
-          var oldHtmlContent = (document.getElementById('comments') as HTMLInputElement).innerHTML;
+          var oldHtmlContent = (document.getElementById('commentsSection') as HTMLInputElement).innerHTML;
           var newHtmlContent = this.generateHtmlForPost(this.postModel);
-          (document.getElementById('comments') as HTMLInputElement).innerHTML = newHtmlContent + oldHtmlContent;
+          (document.getElementById('commentsSection') as HTMLInputElement).innerHTML = newHtmlContent + oldHtmlContent;
         }
       },
        error => {
