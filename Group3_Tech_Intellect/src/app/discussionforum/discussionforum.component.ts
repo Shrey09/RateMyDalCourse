@@ -3,7 +3,6 @@ import { AuthenticationService } from '../authentication/authentication.service'
 import { Post } from './post';
 import { CreatePostService } from '../create-post.service';
 
-
 @Component({
   selector: 'app-discussionforum',
   templateUrl: './discussionforum.component.html',
@@ -36,13 +35,7 @@ export class DiscussionforumComponent implements OnInit {
         this.postMessage = data.responseMessage;
         console.log('Response from server : ' + this.postMessage);
 
-        if (this.postMessage === 'Please enter some content for the post.') {
-          this.isErrorPresent = true;
-          this.isSuccess = false;
-        } else if (this.postMessage === 'Please enter at least 20 characters for the post.') {
-          this.isErrorPresent = true;
-          this.isSuccess = false;
-        } else if (this.postMessage === 'Post successfully created on discussion forum.') {
+        if (this.postMessage === 'Post successfully created on discussion forum.') {
           this.isErrorPresent = false;
           this.isSuccess = true;
           (document.getElementById('postContentTextArea') as HTMLInputElement).value = '';
@@ -50,6 +43,9 @@ export class DiscussionforumComponent implements OnInit {
           const oldHtmlContent = (document.getElementById('commentsSection') as HTMLInputElement).innerHTML;
           const newHtmlContent = this.generateHtmlForPost(this.postModel);
           (document.getElementById('commentsSection') as HTMLInputElement).innerHTML = newHtmlContent + oldHtmlContent;
+        } else {
+          this.isErrorPresent = true;
+          this.isSuccess = false;
         }
       },
        error => {
