@@ -43,6 +43,7 @@ router.post('/register_user',function(req,res)
                     console.log("User profile added to database");
                     res.status(200).send({"Message":"Registration successful. Please login to continue"});
                 }
+            client.close();
              }); 
         }
     }); 
@@ -66,10 +67,10 @@ router.get('/getCourses',function(req,res){
                 courses.push(course);
             },function(){
                 // send the course list as the response
-                console.log("HP Courses array",courses);
+                console.log("Courses array",courses);
                 res.send({"Courses":courses});  
             });
-        
+        client.close();
         }
     })
 })

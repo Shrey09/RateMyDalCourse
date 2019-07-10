@@ -11,15 +11,19 @@ import {CourseService} from '../course.service';
 })
 export class RegistrationComponent implements OnInit {
   // user model for new user 
-  userModel=new User('shrey','x@gmail.com','12345678','12345678','Course-1');
+  userModel=new User('shrey','x@gmail.com','12345678','Course-1');
   // course list to populate dropdown menu
   CoursesList:any[] =[];  
+
+  plainText:string="";
+  encryptedText:string="";
 
   // flags for displaying error or response message from the server
   showCourses=false;
   showErrorMessage: boolean = false;
   showMessage: boolean = false;
   message: string = null;
+
 
   // initalise the web service to send request to the server
   constructor(private _registerService:RegisterService,private _courseService:CourseService) { 
@@ -42,11 +46,29 @@ export class RegistrationComponent implements OnInit {
 
   // method for sending form data to the server
   onSubmit(form){
-    // create usermodel for the new user and stroing the details
+
+    // encrypting password using ceasar cipher (reference:- http://codeniro.com/caesars-cipher-algorithm-javascript/)
+    this.plainText=form.password;
+    for (var i = 0; i < this.plainText.length; i++) 
+    {       
+        var c = this.plainText.charCodeAt(i);
+        if(c >= 65 && c <=  90) 
+        {
+            this.encryptedText += String.fromCharCode((c - 65 + 13) % 26 + 65);
+        }
+        else if(c >= 97 && c <= 122)
+        {
+          this.encryptedText += String.fromCharCode((c - 97 + 13) % 26 + 97);
+        }
+        else 
+        {
+          this.encryptedText += this.plainText.charAt(i);
+        }
+    }
+    // create usermodel for the new user and storing the details
     this.userModel.name=form.name;
     this.userModel.email=form.email;
-    this.userModel.password=form.password;
-    this.userModel.confirmPassword=form.cpassword;
+    this.userModel.password=this.encryptedText;
     this.userModel.courses=form.courses;
     console.log("user model",this.userModel);
     // send user data to the server using register event
