@@ -2,6 +2,7 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { AuthenticationService } from '../authentication/authentication.service';
 import { Post } from './post';
 import { CreatePostService } from '../create-post.service';
+import { GetPostsService } from '../get-posts.service';
 
 @Component({
   selector: 'app-discussionforum',
@@ -15,13 +16,39 @@ export class DiscussionforumComponent implements OnInit {
   isErrorPresent = false;
   isSuccess = false;
 
-  ngOnInit() {
-    this.authenticationService.authenticate();
+  constructor(
+    public authenticationService: AuthenticationService, private createPostService: CreatePostService,
+    private getPostsService: GetPostsService
+  ) {
   }
 
-  constructor(
-    public authenticationService: AuthenticationService, private createPostService: CreatePostService
-  ) {
+  postModel1 = new Post('This is the first post.', 'harsh@gmail.com', 'Harsh Pamnani', 'CSCI5408',
+                          new Array('deep@gmail.com', 'chintan@gmail.com', 'shrey@gmail.com'), new Date());
+  postModel2 = new Post('This is the second post.', 'deep@gmail.com', 'Deep Shah', 'CSCI5408',
+                          new Array('harsh@gmail.com'), new Date());
+  postModel3 = new Post('This is the third post.', 'chintan@gmail.com', 'Chintan Patel', 'CSCI5408',
+                          new Array('deep@gmail.com', 'harsh@gmail.com', 'ravi@gmail.com', 'aman@dal.ca'), new Date());
+
+  postsList: any[] = [this.postModel1, this.postModel2, this.postModel3];
+
+  ngOnInit() {
+    this.authenticationService.authenticate();
+
+    console.log('discussion forum loaded loaded');
+    console.log('posts will be retrieved from server now');
+    this.getPostsService.getPosts().
+    subscribe(
+      data => {
+      // console.log('Posts fetched form server', data['Posts']);
+      // this.Courses = data["Posts"];
+      // console.log(this.Courses);
+      // console.log('First Post', data['Posts'][0]);
+      this.postsList = data['Posts'];
+    },
+      error => {
+        console.log('Some error in connecting to server', error);
+      }
+    );
   }
 
   onSubmit(form) {
@@ -36,13 +63,14 @@ export class DiscussionforumComponent implements OnInit {
         console.log('Response from server : ' + this.postMessage);
 
         if (this.postMessage === 'Post successfully created on discussion forum.') {
+          this.postsList.push(this.postModel);
           this.isErrorPresent = false;
           this.isSuccess = true;
           (document.getElementById('postContentTextArea') as HTMLInputElement).value = '';
 
-          const oldHtmlContent = (document.getElementById('commentsSection') as HTMLInputElement).innerHTML;
-          const newHtmlContent = this.generateHtmlForPost(this.postModel);
-          (document.getElementById('commentsSection') as HTMLInputElement).innerHTML = newHtmlContent + oldHtmlContent;
+          // const oldHtmlContent = (document.getElementById('commentsSection') as HTMLInputElement).innerHTML;
+          // const newHtmlContent = this.generateHtmlForPost(this.postModel);
+          // (document.getElementById('commentsSection') as HTMLInputElement).innerHTML = newHtmlContent + oldHtmlContent;
         } else {
           this.isErrorPresent = true;
           this.isSuccess = false;

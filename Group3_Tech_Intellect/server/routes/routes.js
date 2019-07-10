@@ -33,10 +33,41 @@ router.post('/createPost', function(req,res) {
           client.db("RateMyDalCourse").collection('Posts').insertOne(post);
           res.status(200).send({"responseMessage":"Post successfully created on discussion forum."});
           console.log('SUCCESS: Post successfully created.');
+          client.close();
         }
       });
+
     }
     console.log('');
 })
+
+
+
+router.get('/getPosts',function(req,res){
+  // array to store the courses
+  var posts=[];
+  MongoClient.connect(mongoDbUrl,function(err,client)
+  {
+      if(err)
+      {
+          res.status(501).send({"Error":"error in connecting to database"});
+      }
+      else
+      {
+          //fetching courses from the database
+          var cursor= client.db("RateMyDalCourse").collection('Posts').find();
+          cursor.forEach(function(course) {
+              posts.push(course);
+          },function(){
+              // send the course list as the response
+              console.log("Posts array",posts);
+              res.send({"Posts":posts});
+          });
+
+          client.close();
+      }
+  })
+})
+
 
 module.exports = router;
