@@ -38,14 +38,13 @@ router.post('/createPost', function(req,res) {
       });
 
     }
-    console.log('');
 })
 
 
+router.get('/getPosts/:courseCode',function(req,res){
 
-router.get('/getPosts',function(req,res){
-  // array to store the courses
   var posts=[];
+  const courseCodeFromClient = req.params.courseCode.substring(1);
   MongoClient.connect(mongoDbUrl,function(err,client)
   {
       if(err)
@@ -54,17 +53,17 @@ router.get('/getPosts',function(req,res){
       }
       else
       {
-          //fetching courses from the database
-          var cursor= client.db("RateMyDalCourse").collection('Posts').find();
-          cursor.forEach(function(course) {
-              posts.push(course);
-          },function(){
-              // send the course list as the response
-              console.log("Posts array",posts);
-              res.send({"Posts":posts});
-          });
+        console.log("Course code received from client is: " + courseCodeFromClient);
 
-          client.close();
+        var cursor = client.db("RateMyDalCourse").collection('Posts').find({ courseCode: courseCodeFromClient});
+        cursor.forEach(function(dbPost) {
+            posts.push(dbPost);
+        },function(){
+            // console.log("Posts array",posts);
+            res.send({"Posts":posts});
+        });
+
+        client.close();
       }
   })
 })

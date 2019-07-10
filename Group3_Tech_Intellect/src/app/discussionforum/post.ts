@@ -3,7 +3,7 @@ export class Post {
       public postContent: string,
       public postedByEmail: string,
       public postedByName: string,
-      public courseId: string,
+      public courseCode: string,
       public likedByUsers: Array<string>,
       public postedTime: Date
   ) {}
