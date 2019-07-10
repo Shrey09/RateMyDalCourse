@@ -26,7 +26,7 @@ export class DashboardComponent implements OnInit {
         this.coursesList = data["Courses"];
       },
       error=>{
-        console.log("error in connecting to server service",error)
+        console.log("error in connecting to the server service",error)
       });
   }
 

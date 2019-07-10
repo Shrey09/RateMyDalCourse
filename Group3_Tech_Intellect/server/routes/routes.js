@@ -15,17 +15,22 @@ router.get('/getCourses',function(req,res){
         }
         else
         {
-            console.log("Retrieve courses here");
+            console.log("Retrieve courses displayed here");
 
             var cursor= client.db("RateMyDalCourse").collection('Courses').find();
             cursor.forEach(function(course) { 
                 courses.push(course);
             },function(){
                 // send the course list as the response
-                console.log("Courses array",courses);
+                console.log("All Other Courses array",courses);
                 res.send({"Courses":courses});  
             });
 
+
+
+            //var registerCourse =client.db("RateMyDalCourse").collection('User').find({name: "Nitin Korea"});
+            //console.log("Only register Courses array",registerCourse);
+            //res.send({"RegisterCourse":registerCourse});
         }
     })
 })
