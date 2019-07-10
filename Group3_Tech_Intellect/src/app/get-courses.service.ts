@@ -1,15 +1,22 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http'
+import { Username } from './dashboard/username';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GetCoursesService {
 
-  url = "http://localhost:3000/getCourses";
+  
   constructor(private http: HttpClient) { }
 
+  getMyCourses(username: Username) {
+    const url = "http://localhost:3000/getCourses/:"+username.name;
+    return this.http.get<any[]>(url);
+  }
+
   getCourses() {
-    return this.http.get<any[]>(this.url);
+    const url = "http://localhost:3000/getCourses";
+    return this.http.get<any[]>(url);
   }
 }
