@@ -2,21 +2,19 @@
   <div class="container-fluid">
       <div class="row justify-content-center">
           <div class="col-12 col-sm-9 col-md-6 col-lg-4">
-
+        <!-- User registration form -->
           <form #userForm="ngForm" id="registration_form" class="form-container" method="POST" novalidate (ngSubmit)="onSubmit(userForm.value)">
               <div class="form-heading">
                   <h3><strong>Register</strong></h3>
-                <!-- {{userForm.value | json}}
-                  {{userModel | json}} -->
               </div>
-              <!-- <input type="hidden" #shrey="ngModel" (ngModel)="shrey" name="shrey" value="shreyszfjdngjbj"> -->
+              <!-- name field -->
               <div class="form-group">
                   <label>Name</label>
                   <input type="text" #name="ngModel" [class.is-invalid]="name.invalid && name.touched" class="form-control" id="name"  placeholder="Enter Your Full Name"
                   pattern="[a-zA-Z][a-zA-Z ]+" title="Enter full name" required (ngModel)="name" name="name">
                   <small class="text-danger" [class.d-none]="name.valid || name.untouched" >Name is required</small>
               </div>
-
+               <!-- email address field -->
               <div class="form-group">
                   <label>Email address</label>
                   <input type="email" #email="ngModel" class="form-control" id="email" [class.is-invalid]="email.invalid && email.touched"
@@ -26,16 +24,18 @@
                           <small class="text-danger" *ngIf="email.errors.pattern">Invalid email</small>
                   </div>
               </div>
+              <!-- password field -->
               <div class="form-group">
                   <label>Password</label>
                   <input type="password" #password="ngModel" [class.is-invalid]="password.invalid && password.touched" class="form-control" id="password" title="Password should contian minimum 8 characters"
-                  placeholder="Enter your password"  required (ngModel)="password" name="password" minlength="8">
+                  placeholder="Enter your password"  required (ngModel)="password" name="password" minlength="8" pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$">
                   <div *ngIf="password.errors && (password.valid || password.touched)">
                       <small class="text-danger" *ngIf="password.errors.required" >Password is required</small>
-                      <small class="text-danger" *ngIf="password.errors.minlength">Length of password should be greater than 8</small>
+                      <small class="text-danger" *ngIf="password.errors.minlength">Length of password should be greater than 8</small><br>
+                      <small class="text-danger" *ngIf="password.errors.minlength">Password should contain uppercase, lowercase and a special character</small>
                   </div>
               </div>
-
+              <!-- confirm password field -->
               <div class="form-group">
                       <label>Confirm Password</label>
                       <input type="password"  appConfirmEqualValidator="password" #cpassword="ngModel"  [class.is-invalid]="cpassword.invalid && cpassword.touched" class="form-control"  id="cpassword" placeholder="Confirm your password"
@@ -45,14 +45,16 @@
 
                       </div>
                       <div *ngIf="cpassword.errors && (cpassword.valid || cpassword.touched)">
-                              <small class="text-danger" *ngIf="!cpassword.errors.notequal && !cpassword.errors.required && !password.errors.required && !password.errors.minlength || password != cpassword" >Password and Confirm password does not match </small>
+                              <small class="text-danger" *ngIf="password != cpassword" >Password and Confirm password does not match </small>
                       </div>
               </div>
+              
+              <!-- dropdown list showning available courses in the CS department -->
               <div class="form-group">
                 <label class="form-label">Courses</label>
-                  <div class="input-group-prepend ">
-                      <select class="selectpicker" multiple data-live-search="true" (ngModel)="courses" name="courses" #courses="ngModel">
-                          <option *ngFor="let course of Courses" [value]="course._id">{{course.Name}}</option>
+                  <div class=" ">
+                      <select class="browser-default custom-select form-control" id="courses" multiple (ngModel)="courses" name="courses" #courses="ngModel" required>
+                          <option *ngFor="let course of CoursesList" [value]="course.Name">{{course.Name}}</option>
                       </select>
                   </div>
               </div>
@@ -60,14 +62,14 @@
                   <button [disabled]="userForm.form.invalid" [class.btn-danger]="userForm.form.invalid" type="submit"  class="btn btn-primary">Submit</button>
               </div>
               <br>
-            <!-- showing response message obtained from the server -->
+            <!-- showing error or response message obtained from the server -->
               <div  class="text-center alert alert-danger" *ngIf="showErrorMessage">
                 <b>{{message}}</b>
               </div>
               <div  class="text-center alert alert-success" *ngIf="showMessage">
                 <b>{{message}}</b>
               </div>
-            <!-- showing response message obtained from the server -->
+            
               <div class="forgot-password ">
                   <a href="login">Already a member?</a>
               </div>
@@ -75,4 +77,3 @@
           </div>
       </div>
   </div>
-  <!-- form completed -->

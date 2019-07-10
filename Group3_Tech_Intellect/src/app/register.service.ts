@@ -13,6 +13,7 @@ export class RegisterService {
   constructor(private _http:HttpClient) {
     
    }
+   // calling register event
    register(user: User){
     return this._http.post<any>(this._url,user);
   }

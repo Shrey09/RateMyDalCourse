@@ -1,24 +1,21 @@
 import { Component, OnInit } from '@angular/core';
 import {User} from './user';
-import {Course} from './course';
 import {RegisterService} from '../register.service';
 import {CourseService} from '../course.service';
+
 
 @Component({
   selector: 'app-registration',
   templateUrl: './registration.component.html',
-  styleUrls: ['./registration.component.css']
+  styleUrls: ['./registration.component.css'],
 })
 export class RegistrationComponent implements OnInit {
   // user model for new user 
   userModel=new User('shrey','x@gmail.com','12345678','12345678','Course-1');
   // course list to populate dropdown menu
-  Courses:any=[{"_id":"1","Name":"Data Science"},
-  {"_id":"2","Name":"Cloud Computing"},
-  {"_id":"3","Name":"Quality Assurance"},
-  {"_id":"4","Name":"Mobile Computing"},
-  {"_id":"5","Name":"Web Technology"}];  
+  CoursesList:any[] =[];  
 
+  // flags for displaying error or response message from the server
   showCourses=false;
   showErrorMessage: boolean = false;
   showMessage: boolean = false;
@@ -31,16 +28,16 @@ export class RegistrationComponent implements OnInit {
 
   ngOnInit() {
     // fetching the courses from the database to create option into dropdown
-    console.log("event loaded");
-    // calling the web service and getting observable reponse
     this._courseService.getCourse().
-    subscribe(courses=>{
-      console.log("Courses fetched",courses["Courses"]);
-      this.Courses=courses["Courses"];
-      console.log(courses);
-      
+    subscribe(
+      data => {
+      console.log('courses fetched form server', data['Courses']);
+      this.CoursesList = data['Courses'];
     },
-    error=>console.log("error",error));
+      error => {
+        console.log('Some error in connecting to server', error);
+      }
+    );
   }
 
   // method for sending form data to the server
@@ -52,7 +49,7 @@ export class RegistrationComponent implements OnInit {
     this.userModel.confirmPassword=form.cpassword;
     this.userModel.courses=form.courses;
     console.log("user model",this.userModel);
-    // pass user data to the server
+    // send user data to the server using register event
     this._registerService.register(this.userModel)
     .subscribe(data=>{
       // handle the error or successful message response for the server
@@ -63,6 +60,12 @@ export class RegistrationComponent implements OnInit {
         this.message=data["Message"];
       }
       if(data["Message"]=="Registration successful. Please login to continue"){
+        // reseting form after successful registration`
+        (document.getElementById('name') as HTMLInputElement).value="";
+        (document.getElementById('email') as HTMLInputElement).value="";
+        (document.getElementById('password') as HTMLInputElement).value="";
+        (document.getElementById('cpassword') as HTMLInputElement).value="";
+        (document.getElementById('courses') as HTMLInputElement ).value="";
         console.log(data);
         this.showMessage=true;
         this.showErrorMessage=false;

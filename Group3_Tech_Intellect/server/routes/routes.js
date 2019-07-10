@@ -1,9 +1,10 @@
 var express = require('express');
 var router = express.Router();
+// MongoClient to establish connection to mongodb database cluster on mongo atlas
 var MongoClient = require('mongodb').MongoClient;
 var url="mongodb+srv://shrey:web12345@ratemydalcourse-rqsoy.mongodb.net/test?retryWrites=true&w=majority";
 
-// endpoint handling request for user registration
+// endpoint handling request for user registration and storing user data in the database
 router.post('/register_user',function(req,res)
 {
     console.log(req.body);
@@ -17,7 +18,7 @@ router.post('/register_user',function(req,res)
         //check if user has already resgistered or not
         else
         {  
-            // check username or email already exists or not
+            // checking username or email already exists or not
             client.db("RateMyDalCourse").collection('User').findOne({
                 "$or": [{
                     "email": user.email
@@ -25,6 +26,7 @@ router.post('/register_user',function(req,res)
                     "name": user.name
                 }]
             }, function(err, result) {
+                // send error message to client 
                 if(err) 
                 {
                     console.log("error");
@@ -34,7 +36,7 @@ router.post('/register_user',function(req,res)
                 {
                     res.send({"Message":"Entered email or username already exist"});
                 } 
-                // Add details of the new user in the mongodb database
+                // Add details of the new user in the mongodb database and send response message to client
                 else 
                 {
                     client.db("RateMyDalCourse").collection('User').insertOne(user);
@@ -46,6 +48,7 @@ router.post('/register_user',function(req,res)
     }); 
 })
 
+// endpoint for handling get request to fetch available courses from the database
 router.get('/getCourses',function(req,res){
     // array to store the courses
     var courses=[];
@@ -63,7 +66,7 @@ router.get('/getCourses',function(req,res){
                 courses.push(course);
             },function(){
                 // send the course list as the response
-                console.log("Courses array",courses);
+                console.log("HP Courses array",courses);
                 res.send({"Courses":courses});  
             });
         

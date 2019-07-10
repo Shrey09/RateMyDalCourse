@@ -17,6 +17,7 @@ import { UrlSerializer } from '@angular/router';
 import { LowerCaseUrlSerializer } from './lowerCaseUrlSerializer';
 import { AuthenticationService } from './authentication/authentication.service';
 import {HttpClientModule} from '@angular/common/http';
+import {NgMultiSelectDropDownModule} from 'ng-multiselect-dropdown';
 // import {LoginValidatorDirective} from './login/login-validator.directive';
 // import {EmailValidatorDirective} from './login/login-email-validator.directive';
 
@@ -38,7 +39,8 @@ import {HttpClientModule} from '@angular/common/http';
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule 
+    HttpClientModule,
+    NgMultiSelectDropDownModule.forRoot()
   ],
   providers: [
     {
