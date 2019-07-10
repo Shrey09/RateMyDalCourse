@@ -3,14 +3,14 @@
         <div class="col-12 col-sm-9 col-md-8 col-lg-6">
 
 <!-- edit profile form -->
-<form class="form-container container" #userForm="ngForm" action="coursePage.html" method="POST" onsubmit='return checkForm()'>
+<form class="form-container container" #userForm="ngForm" action="coursePage.html" method="POST" novalidate (ngSubmit)="onSubmit(userForm.value)">
   <h1 class="text-center form-header">Edit Profile</h1>
 
   <div class="form-group row">
           <label for="name" class="col-sm-3 col-form-label">Name</label>
           <div class="col-sm-9">
               <input type="text" #name="ngModel" [class.is-invalid]="name.invalid && name.touched" class="form-control" id="name"  placeholder="Enter Your Full Name"
-              pattern="[a-zA-Z][a-zA-Z ]+" title="Enter full name" required ngModel name="name"  [value]="username"  [(ngModel)]="username">
+              pattern="[a-zA-Z][a-zA-Z ]+" title="Enter full name" ngModel name="name"  [value]="UserData.name" [(ngModel)]="username">
               <small class="text-danger" [class.d-none]="name.valid || name.untouched" >Name is required</small>
           </div>
   </div>
@@ -19,7 +19,7 @@
     <label for="email" class="col-sm-3 col-form-label">Email</label>
     <div class="col-sm-9">
         <input type="text" class="form-control" id="email"  placeholder="Enter your email"
-         title="Enter your email" name="email" disabled value="harsh@gmail.com">
+         title="Enter your email" name="email" disabled [value]="UserData.email">
     </div>
   </div>
 
@@ -69,11 +69,14 @@
             <div class="addPrepend input-group-text bg-success">
             Add
             </div>
-            <select class="selectpicker" multiple data-live-search="true">
-                <option data-tokens="add_c1">Course-1</option>
-                <option data-tokens="add_c2">Course-2</option>
-                <option data-tokens="add_c3">Course-3</option>
+            <select class=" " multiple data-live-search="true" id="add_courses" name="add_courses" (ngModel)="add_courses" #add_course="ngModel">
+                <option *ngFor="let course of CourseAddChoices" [value]="course">{{course}}</option>
             </select>
+            <!-- <div class=" ">
+            <select class="browser-default custom-select form-control" id="add_courses" multiple (ngModel)="add_courses" name="add_courses" #courses="ngModel" required>
+                <option *ngFor="let course of CoursesList" [value]="course.Name">{{course.Name}}</option>
+            </select>
+            </div> -->
         </div>
     </div>
 
@@ -82,10 +85,8 @@
                 <div class="dropPrepend input-group-text bg-danger">
                 Drop
                 </div>
-        <select class="selectpicker" multiple data-live-search="true">
-            <option data-tokens="drop_c1">Course-1</option>
-            <option data-tokens="drop_c2">Course-2</option>
-            <option data-tokens="drop_c3">Course-3</option>
+        <select class=" " multiple data-live-search="true" id="drop_courses" name="drop_courses" (ngModel)="drop_courses" #drop_courses="ngModel">
+            <option *ngFor="let dropcourse of UserRegisteredCourses" [value]="dropcourse">{{dropcourse}}</option>
         </select>
         </div>
   </div>
