@@ -39,7 +39,9 @@ export class DashboardComponent implements OnInit {
       data =>{
         console.log("My courses fetched");
         console.log(data["MyCourses"]);
-        this.myCoursesList = data["MyCourses"];
+        this.myCoursesList = data["MyCourses"][0]["courses"];
+        
+        console.log(this.myCoursesList);
       },
       error=>{
         console.log("error in connecting to the server get my courses",error)
