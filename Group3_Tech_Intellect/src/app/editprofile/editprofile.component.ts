@@ -84,6 +84,8 @@ export class EditprofileComponent implements OnInit {
     var old_password = data.old_password;
     var updated_add_course = data.add_courses;
     var updated_drop_course = data.drop_courses;
+    var copy_UserRegisteredCourses = this.UserRegisteredCourses.slice();
+    var copy_CourseAddChoices = this.CourseAddChoices.slice();
 
     // assign name to model
     if (updated_name == undefined) {
@@ -137,14 +139,16 @@ export class EditprofileComponent implements OnInit {
         else if (data['status'] == 'NOT_MODIFIED'){
           this.errorFlag = true;
           this.successFlag = false;
-          this.showMessage = "Old password not matched.";
-          // (document.getElementById('add_courses') as HTMLInputElement).value = data.add_courses;
-          // (document.getElementById('drop_courses') as HTMLInputElement).value = data.drop_courses;
+          this.showMessage = "Old password not matched or nothing to update.";
+          this.UserRegisteredCourses = copy_UserRegisteredCourses;
+          this.CourseAddChoices = copy_CourseAddChoices;
         } 
         else {
           this.errorFlag = true;
           this.successFlag = false;
           this.showMessage = "Something went wrong while update. Please try again.";
+          this.UserRegisteredCourses = copy_UserRegisteredCourses;
+          this.CourseAddChoices = copy_CourseAddChoices;
         }
         // reset the fields
         (document.getElementById('old_password') as HTMLInputElement).value = "";
