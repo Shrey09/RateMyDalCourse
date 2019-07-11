@@ -59,12 +59,18 @@ export class EditprofileComponent implements OnInit {
             }
           },
           error => {
-            console.log("Error while fetching user data", error);
+            this.errorFlag = true;
+            this.successFlag = false;
+            this.showMessage = "We are facing server problem. Try again later.";
+            console.log("UserProfileFetchError: ", error);    
           }
         );
       },
       error => {
-        console.log("Error while fetching courses", error);
+        this.errorFlag = true;
+        this.successFlag = false;
+        this.showMessage = "We are facing server problem. Try again later.";
+        console.log("CourseFetchError: ", error);
       },
     );
 
@@ -192,7 +198,16 @@ export class EditprofileComponent implements OnInit {
         (document.getElementById('cpassword') as HTMLInputElement).value = "";
       },
       error => {
-        console.log("Error: ", error);
+        this.errorFlag = true;
+        this.successFlag = false;
+        this.showMessage = "We are facing server problem. Try again later.";
+        // reset the fields
+        (document.getElementById('old_password') as HTMLInputElement).value = "";
+        (document.getElementById('password') as HTMLInputElement).value = "";
+        (document.getElementById('cpassword') as HTMLInputElement).value = "";
+        this.UserRegisteredCourses = copy_UserRegisteredCourses;
+        this.CourseAddChoices = copy_CourseAddChoices;
+        console.log("ServerDownError: ", error);
       }
     );
   }
