@@ -34,12 +34,10 @@ export class EditprofileComponent implements OnInit {
     // fetch courses using getcourse service
     this._courseService.fetchCourses().subscribe(
       data => {
-        console.log(data);
         this.CoursesList = data['Courses'];
 
         this._userdata.fetchUserData().subscribe(
           data => {
-            console.log(data['User']);
             this.UserData = data['User'];
             this.UserRegisteredCourses = data['User']['courses'];
 
@@ -125,9 +123,6 @@ export class EditprofileComponent implements OnInit {
       }
     }
 
-    console.log("Encrypted password: ", encrypt_old_password);
-    console.log("Encrypted new password: ", encrypt_updated_password);
-
     // assign name to model
     if (updated_name == undefined) {
       this.updateUserModel.name = this.UserData['name'];
@@ -167,8 +162,6 @@ export class EditprofileComponent implements OnInit {
     this.updateUserModel.courses = this.UserRegisteredCourses;
     this.updateUserModel.email = this.UserData['email'];
     this.updateUserModel.old_password = encrypt_old_password;
-    console.log(this.UserRegisteredCourses);
-    console.log("Model: ", this.updateUserModel);
 
     this._updateuserService.updateUserData(this.updateUserModel).subscribe(
       data => {
