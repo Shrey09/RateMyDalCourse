@@ -57,7 +57,8 @@
                         <a class="lightbox"><img src="assets/image/gallery1.jpg" class="card-img-top" style="max-height:130px; width:100%" alt="error loading image"></a>
                         <div class="card-body">
                         <h6>{{course.Code}} {{course.Name}}</h6>
-                        <a type="button" class="btn btn-dark" href="discussion">Discuss</a>
+                        
+                        <a type="button" class="btn btn-dark" [href]="'discussion/' + course.Name">Discuss</a>
                         </div>
                     </div>
                 </div>

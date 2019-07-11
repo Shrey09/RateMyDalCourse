@@ -29,7 +29,7 @@ const routes: Routes = [
     path: 'editprofile' , component:EditprofileComponent
   },
   {
-    path: 'discussion' , component:DiscussionforumComponent
+    path: 'discussion/:id' , component:DiscussionforumComponent
   },
   {
     path: '**', component:PagenotfoundComponent

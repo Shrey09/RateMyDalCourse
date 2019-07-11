@@ -26,18 +26,13 @@ router.get('/getCourses',function(req,res){
                 res.send({"Courses":courses});  
             });
 
-            client.close();
-
-            //var registerCourse =client.db("RateMyDalCourse").collection('User').find({name: "Nitin Korea"});
-            //console.log("Only register Courses array",registerCourse);
-            //res.send({"RegisterCourse":registerCourse});
+           
         }
     })
 })
 
 router.get('/getCourses/:username',function(req,res){
-    // array to store the courses
-    // var courses=[];
+   
     let username = req.params.username;
     MongoClient.connect(url,function(err,client)
     {
@@ -59,6 +54,40 @@ router.get('/getCourses/:username',function(req,res){
                 console.log("All My Courses array",myCourses);
                 res.send({"MyCourses":myCourses});  
             });
+
+        }
+    })
+})
+
+            router.get('/displayrating/:subject',function(req,res){
+
+                let subject = req.params.subject;
+
+                MongoClient.connect(url,function(err,client)
+                {
+                    var ratecourses = [];
+                    if(err)
+                    {
+                        res.status(501).send({"Error":"error in connecting to database"});
+                    }
+                    else
+                    {
+
+                        console.log("Retrieve my courses displayed here");
+                         console.log("Subjectname is " + subject);
+            
+            var cursor= client.db("RateMyDalCourse").collection('Rate').find({Name: subject});
+            cursor.forEach(function(rate) { 
+                console.log('hppppp',rate);
+                ratecourses.push(rate);
+            },function(){
+                // send the course list as the response
+                console.log("All the courses for ratings",ratecourses);
+                res.send({"Ratecourses":ratecourses});  
+            });
+
+
+
             client.close();
         }
     })

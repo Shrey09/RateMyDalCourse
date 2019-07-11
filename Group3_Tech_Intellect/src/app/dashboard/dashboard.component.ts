@@ -11,7 +11,7 @@ import {Username} from './username';
 })
 
 export class DashboardComponent implements OnInit {
-  usernameModel = new Username('willam@g.com');
+  usernameModel = new Username('nitin@gmail.com');
   constructor(
     public authenticationService: AuthenticationService, public getCoursesService: GetCoursesService,
     
@@ -21,6 +21,7 @@ export class DashboardComponent implements OnInit {
   myCoursesList : any[];
 
   ngOnInit() {
+    this.authenticationService.authenticate();
     console.log("dashboard loaded");
 
     this.getCoursesService.getCourses().
