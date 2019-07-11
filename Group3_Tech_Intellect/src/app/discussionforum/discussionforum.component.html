@@ -1,56 +1,53 @@
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
-<link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
-
 <div class="container">
   <div id="discussionForm">
 
-      <!--Create New Post Button-->
-      <div class="row">
-          <div class="display-3">
-              <h1 class="display-3 pb-1 subject"> <span><i class="fab fa-discourse"></i></span>
-                    CSCI5408 Mobile Compting</h1>
-          </div>
+    <div class="row">
+      <div class="display-3">
+        <h1 class="display-3 pb-1 subject"> <span><i class="fab fa-discourse"></i></span>
+          CSCI5408 Mobile Compting</h1>
       </div>
+    </div>
 
-  <div class="row">
-          <div class="display-4">
-              <h1 class="display-4 pb-3 subject-fields"><span><i class="fas fa-star-half-alt"></i></span>
-                    Overall Rating: 4.5</h1>
-          </div>
+    <div class="row">
+      <div class="display-4">
+        <h1 class="display-4 pb-3 subject-fields"><span><i class="fas fa-star-half-alt"></i></span>
+          Overall Rating: 4.5</h1>
       </div>
+    </div>
 
-  <div class="row">
-          <div class="display-4">
-              <h1 class="display-4 pb-3 subject-fields"><span><i class="far fa-calendar-plus"></i></span>
-                    Credit Hours: 3.0</h1>
-          </div>
+    <div class="row">
+      <div class="display-4">
+        <h1 class="display-4 pb-3 subject-fields"><span><i class="far fa-calendar-plus"></i></span>
+          Credit Hours: 3.0</h1>
       </div>
+    </div>
 
-      <div class="row">
-        <div class="col-sm-9">
-            <h4 class="display-4 comments">Comments</h4>
-        </div>
-        <div class="col-sm-3">
-            <h4 class="display-5 comments"> {{ postsList.length }} Comments</h4>
-        </div>
+    <div class="row">
+      <div class="col-sm-9">
+        <h4 class="display-4 comments">Comments</h4>
       </div>
+      <div class="col-sm-3">
+        <h4 class="display-5 comments"> {{ postsList.length }} Comments</h4>
+      </div>
+    </div>
 
-      <hr id="horizontalLine">
+    <hr id="horizontalLine">
 
-      <div class="row justify-content-center">
+    <div class="row justify-content-center">
 
-          <div class="card col-md-9">
-            <div class="row my-4">
-        <div class="col-sm-12">
-          <form #createPostForm="ngForm" method="POST" novalidate (ngSubmit)="onSubmit(createPostForm.value)">
-            <div class="md-form amber-textarea active-amber-textarea-2">
+      <div class="card col-md-9">
+        <div class="row my-4">
+          <div class="col-sm-12">
+            <form #createPostForm="ngForm" method="POST" novalidate (ngSubmit)="onSubmit(createPostForm.value)">
+              <div class="md-form amber-textarea active-amber-textarea-2">
                 <span><i class="fas fa-pencil-alt prefix mb-2"></i></span>
 
-                <textarea #postContent="ngModel" class="form-control md-textarea" id="postContentTextArea"
-                  rows="3" placeholder="Write a review or ask question about this course"
-                  (ngModel)="postContent" name="postContent"></textarea>
+                <textarea #postContent="ngModel" class="form-control md-textarea" id="postContentTextArea" rows="3"
+                  placeholder="Write a review or ask question about this course" (ngModel)="postContent"
+                  name="postContent"></textarea>
 
-                <button class="btn-success mt-3" type="submit" action="/submitPost"><span><i class="far fa-comments"></i></span> Add Comment </button>
+                <button class="btn-success mt-3" type="submit" action="/submitPost"><span><i
+                      class="far fa-comments"></i></span> Add Comment </button>
 
                 <div class="alert alert-danger mt-2" *ngIf="isErrorPresent">
                   <b> {{ postMessage }} </b>
@@ -59,22 +56,20 @@
                 <div class="alert alert-success mt-2" *ngIf="isSuccess">
                   <b> {{ postMessage }} </b>
                 </div>
-            </div>
-          </form>
+              </div>
+            </form>
+          </div>
         </div>
-      </div>
 
-
-      <!-- <div id="commentsSection"  > -->
         <div class="row" *ngFor="let post of postsList">
           <div class="card-body comment">
             <h5 class="card-title"> {{ post.postedByName }} </h5>
-            <p class="card-text"> {{ post.postContent }}  </p>
-            <div class="card-text helpful"><span><i class="fas fa-thumbs-up"></i></span> Mark as Helpful ({{ post.likedByUsers.length }}) </div>
-            </div>
+            <p class="card-text"> {{ post.postContent }} </p>
+            <div class="card-text helpful"><span><i class="fas fa-thumbs-up"></i></span> Mark as Helpful
+              ({{ post.likedByUsers.length }}) </div>
           </div>
-      <!-- </div> -->
-          </div>
+        </div>
       </div>
+    </div>
   </div>
 </div>

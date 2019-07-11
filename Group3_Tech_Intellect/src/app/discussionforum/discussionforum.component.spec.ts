@@ -8,9 +8,9 @@ describe('DiscussionforumComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DiscussionforumComponent ]
+      declarations: [DiscussionforumComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
