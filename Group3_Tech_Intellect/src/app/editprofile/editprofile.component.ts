@@ -76,6 +76,7 @@ export class EditprofileComponent implements OnInit {
   onSubmit(data){
     var updated_name = data.name;
     var updated_password = data.password;
+    var old_password = data.old_password;
     var updated_add_course = data.add_courses;
     var updated_drop_course = data.drop_courses;
     
@@ -89,10 +90,10 @@ export class EditprofileComponent implements OnInit {
 
     // assign password to model
     if (updated_password == ''){
-      this.updateUserModel.password = this.UserData['password'];
+      this.updateUserModel.new_password = this.UserData['password'];
     }
     else {
-      this.updateUserModel.password = updated_password;
+      this.updateUserModel.new_password = updated_password;
     }
 
     // add new courses to array
@@ -116,6 +117,7 @@ export class EditprofileComponent implements OnInit {
     // assignm new course list to model
     this.updateUserModel.courses = this.UserRegisteredCourses;
     this.updateUserModel.email = this.UserData['email'];
+    this.updateUserModel.old_password = old_password;
     console.log(this.UserRegisteredCourses);
     console.log("Model: ",this.updateUserModel);
 
