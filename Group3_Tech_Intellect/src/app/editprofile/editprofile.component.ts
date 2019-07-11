@@ -86,6 +86,41 @@ export class EditprofileComponent implements OnInit {
     var updated_drop_course = data.drop_courses;
     var copy_UserRegisteredCourses = this.UserRegisteredCourses.slice();
     var copy_CourseAddChoices = this.CourseAddChoices.slice();
+    var encrypt_old_password = "";
+    var encrypt_updated_password = "";
+
+    // http://codeniro.com/caesars-cipher-algorithm-javascript/
+    for (var i = 0; i < old_password.length; i++) {
+      var c = old_password.charCodeAt(i);
+
+      if (c >= 65 && c <= 90) {
+        encrypt_old_password += String.fromCharCode((c - 65 + 13) % 26 + 65);
+      }
+      else if (c >= 97 && c <= 122) {
+        encrypt_old_password += String.fromCharCode((c - 97 + 13) % 26 + 97);
+      }
+      else {
+        encrypt_old_password += old_password.charAt(i);
+      }
+    }
+
+    // http://codeniro.com/caesars-cipher-algorithm-javascript/
+    for (var i = 0; i < updated_password.length; i++) {
+      var c = updated_password.charCodeAt(i);
+
+      if (c >= 65 && c <= 90) {
+        encrypt_updated_password += String.fromCharCode((c - 65 + 13) % 26 + 65);
+      }
+      else if (c >= 97 && c <= 122) {
+        encrypt_updated_password += String.fromCharCode((c - 97 + 13) % 26 + 97);
+      }
+      else {
+        encrypt_updated_password += updated_password.charAt(i);
+      }
+    }
+
+    console.log("Encrypted password: ", encrypt_old_password);
+    console.log("Encrypted new password: ", encrypt_updated_password);
 
     // assign name to model
     if (updated_name == undefined) {
@@ -97,10 +132,10 @@ export class EditprofileComponent implements OnInit {
 
     // assign password to model
     if (updated_password == '') {
-      this.updateUserModel.password = this.UserData['password'];
+      this.updateUserModel.password = encrypt_old_password;
     }
     else {
-      this.updateUserModel.password = updated_password;
+      this.updateUserModel.password = encrypt_updated_password;
     }
 
     // add new courses to array
@@ -114,6 +149,7 @@ export class EditprofileComponent implements OnInit {
     // https://stackoverflow.com/a/5767357
     if (updated_drop_course != null) {
       for (var i = 0; i < updated_drop_course.length; i++) {
+        this.CourseAddChoices.push(updated_drop_course[i]);
         var index = this.UserRegisteredCourses.indexOf(updated_drop_course[i]);
         if (index > -1) {
           this.UserRegisteredCourses.splice(index, 1);
@@ -124,7 +160,7 @@ export class EditprofileComponent implements OnInit {
     // assignm new course list to model
     this.updateUserModel.courses = this.UserRegisteredCourses;
     this.updateUserModel.email = this.UserData['email'];
-    this.updateUserModel.old_password = old_password;
+    this.updateUserModel.old_password = encrypt_old_password;
     console.log(this.UserRegisteredCourses);
     console.log("Model: ", this.updateUserModel);
 
