@@ -10,7 +10,7 @@ export class UpdateuserService {
   _url = "http://localhost:3000/updateUserData"
   constructor(private _http: HttpClient) { }
 
-  fetchUserData(userdata: UpdateUser){
+  updateUserData(userdata: UpdateUser){
     return this._http.post<any[]>(this._url, userdata);
   }
 }

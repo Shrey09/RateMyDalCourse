@@ -69,6 +69,7 @@ export class EditprofileComponent implements OnInit {
     public authenticationService: AuthenticationService,
     private _courseService:GetcourseService,
     private _userdata:GetuserService,
+    private _updateuserService:UpdateuserService,
   ) {
   }
 
@@ -117,6 +118,16 @@ export class EditprofileComponent implements OnInit {
     this.updateUserModel.email = this.UserData['email'];
     console.log(this.UserRegisteredCourses);
     console.log("Model: ",this.updateUserModel);
+
+    this._updateuserService.updateUserData(this.updateUserModel).subscribe(
+      data => {
+        console.log("success", data);
+      },
+      error => {
+        console.log("Error: ", error);
+      }
+      
+    )
   }
 
 }

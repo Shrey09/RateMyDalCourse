@@ -49,4 +49,27 @@ router.get('/fetchCourses', function(req, res){
         }
     })
 })
+
+router.post('/updateUserData', function(req, res){
+    data = req.body;
+    MongoClient.connect(url, function(err, client){
+        if (err){
+            res.status(501).send({"Error":"error in connecting to database"});
+        }
+        else {
+            client.db("RateMyDalCourse").collection('User').updateOne(
+                { email: data.email},
+                { $set: data },
+                function(err, result){
+                    if (err) {
+                        res.status(501).send({"Error":"error in updating profile"});
+                    }
+                    else {
+                        res.send({data: result});
+                    }
+                }
+            );
+        }
+    })
+})
 module.exports = router;
