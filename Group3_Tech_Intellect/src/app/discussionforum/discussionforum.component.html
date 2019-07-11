@@ -1,27 +1,28 @@
+<!-- Author: Harsh Pamnani - B00802614 -->
+
+<!-- Container for showing the information of course and its corresponding comments -->
 <div class="container">
   <div id="discussionForm">
 
+    <!-- Displaying course code and course name -->
     <div class="row">
-      <div class="display-3">
-        <h1 class="display-3 pb-1 subject"> <span><i class="fab fa-discourse"></i></span>
-          CSCI5408 Mobile Compting</h1>
-      </div>
+      <h1 class="display-3 pb-1 subject"> <span><i class="fab fa-discourse"></i></span>
+        CSCI5408 Mobile Compting</h1>
     </div>
 
+    <!-- Displaying Overall Rating of the course -->
     <div class="row">
-      <div class="display-4">
-        <h1 class="display-4 pb-3 subject-fields"><span><i class="fas fa-star-half-alt"></i></span>
-          Overall Rating: 4.5</h1>
-      </div>
+      <h1 class="display-4 pb-3 subject-fields"><span><i class="fas fa-star-half-alt"></i></span>
+        Overall Rating: 4.5</h1>
     </div>
 
+    <!-- Displaying the credit hours of the course -->
     <div class="row">
-      <div class="display-4">
-        <h1 class="display-4 pb-3 subject-fields"><span><i class="far fa-calendar-plus"></i></span>
-          Credit Hours: 3.0</h1>
-      </div>
+      <h1 class="display-4 pb-3 subject-fields"><span><i class="far fa-calendar-plus"></i></span>
+        Credit Hours: 3.0</h1>
     </div>
 
+    <!-- Displaying comments count -->
     <div class="row">
       <div class="col-sm-9">
         <h4 class="display-4 comments">Comments</h4>
@@ -31,28 +32,33 @@
       </div>
     </div>
 
+    <!-- Horizontal line for dividing  -->
     <hr id="horizontalLine">
 
+    <!-- Creating a new row for the comments inside the container -->
     <div class="row justify-content-center">
-
       <div class="card col-md-9">
         <div class="row my-4">
           <div class="col-sm-12">
+
+            <!-- Form for creating a new post/comment -->
             <form #createPostForm="ngForm" method="POST" novalidate (ngSubmit)="onSubmit(createPostForm.value)">
               <div class="md-form amber-textarea active-amber-textarea-2">
                 <span><i class="fas fa-pencil-alt prefix mb-2"></i></span>
 
+                <!-- Input area where user can enter his comment -->
                 <textarea #postContent="ngModel" class="form-control md-textarea" id="postContentTextArea" rows="3"
                   placeholder="Write a review or ask question about this course" (ngModel)="postContent"
                   name="postContent"></textarea>
 
+                <!-- Button to submit the comment -->
                 <button class="btn-success mt-3" type="submit" action="/submitPost"><span><i
                       class="far fa-comments"></i></span> Add Comment </button>
 
+                <!-- Showing error message or success message  -->
                 <div class="alert alert-danger mt-2" *ngIf="isErrorPresent">
                   <b> {{ postMessage }} </b>
                 </div>
-
                 <div class="alert alert-success mt-2" *ngIf="isSuccess">
                   <b> {{ postMessage }} </b>
                 </div>
@@ -61,6 +67,9 @@
           </div>
         </div>
 
+        <!-- Each card will display the name of user who posted the comment, comment content,
+          and how many peopele found that comment as helpful -->
+        <!-- Iterating over each post received from server.-->
         <div class="row" *ngFor="let post of postsList">
           <div class="card-body comment">
             <h5 class="card-title"> {{ post.postedByName }} </h5>
