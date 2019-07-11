@@ -3,7 +3,7 @@ export class UpdateUser{
         public name:string,
         public email:string,
         public old_password:string,
-        public new_password:string,
+        public password:string,
         public courses:Array<string>,
     ){}
 }

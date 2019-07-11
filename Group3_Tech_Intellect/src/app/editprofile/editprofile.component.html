@@ -27,7 +27,7 @@
       <label for="old_Password" class="col-sm-3 col-form-label">Old Password</label>
       <div class="col-sm-9">
           <input type="password" #old_password="ngModel" [class.is-invalid]="old_password.invalid && old_password.touched" class="form-control" id="old_password" title="Password should contian minimum 8 characters"
-          placeholder="Enter your password"   ngModel name="old_password" minlength="8" >
+          placeholder="Enter your password" required  ngModel name="old_password" minlength="8" >
           <div *ngIf="old_password.errors && (old_password.valid || old_password.touched)">
               <small class="text-danger" *ngIf="old_password.errors.required" >Old Password is required</small>
               <small class="text-danger" *ngIf="old_password.errors.minlength">Length of password should be greater than 8</small>
@@ -95,9 +95,18 @@
 
 
   <div class="form-button">
-      <button [disabled]="userForm.form.invalid" [class.btn-danger]="userForm.form.invalid" type="submit" onclick="alert('Successfully Updated the profile.'); window.location.href='editprofile'" class="btn btn-primary">Submit</button>
+      <button [disabled]="userForm.form.invalid" [class.btn-danger]="userForm.form.invalid" type="submit"  class="btn btn-primary">Submit</button>
   </div><div id="msg2" class="text-center"></div>
+
+  <!-- Showing error message or success message  -->
+  <div class="alert alert-danger mt-2" *ngIf="errorFlag">
+    <b> {{ showMessage }} </b>
+  </div>
+  <div class="alert alert-success mt-2" *ngIf="successFlag">
+    <b> {{ showMessage }} </b>
+  </div>
 </form>
+
 <!-- edit profile form completed -->
 
 </div>

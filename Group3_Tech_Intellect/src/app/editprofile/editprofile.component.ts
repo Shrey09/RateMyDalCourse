@@ -12,20 +12,25 @@ import { UpdateUser } from './updateuser';
 })
 export class EditprofileComponent implements OnInit {
 
-  updateUserModel: UpdateUser = new UpdateUser('Chintan Patel', 'chintan.patel@dal.ca', '@Passw0rd', new Array());
+  updateUserModel: UpdateUser = new UpdateUser('Chintan Patel', 'chintan.patel@dal.ca', '@Passw0rd', '@Passw0rd', new Array());
+
+  // flags to check updates in data
+  errorFlag = false;   // it will be set to true if error is present
+  successFlag = false;   // it will be set to true if no error is present
+  showMessage: string = null;   // success or error message will stored here
 
   // All courses which are offered
-  CoursesList:any[] = [];   // all courses which are offered
-  UserData:any[] = [];   // user data
-  UserRegisteredCourses:any[] = [];   // Courses which the user have completed
-  CourseAddChoices:any[] = [];   // Courses which user can add as registered
-  TempArray:any[] = [];   // This array will be used in checking difference in CoursesList and
-                  // UserRegisteredCourses
-  NewCourses:any[] = [];   // This array will be passed to database as new list of registered courses
+  CoursesList: any[] = [];   // all courses which are offered
+  UserData: any[] = [];   // user data
+  UserRegisteredCourses: any[] = [];   // Courses which the user have completed
+  CourseAddChoices: any[] = [];   // Courses which user can add as registered
+  TempArray: any[] = [];   // This array will be used in checking difference in CoursesList and
+  // UserRegisteredCourses
+  NewCourses: any[] = [];   // This array will be passed to database as new list of registered courses
 
   ngOnInit() {
     this.authenticationService.authenticate();
-    
+
     // fetch courses using getcourse service
     this._courseService.fetchCourses().subscribe(
       data => {
@@ -37,19 +42,19 @@ export class EditprofileComponent implements OnInit {
             console.log(data['User']);
             this.UserData = data['User'];
             this.UserRegisteredCourses = data['User']['courses'];
-    
+
             // https://stackoverflow.com/a/1187628
-            for (var i=0; i<this.CoursesList.length; i++){
+            for (var i = 0; i < this.CoursesList.length; i++) {
               this.TempArray[this.CoursesList[i]['Name']] = true;
             }
-    
-            for (var i=0; i<this.UserRegisteredCourses.length; i++){
-              if (this.TempArray[this.UserRegisteredCourses[i]]){
+
+            for (var i = 0; i < this.UserRegisteredCourses.length; i++) {
+              if (this.TempArray[this.UserRegisteredCourses[i]]) {
                 delete this.TempArray[this.UserRegisteredCourses[i]];
               }
             }
 
-            for (var course in this.TempArray){
+            for (var course in this.TempArray) {
               this.CourseAddChoices.push(course);
             }
           },
@@ -67,21 +72,21 @@ export class EditprofileComponent implements OnInit {
 
   constructor(
     public authenticationService: AuthenticationService,
-    private _courseService:GetcourseService,
-    private _userdata:GetuserService,
-    private _updateuserService:UpdateuserService,
+    private _courseService: GetcourseService,
+    private _userdata: GetuserService,
+    private _updateuserService: UpdateuserService,
   ) {
   }
 
-  onSubmit(data){
+  onSubmit(data) {
     var updated_name = data.name;
     var updated_password = data.password;
     var old_password = data.old_password;
     var updated_add_course = data.add_courses;
     var updated_drop_course = data.drop_courses;
-    
+
     // assign name to model
-    if (updated_name == undefined){
+    if (updated_name == undefined) {
       this.updateUserModel.name = this.UserData['name'];
     }
     else {
@@ -89,26 +94,26 @@ export class EditprofileComponent implements OnInit {
     }
 
     // assign password to model
-    if (updated_password == ''){
-      this.updateUserModel.new_password = this.UserData['password'];
+    if (updated_password == '') {
+      this.updateUserModel.password = this.UserData['password'];
     }
     else {
-      this.updateUserModel.new_password = updated_password;
+      this.updateUserModel.password = updated_password;
     }
 
     // add new courses to array
-    if (updated_add_course != null){
-      for (var i=0; i<updated_add_course.length; i++){
+    if (updated_add_course != null) {
+      for (var i = 0; i < updated_add_course.length; i++) {
         this.UserRegisteredCourses.push(updated_add_course[i]);
       }
     }
 
     // remove desired courses from array
     // https://stackoverflow.com/a/5767357
-    if (updated_drop_course != null){
-      for (var i=0; i<updated_drop_course.length; i++){
+    if (updated_drop_course != null) {
+      for (var i = 0; i < updated_drop_course.length; i++) {
         var index = this.UserRegisteredCourses.indexOf(updated_drop_course[i]);
-        if (index > -1){
+        if (index > -1) {
           this.UserRegisteredCourses.splice(index, 1);
         }
       }
@@ -119,17 +124,37 @@ export class EditprofileComponent implements OnInit {
     this.updateUserModel.email = this.UserData['email'];
     this.updateUserModel.old_password = old_password;
     console.log(this.UserRegisteredCourses);
-    console.log("Model: ",this.updateUserModel);
+    console.log("Model: ", this.updateUserModel);
 
     this._updateuserService.updateUserData(this.updateUserModel).subscribe(
       data => {
-        console.log("success", data);
+        console.log("Status: ", data["status"]);
+        if (data['status'] == "MODIFIED"){
+          this.errorFlag = false;
+          this.successFlag = true;
+          this.showMessage = "Profile successfully updated.";
+        } 
+        else if (data['status'] == 'NOT_MODIFIED'){
+          this.errorFlag = true;
+          this.successFlag = false;
+          this.showMessage = "Old password not matched.";
+          // (document.getElementById('add_courses') as HTMLInputElement).value = data.add_courses;
+          // (document.getElementById('drop_courses') as HTMLInputElement).value = data.drop_courses;
+        } 
+        else {
+          this.errorFlag = true;
+          this.successFlag = false;
+          this.showMessage = "Something went wrong while update. Please try again.";
+        }
+        // reset the fields
+        (document.getElementById('old_password') as HTMLInputElement).value = "";
+        (document.getElementById('password') as HTMLInputElement).value = "";
+        (document.getElementById('cpassword') as HTMLInputElement).value = "";
       },
       error => {
         console.log("Error: ", error);
       }
-      
-    )
+    );
   }
 
 }

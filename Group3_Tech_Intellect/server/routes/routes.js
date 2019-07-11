@@ -19,7 +19,7 @@ router.get('/fetchUserData', function(req, res){
                         res.status(501).send({"Error":"error in finding the user"});
                     }
                     else{
-                        console.log("User data: ", result);
+                        // console.log("User data: ", result);
                         res.send({"User": result});
                     }
                 }
@@ -52,23 +52,39 @@ router.get('/fetchCourses', function(req, res){
 
 router.post('/updateUserData', function(req, res){
     data = req.body;
+    updated_model = {"name": data.name, "email": data.email,
+                "password": data.password, "courses": data.courses};
+    console.log(updated_model);
+    console.log(data);
     MongoClient.connect(url, function(err, client){
         if (err){
             res.status(501).send({"Error":"error in connecting to database"});
         }
         else {
             client.db("RateMyDalCourse").collection('User').updateOne(
-                { email: data.email},
-                { $set: data },
+                { email: data.email, password: data.old_password},
+                { $set: updated_model },
                 function(err, result){
                     if (err) {
                         res.status(501).send({"Error":"error in updating profile"});
                     }
                     else {
-                        res.send({data: result});
+                        if (result.modifiedCount == 0){
+                            console.log("Not Modified");
+                            res.send({ "status": "NOT_MODIFIED"});
+                        }
+                        else if (result.modifiedCount == 1) {
+                            console.log("Modified");
+                            res.send({ "status": "MODIFIED"});
+                        }
+                        else {
+                            console.log("SOMETHING_WRONG: ", result);
+                            res.send({ "status": "SOMETHING_WRONG"});
+                        }
                     }
                 }
             );
+            client.close();
         }
     })
 })
