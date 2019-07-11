@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from '../authentication/authentication.service';
 import { GetcourseService } from '../getcourse.service';
 import { GetuserService } from '../getuser.service';
+import { UpdateuserService } from '../updateuser.service';
+import { UpdateUser } from './updateuser';
 
 @Component({
   selector: 'app-editprofile',
@@ -9,6 +11,8 @@ import { GetuserService } from '../getuser.service';
   styleUrls: ['./editprofile.component.css']
 })
 export class EditprofileComponent implements OnInit {
+
+  updateUserModel: UpdateUser = new UpdateUser('Chintan Patel', 'chintan.patel@dal.ca', '@Passw0rd', new Array());
 
   // All courses which are offered
   CoursesList:any[] = [];   // all courses which are offered
@@ -74,6 +78,22 @@ export class EditprofileComponent implements OnInit {
     var updated_add_course = data.add_courses;
     var updated_drop_course = data.drop_courses;
     
+    // assign name to model
+    if (updated_name == undefined){
+      this.updateUserModel.name = this.UserData['name'];
+    }
+    else {
+      this.updateUserModel.name = updated_name;
+    }
+
+    // assign password to model
+    if (updated_password == ''){
+      this.updateUserModel.password = this.UserData['password'];
+    }
+    else {
+      this.updateUserModel.password = updated_password;
+    }
+
     // add new courses to array
     if (updated_add_course != null){
       for (var i=0; i<updated_add_course.length; i++){
@@ -91,8 +111,12 @@ export class EditprofileComponent implements OnInit {
         }
       }
     }
-    
+
+    // assignm new course list to model
+    this.updateUserModel.courses = this.UserRegisteredCourses;
+    this.updateUserModel.email = this.UserData['email'];
     console.log(this.UserRegisteredCourses);
+    console.log("Model: ",this.updateUserModel);
   }
 
 }
