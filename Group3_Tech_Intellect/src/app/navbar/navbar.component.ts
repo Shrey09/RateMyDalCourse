@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { AuthenticationService } from '../authentication/authentication.service';
+import { Router, ActivatedRoute } from '@angular/router';
+
 
 @Component({
   selector: 'app-navbar',
@@ -11,7 +13,30 @@ import { AuthenticationService } from '../authentication/authentication.service'
 
 export class NavbarComponent {
   constructor(
-    public authenticationService: AuthenticationService,
+    public authenticationService: AuthenticationService,private router: Router
   ) {
   }
+
+  onSubmit(searchString: any) {
+   
+    if(!searchString)
+    {
+      location.reload();
+      this.router.navigateByUrl('dashboard');
+    }
+    else if(searchString == " ")
+    { 
+      console.log("Here herer");
+      location.reload();
+      this.router.navigateByUrl('dashboard');
+    }
+    else
+    {
+      this.router.navigateByUrl('dashboard?s=' + searchString);
+    }
+    
+  }
+  
+
+
 }

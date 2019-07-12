@@ -15,14 +15,14 @@ router.get('/getCourses',function(req,res){
         }
         else
         {
-            console.log("Retrieve courses displayed here");
+            //console.log("Retrieve courses displayed here");
 
             var cursor= client.db("RateMyDalCourse").collection('Courses').find();
             cursor.forEach(function(course) { 
                 courses.push(course);
             },function(){
                 // send the course list as the response
-                console.log("All Other Courses array",courses);
+               // console.log("All Other Courses array",courses);
                 res.send({"Courses":courses});  
             });
 
@@ -43,21 +43,23 @@ router.get('/getCourses/:username',function(req,res){
         }
         else
         {
-            console.log("Retrieve my courses displayed here");
-            console.log("Username is" + username);
+           // console.log("Retrieve my courses displayed here");
+            //console.log("Username is" + username);
             
             var cursor= client.db("RateMyDalCourse").collection('User').find({email: username.substring(1)});
             cursor.forEach(function(course) { 
                 myCourses.push(course);
             },function(){
                 // send the course list as the response
-                console.log("All My Courses array",myCourses);
+               // console.log("All My Courses array",myCourses);
                 res.send({"MyCourses":myCourses});  
             });
 
         }
     })
 })
+
+
 
             router.get('/displayrating/:subject',function(req,res){
 
@@ -73,16 +75,17 @@ router.get('/getCourses/:username',function(req,res){
                     else
                     {
 
-                        console.log("Retrieve my courses displayed here");
-                         console.log("Subjectname is " + subject);
+                       // console.log("Retrieve my courses displayed here");
+                        // console.log("Subjectname is " + subject);
             
             var cursor= client.db("RateMyDalCourse").collection('Rate').find({Name: subject});
             cursor.forEach(function(rate) { 
-                console.log('hppppp',rate);
+                
                 ratecourses.push(rate);
             },function(){
                 // send the course list as the response
-                console.log("All the courses for ratings",ratecourses);
+                //console.log("All the courses for ratings",ratecourses);
+                
                 res.send({"Ratecourses":ratecourses});  
             });
 

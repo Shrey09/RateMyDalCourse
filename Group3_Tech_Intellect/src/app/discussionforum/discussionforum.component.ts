@@ -11,7 +11,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class DiscussionforumComponent implements OnInit {
   public id: string;
-  public finalrate = 0;
+  public finalrate;
   constructor(
     private route: ActivatedRoute,public authenticationService: AuthenticationService, public ratingService : RatingService,
   ) {
@@ -39,7 +39,7 @@ export class DiscussionforumComponent implements OnInit {
           
         }
         console.log(calculate);
-        this.finalrate= calculate/listsize;
+        this.finalrate= (calculate/listsize).toFixed(1);
         console.log(this.finalrate);
       },
       error=>{
