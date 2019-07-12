@@ -6,7 +6,7 @@ import {HttpClient} from '@angular/common/http';
 })
 export class CourseService {
 
-  _url="http://localhost:3000/getCourses";
+  _url="http://129.173.22.35:19999/getCourses";
   constructor(private _http:HttpClient) { }
 
   getCourse(){

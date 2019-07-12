@@ -8,8 +8,8 @@ import {User} from './registration/user';
 // create service for user registration
 export class RegisterService {
 
-  // sending request to server on port 3000
-  _url="http://localhost:3000/register_user";
+  // sending request to server on port 19999
+  _url="http://129.173.22.35:19999/register_user";
   constructor(private _http:HttpClient) {
     
    }
