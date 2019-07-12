@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {User} from './user';
 import {RegisterService} from '../register.service';
 import {CourseService} from '../course.service';
-
+declare var $: any;
 
 @Component({
   selector: 'app-registration',
@@ -42,12 +42,15 @@ export class RegistrationComponent implements OnInit {
         console.log('Some error in connecting to server', error);
       }
     );
+    setTimeout(function () {
+      $('.selectpicker').val('default').selectpicker('refresh');
+    }, 1000)  
   }
 
-  // method for sending form data to the server
+  // method for sending user data to the server
   onSubmit(form){
 
-    // encrypting password using ceasar cipher (reference:- http://codeniro.com/caesars-cipher-algorithm-javascript/)
+    // encrypting password using ceasar cipher (reference:- http://codeniro.com/caesars-cipher-algorithm-javascript/ )
     this.plainText=form.password;
     for (var i = 0; i < this.plainText.length; i++) 
     {       
@@ -100,7 +103,9 @@ export class RegistrationComponent implements OnInit {
         this.showMessage=false;
         this.message="Improper network connection. Please try after sometime";
       });
-    
+      
   }
+  
+
 
 }

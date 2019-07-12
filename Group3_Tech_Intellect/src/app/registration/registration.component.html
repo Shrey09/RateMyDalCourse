@@ -49,11 +49,11 @@
                       </div>
               </div>
               
-              <!-- dropdown list showning available courses in the CS department -->
+              <!-- dropdown list showing available courses in the CS department -->
               <div class="form-group">
                 <label class="form-label">Courses</label>
                   <div class=" ">
-                      <select class="browser-default custom-select form-control" id="courses" multiple (ngModel)="courses" name="courses" #courses="ngModel" required>
+                      <select class="selectpicker form-control" id="courses" multiple data-live-search="true" (ngModel)="courses" name="courses" #courses="ngModel" required>
                           <option *ngFor="let course of CoursesList" [value]="course.Name">{{course.Name}}</option>
                       </select>
                   </div>
