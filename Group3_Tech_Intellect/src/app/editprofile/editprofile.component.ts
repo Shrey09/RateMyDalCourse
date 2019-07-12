@@ -4,6 +4,8 @@ import { GetcourseService } from '../getcourse.service';
 import { GetuserService } from '../getuser.service';
 import { UpdateuserService } from '../updateuser.service';
 import { UpdateUser } from './updateuser';
+import { NgForm } from '@angular/forms';
+declare var $: any;
 
 @Component({
   selector: 'app-editprofile',
@@ -55,6 +57,7 @@ export class EditprofileComponent implements OnInit {
             for (var course in this.TempArray) {
               this.CourseAddChoices.push(course);
             }
+            // console.log(this.CourseAddChoices);
           },
           error => {
             this.errorFlag = true;
@@ -71,7 +74,9 @@ export class EditprofileComponent implements OnInit {
         console.log("CourseFetchError: ", error);
       },
     );
-
+    setTimeout(function () {
+      $('.selectpicker').val('default').selectpicker('refresh');
+    }, 1000)
   }
 
   constructor(
@@ -82,7 +87,8 @@ export class EditprofileComponent implements OnInit {
   ) {
   }
 
-  onSubmit(data) {
+  onSubmit(formData: NgForm, data) {
+    console.log(data);
     var updated_name = data.name;
     var updated_password = data.password;
     var old_password = data.old_password;
@@ -92,6 +98,9 @@ export class EditprofileComponent implements OnInit {
     var copy_CourseAddChoices = this.CourseAddChoices.slice();
     var encrypt_old_password = "";
     var encrypt_updated_password = "";
+
+    // console.log("Updated add course", updated_add_course);
+    // console.log("Updated drop course", updated_drop_course);
 
     // http://codeniro.com/caesars-cipher-algorithm-javascript/
     for (var i = 0; i < old_password.length; i++) {
@@ -108,18 +117,20 @@ export class EditprofileComponent implements OnInit {
       }
     }
 
-    // http://codeniro.com/caesars-cipher-algorithm-javascript/
-    for (var i = 0; i < updated_password.length; i++) {
-      var c = updated_password.charCodeAt(i);
+    if (updated_password != null){
+      // http://codeniro.com/caesars-cipher-algorithm-javascript/
+      for (var i = 0; i < updated_password.length; i++) {
+        var c = updated_password.charCodeAt(i);
 
-      if (c >= 65 && c <= 90) {
-        encrypt_updated_password += String.fromCharCode((c - 65 + 13) % 26 + 65);
-      }
-      else if (c >= 97 && c <= 122) {
-        encrypt_updated_password += String.fromCharCode((c - 97 + 13) % 26 + 97);
-      }
-      else {
-        encrypt_updated_password += updated_password.charAt(i);
+        if (c >= 65 && c <= 90) {
+          encrypt_updated_password += String.fromCharCode((c - 65 + 13) % 26 + 65);
+        }
+        else if (c >= 97 && c <= 122) {
+          encrypt_updated_password += String.fromCharCode((c - 97 + 13) % 26 + 97);
+        }
+        else {
+          encrypt_updated_password += updated_password.charAt(i);
+        }
       }
     }
 
@@ -143,6 +154,10 @@ export class EditprofileComponent implements OnInit {
     if (updated_add_course != null) {
       for (var i = 0; i < updated_add_course.length; i++) {
         this.UserRegisteredCourses.push(updated_add_course[i]);
+        var index = this.CourseAddChoices.indexOf(updated_add_course[i]);
+        if (index > -1) {
+          this.CourseAddChoices.splice(index, 1);
+        }
       }
     }
 
@@ -165,7 +180,7 @@ export class EditprofileComponent implements OnInit {
 
     this._updateuserService.updateUserData(this.updateUserModel).subscribe(
       data => {
-        console.log("Status: ", data["status"]);
+        // console.log("Status: ", data["status"]);
         if (data['status'] == "MODIFIED"){
           this.errorFlag = false;
           this.successFlag = true;
@@ -185,22 +200,42 @@ export class EditprofileComponent implements OnInit {
           this.UserRegisteredCourses = copy_UserRegisteredCourses;
           this.CourseAddChoices = copy_CourseAddChoices;
         }
-        // reset the fields
+
+        formData.reset();
         (document.getElementById('old_password') as HTMLInputElement).value = "";
         (document.getElementById('password') as HTMLInputElement).value = "";
         (document.getElementById('cpassword') as HTMLInputElement).value = "";
+        if (data['status'] == "MODIFIED"){
+          (document.getElementById('name') as HTMLInputElement).value = this.updateUserModel.name;
+        }
+        else {
+          (document.getElementById('name') as HTMLInputElement).value = this.UserData['name'];
+        }
+        
+        
+        // https://stackoverflow.com/a/55257919
+        setTimeout(function () {
+          $('.selectpicker').selectpicker('refresh');
+        }, 1000);
+        
       },
       error => {
         this.errorFlag = true;
         this.successFlag = false;
         this.showMessage = "We are facing server problem. Try again later.";
         // reset the fields
+        formData.reset();
         (document.getElementById('old_password') as HTMLInputElement).value = "";
         (document.getElementById('password') as HTMLInputElement).value = "";
         (document.getElementById('cpassword') as HTMLInputElement).value = "";
+        (document.getElementById('name') as HTMLInputElement).value = this.UserData['name'];
         this.UserRegisteredCourses = copy_UserRegisteredCourses;
         this.CourseAddChoices = copy_CourseAddChoices;
         console.log("ServerDownError: ", error);
+        // https://stackoverflow.com/a/55257919
+        setTimeout(function () {
+          $('.selectpicker').selectpicker('refresh');
+        }, 1000);
       }
     );
   }

@@ -4,7 +4,7 @@
 
             <!-- edit profile form -->
             <form class="form-container container" #userForm="ngForm" action="coursePage.html" method="POST" novalidate
-                (ngSubmit)="onSubmit(userForm.value)">
+                (ngSubmit)="onSubmit(userForm, userForm.value)">
                 <h1 class="text-center form-header">Edit Profile</h1>
 
                 <div class="form-group row">
@@ -88,7 +88,7 @@
                             <div class="addPrepend input-group-text bg-success">
                                 Add
                             </div>
-                            <select class=" " multiple data-live-search="true" id="add_courses" name="add_courses"
+                            <select class="selectpicker" multiple data-live-search="true" id="add_courses" name="add_courses"
                                 (ngModel)="add_courses" #add_course="ngModel">
                                 <option *ngFor="let course of CourseAddChoices" [value]="course">{{course}}</option>
                             </select>
@@ -100,7 +100,7 @@
                             <div class="dropPrepend input-group-text bg-danger">
                                 Drop
                             </div>
-                            <select class=" " multiple data-live-search="true" id="drop_courses" name="drop_courses"
+                            <select class="selectpicker" multiple data-live-search="true" id="drop_courses" name="drop_courses"
                                 (ngModel)="drop_courses" #drop_courses="ngModel">
                                 <option *ngFor="let dropcourse of UserRegisteredCourses" [value]="dropcourse">
                                     {{dropcourse}}</option>
