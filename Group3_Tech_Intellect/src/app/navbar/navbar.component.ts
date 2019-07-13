@@ -17,14 +17,14 @@ export class NavbarComponent {
   ) {
   }
 
-  onSubmit(searchString: any) {
+  onSubmit(searchString: string) {
    
     if(!searchString)
     {
       location.reload();
       this.router.navigateByUrl('dashboard');
     }
-    else if(searchString == " ")
+    else if(searchString.trim() == "")
     { 
       console.log("Here herer");
       location.reload();
