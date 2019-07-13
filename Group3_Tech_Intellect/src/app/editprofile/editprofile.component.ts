@@ -48,7 +48,7 @@ export class EditprofileComponent implements OnInit {
             // https://stackoverflow.com/a/1187628
             // This sourse is used to check difference in arrays.
             for (var i = 0; i < this.CoursesList.length; i++) {
-              this.TempArray[this.CoursesList[i]['Name']] = true;
+              this.TempArray[this.CoursesList[i]['Code'] + ' ' + this.CoursesList[i]['Name']] = true;
             }
 
             for (var i = 0; i < this.UserRegisteredCourses.length; i++) {
