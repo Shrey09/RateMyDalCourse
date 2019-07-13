@@ -1,3 +1,5 @@
+// Author: Chintan Patel
+// Banner ID: B00826089
 import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from '../authentication/authentication.service';
 import { GetcourseService } from '../getcourse.service';
@@ -44,6 +46,7 @@ export class EditprofileComponent implements OnInit {
             this.UserRegisteredCourses = data['User']['courses'];
 
             // https://stackoverflow.com/a/1187628
+            // This sourse is used to check difference in arrays.
             for (var i = 0; i < this.CoursesList.length; i++) {
               this.TempArray[this.CoursesList[i]['Name']] = true;
             }
@@ -63,7 +66,7 @@ export class EditprofileComponent implements OnInit {
             this.errorFlag = true;
             this.successFlag = false;
             this.showMessage = "We are facing server problem. Try again later.";
-            console.log("UserProfileFetchError: ", error);    
+            console.log("UserProfileFetchError: ", error);    // log the error
           }
         );
       },
@@ -71,11 +74,11 @@ export class EditprofileComponent implements OnInit {
         this.errorFlag = true;
         this.successFlag = false;
         this.showMessage = "We are facing server problem. Try again later.";
-        console.log("CourseFetchError: ", error);
+        console.log("CourseFetchError: ", error);   // log the error
       },
     );
     setTimeout(function () {
-      $('.selectpicker').val('default').selectpicker('refresh');
+      $('.selectpicker').val('default').selectpicker('refresh');   // refresh the selectpicker with fetched courses
     }, 1000)
   }
 
@@ -88,21 +91,23 @@ export class EditprofileComponent implements OnInit {
   }
 
   onSubmit(formData: NgForm, data) {
-    console.log(data);
-    var updated_name = data.name;
-    var updated_password = data.password;
-    var old_password = data.old_password;
-    var updated_add_course = data.add_courses;
-    var updated_drop_course = data.drop_courses;
-    var copy_UserRegisteredCourses = this.UserRegisteredCourses.slice();
-    var copy_CourseAddChoices = this.CourseAddChoices.slice();
-    var encrypt_old_password = "";
-    var encrypt_updated_password = "";
+    // console.log(data);
+    var updated_name = data.name;   // updated name 
+    var updated_password = data.password;   // updated new password
+    var old_password = data.old_password;   // updated old password 
+    var updated_add_course = data.add_courses;   // updated list of add courses
+    var updated_drop_course = data.drop_courses;   // updated list of drop courses
+    var copy_UserRegisteredCourses = this.UserRegisteredCourses.slice();   // make copy of previously registered courses
+    var copy_CourseAddChoices = this.CourseAddChoices.slice();   // make copy of previously added courses
+    var encrypt_old_password = "";   // to store encrypted old password
+    var encrypt_updated_password = "";   // to store encrypted new password
 
     // console.log("Updated add course", updated_add_course);
     // console.log("Updated drop course", updated_drop_course);
 
     // http://codeniro.com/caesars-cipher-algorithm-javascript/
+    // this source is used to enrypt old password.
+    // Some changes like function removal, shift key changes are made from this source.
     for (var i = 0; i < old_password.length; i++) {
       var c = old_password.charCodeAt(i);
 
@@ -119,6 +124,8 @@ export class EditprofileComponent implements OnInit {
 
     if (updated_password != null){
       // http://codeniro.com/caesars-cipher-algorithm-javascript/
+      // this source is used to enrypt old password.
+      // Some changes like function removal, shift key changes are made from this source.
       for (var i = 0; i < updated_password.length; i++) {
         var c = updated_password.charCodeAt(i);
 
@@ -153,10 +160,10 @@ export class EditprofileComponent implements OnInit {
     // add new courses to array
     if (updated_add_course != null) {
       for (var i = 0; i < updated_add_course.length; i++) {
-        this.UserRegisteredCourses.push(updated_add_course[i]);
+        this.UserRegisteredCourses.push(updated_add_course[i]);   // push new courses to user registered cources
         var index = this.CourseAddChoices.indexOf(updated_add_course[i]);
         if (index > -1) {
-          this.CourseAddChoices.splice(index, 1);
+          this.CourseAddChoices.splice(index, 1);   // remove courses from previous array.
         }
       }
     }
@@ -165,10 +172,10 @@ export class EditprofileComponent implements OnInit {
     // https://stackoverflow.com/a/5767357
     if (updated_drop_course != null) {
       for (var i = 0; i < updated_drop_course.length; i++) {
-        this.CourseAddChoices.push(updated_drop_course[i]);
+        this.CourseAddChoices.push(updated_drop_course[i]);   // push dropped courses to available courses to add
         var index = this.UserRegisteredCourses.indexOf(updated_drop_course[i]);
         if (index > -1) {
-          this.UserRegisteredCourses.splice(index, 1);
+          this.UserRegisteredCourses.splice(index, 1);   // remove courses from previous array
         }
       }
     }
@@ -181,6 +188,8 @@ export class EditprofileComponent implements OnInit {
     this._updateuserService.updateUserData(this.updateUserModel).subscribe(
       data => {
         // console.log("Status: ", data["status"]);
+
+        // make changes according to status returned from server
         if (data['status'] == "MODIFIED"){
           this.errorFlag = false;
           this.successFlag = true;
@@ -215,7 +224,7 @@ export class EditprofileComponent implements OnInit {
         
         // https://stackoverflow.com/a/55257919
         setTimeout(function () {
-          $('.selectpicker').selectpicker('refresh');
+          $('.selectpicker').selectpicker('refresh');   // refresh selectpicker
         }, 1000);
         
       },
@@ -231,10 +240,10 @@ export class EditprofileComponent implements OnInit {
         (document.getElementById('name') as HTMLInputElement).value = this.UserData['name'];
         this.UserRegisteredCourses = copy_UserRegisteredCourses;
         this.CourseAddChoices = copy_CourseAddChoices;
-        console.log("ServerDownError: ", error);
+        console.log("ServerDownError: ", error);   // log the error
         // https://stackoverflow.com/a/55257919
         setTimeout(function () {
-          $('.selectpicker').selectpicker('refresh');
+          $('.selectpicker').selectpicker('refresh');   // refresh the selectpicker
         }, 1000);
       }
     );
