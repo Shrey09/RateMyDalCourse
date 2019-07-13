@@ -14,7 +14,7 @@ export class CreatePostService {
   // Method for creating the post on mongodb.
   // This method will processs a POST request on specified URL.
   createPost(post: Post) {
-    const url = 'http://129.173.22.35:24125/createPost';
+    const url = 'http://localhost:3000/createPost';
     return this.httpClient.post<any>(url, post);
   }
 }

@@ -28,10 +28,10 @@
         <li class="nav-item mr-2" *ngIf="(authenticationService.isUserAuthenticated$ | async) === true">
             <a class="nav-link" href='dashboard'>Dashboard</a>
           </li>
-        <form class="form-inline py-lg-0 py-pd-2 py-sm-2 py-xs-2 ml-auto mr-2" id="search-form" *ngIf="(authenticationService.isUserAuthenticated$ | async) === true">
-            <input class="form-control mr-sm-2" type="search" placeholder="Search Courses" aria-label="Search">
-           <a class="btn btn-outline-primary nav-link-btn mt-2 mt-sm-0" href="dashboard"> Search </a>
-      </form>
+        <form class="form-inline py-lg-0 py-pd-2 py-sm-2 py-xs-2 ml-auto mr-2" id="search-form" *ngIf="(authenticationService.isUserAuthenticated$ | async) === true" method="POST" novalidate (ngSubmit)="onSubmit(searchcourse.value)">
+            <input class="form-control mr-sm-2" type="text" placeholder="Search Courses" aria-label="Search" #searchcourse>
+           <button class="btn btn-outline-primary nav-link-btn mt-2 mt-sm-0" type="submit"> Search </button>
+       </form>
 
       <ul id="profile-drop" class="navbar-nav ml-auto" *ngIf="(authenticationService.isUserAuthenticated$ | async) === true">
         <li class="nav-item dropdown mr-2">

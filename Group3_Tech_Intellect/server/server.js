@@ -4,9 +4,10 @@
 const express=require('express');
 const bodyParser=require('body-parser');
 const cors=require('cors');
-const port=24125;
+const port=3000;
 
 // Initializing express and telling the app to user bodyParser
+
 const app=express();
 app.use(bodyParser.json());
 app.use(cors());
@@ -19,3 +20,4 @@ app.use('/',routes);
 app.listen(port,function(){
     console.log('Server : Started running on port: ' + port);
 })
+

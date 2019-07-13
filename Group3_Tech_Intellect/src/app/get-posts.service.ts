@@ -13,7 +13,7 @@ export class GetPostsService {
   // Method for fetching the posts from mongodb.
   // This method will processs a GET request on specified URL with course code.
   getPosts(courseCode: string) {
-    const url = 'http://129.173.22.35:24125/getPosts/' + courseCode;
+    const url = 'http://localhost:3000/getPosts/' + courseCode;
     return this.http.get<any>(url);
   }
 }

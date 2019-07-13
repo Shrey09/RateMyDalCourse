@@ -16,7 +16,8 @@ import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
 import { UrlSerializer } from '@angular/router';
 import { LowerCaseUrlSerializer } from './lowerCaseUrlSerializer';
 import { AuthenticationService } from './authentication/authentication.service';
-import { HttpClientModule } from '@angular/common/http'
+import { HttpClientModule } from '@angular/common/http';
+
 // import {LoginValidatorDirective} from './login/login-validator.directive';
 // import {EmailValidatorDirective} from './login/login-email-validator.directive';
 
