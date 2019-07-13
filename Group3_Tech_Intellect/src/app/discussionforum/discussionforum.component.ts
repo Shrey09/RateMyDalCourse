@@ -17,32 +17,45 @@ export class DiscussionforumComponent implements OnInit {
   ) {
   }
 
+  // list to store overall rating and individual rating
   RatingList : any[];
   rate : any[];
   ngOnInit() {
     this.authenticationService.authenticate();
+    // fetch the course code which is passed from the service
     this.id = this.route.snapshot.paramMap.get('id');
 
+    // subscribe the ratingservice by passing the courseid
     this.ratingService.displayrating(this.id).subscribe(
-      data =>{
-        console.log("Ratings displayed ");
-        console.log(data["Ratecourses"]);
+      data =>{        
         this.RatingList = data["Ratecourses"];
-        console.log(this.RatingList.length)
-
-        var i;
+        
+        // Logic to Calculate Overall rating
+        
         var calculate = 0;
         var listsize =this.RatingList.length;
-        for(i = 0; i < this.RatingList.length; i++){
-          console.log(this.RatingList[i]['Rate']);
+        for(var i = 0; i < this.RatingList.length; i++){
+          
           calculate= calculate + this.RatingList[i]['Rate'];
           
+          
+        } 
+
+        // Dispaly the message when there is no ratings present
+       /* if(isNaN(this.finalrate))
+        {
+          this.finalrate='No Ratings Available';
+          console.log("deep");
         }
-        console.log(calculate);
-        this.finalrate= (calculate/listsize).toFixed(1);
-        console.log(this.finalrate);
+        // Round off overall rating to one decimal point 
+        else{*/
+          this.finalrate = (calculate/listsize).toFixed(1);   
+          console.log("Meet"); 
+       // }     
+           
       },
       error=>{
+        // Error Message when connection with server
         console.log("error in connecting to the server service",error)
       });
   }

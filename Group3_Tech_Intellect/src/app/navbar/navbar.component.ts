@@ -17,18 +17,28 @@ export class NavbarComponent {
   ) {
   }
 
+  // Operations perform when user clicks on the search button
   onSubmit(searchString: string) {
    
+    // Entire dashboard is displayed when user doesn't provide any input on search button
     if(!searchString)
     {
       location.reload();
       this.router.navigateByUrl('dashboard');
     }
+
+    // Entire dashboard is displayed when user provide multiple space on search button
     else if(searchString.trim() == "")
     { 
-      console.log("Here herer");
+      
       location.reload();
       this.router.navigateByUrl('dashboard');
+    }
+
+    // Alert is displayed when user enters special character
+    else if(/[^a-zA-Z0-9\-\/]/.test(searchString))
+    {
+      alert('Input should be only alphanumeric');
     }
     else
     {

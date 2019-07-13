@@ -31,9 +31,8 @@ export class DashboardComponent implements OnInit {
   myCoursesList: any[];
   searchedCourses: any[];
   searchedMyCourses: any[];
-
-  hpCourseSearchArray: any[];
-  hpMyCourseSearchArray: any[];
+  copyCourseSearchArray: any[];
+  copyMyCourseSearchArray: any[];
 
   //first method which execute while page load
   ngOnInit() {
@@ -47,7 +46,7 @@ export class DashboardComponent implements OnInit {
         data => {
           // List of courses which user has not completed
           this.coursesList = data["Courses"];
-          this.hpCourseSearchArray = Object.assign({}, this.coursesList);
+          this.copyCourseSearchArray = Object.assign({}, this.coursesList);
         },
         error => {
           console.log("error in connecting to the server service", error)
@@ -58,7 +57,7 @@ export class DashboardComponent implements OnInit {
         data => {
           // List of the courses completed by the user.       
           this.myCoursesList = data["MyCourses"][0]["courses"];
-          this.hpMyCourseSearchArray = Object.assign({}, this.myCoursesList);
+          this.copyMyCourseSearchArray = Object.assign({}, this.myCoursesList);
         },
         error => {
 
@@ -71,16 +70,7 @@ export class DashboardComponent implements OnInit {
       this.searchedCourses = []
       this.searchedMyCourses = []
 
-      console.log("Parameter is : " , params.s);
-      console.log(params.s);
-
-      console.log('1');
-      console.log(params.s == '');
-      console.log('2');
-      console.log(params.s == null);
-      console.log('3');
-      console.log(params.s == undefined);
-      
+        
 
       if (params.s != '') {
 
@@ -88,11 +78,11 @@ export class DashboardComponent implements OnInit {
         var queryString = params.s;
 
           // Logic to check if the search course is present in the course list.
-          for (var i in this.hpCourseSearchArray) {
+          for (var i in this.copyCourseSearchArray) {
 
-            if (this.hpCourseSearchArray[i].Name.toLowerCase().trim().includes(queryString.toLowerCase().trim()) ||
-              this.hpCourseSearchArray[i].Code.toLowerCase().trim().includes(queryString.toLowerCase().trim())) {
-              this.searchedCourses.push(this.hpCourseSearchArray[i])
+            if (this.copyCourseSearchArray[i].Name.toLowerCase().trim().includes(queryString.toLowerCase().trim()) ||
+              this.copyCourseSearchArray[i].Code.toLowerCase().trim().includes(queryString.toLowerCase().trim())) {
+              this.searchedCourses.push(this.copyCourseSearchArray[i])
             }
           }
 
@@ -100,9 +90,9 @@ export class DashboardComponent implements OnInit {
 
 
           // Logic to check if search string is present in the user's completed course.
-          for (var i in this.hpMyCourseSearchArray) {
-            if (this.hpMyCourseSearchArray[i].toLowerCase().trim().includes(queryString)) {
-              this.searchedMyCourses.push(this.hpMyCourseSearchArray[i])
+          for (var i in this.copyMyCourseSearchArray) {
+            if (this.copyMyCourseSearchArray[i].toLowerCase().trim().includes(queryString)) {
+              this.searchedMyCourses.push(this.copyMyCourseSearchArray[i])
             }
           }
 
