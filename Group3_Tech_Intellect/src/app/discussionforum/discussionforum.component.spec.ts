@@ -1,3 +1,6 @@
+// Author: Harsh Pamnani - B00802614
+
+// File created by angular framework while creating the component
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { DiscussionforumComponent } from './discussionforum.component';
@@ -8,9 +11,9 @@ describe('DiscussionforumComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DiscussionforumComponent ]
+      declarations: [DiscussionforumComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

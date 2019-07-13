@@ -1,3 +1,6 @@
+ /* Author: Harsh Pamnani - B00802614 */
+
+/* This file is having all the styles which needs to be applied on discussion forum page. */
 * {
 	font-family: 'Raleway', sans-serif;
 }
@@ -8,16 +11,16 @@ body {
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;
-	background-size: cover;	
+	background-size: cover;
 }
 
-.navbar { 
+.navbar {
 	background: #192a56;
 	font-size: 1.25rem;
 }
 
-.nav-link , .navbar-brand { 
-	color: #ffffff; 
+.nav-link , .navbar-brand {
+	color: #ffffff;
 	cursor: pointer;
 }
 
@@ -25,15 +28,15 @@ body {
 	color: #E0E0E0 !important;
 }
 
-.nav-link { 
+.nav-link {
 	color: #E0E0E0 !important;
 	margin-right: 1em !important;
 }
 
-.nav-link:hover { 
-	background: #dff9fb; 
-	color: #000000 !important; 
-	border-color: #dff9fb; 
+.nav-link:hover {
+	background: #dff9fb;
+	color: #000000 !important;
+	border-color: #dff9fb;
 	padding-left: 1rem;
 }
 
@@ -41,13 +44,13 @@ body {
 	color: #E0E0E0;
 	padding-left: 1rem;
 	border: 2px solid #E0E0E0;
-	border-radius: 25px;	
+	border-radius: 25px;
 }
 
 .nav-link-btn:hover {
-	background: #dff9fb; 
+	background: #dff9fb;
 	color: #000000;
-	border-color: #dff9fb; 
+	border-color: #dff9fb;
 	padding-left: 1rem;
 	border-radius: 25px;
 }
