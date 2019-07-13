@@ -1,3 +1,6 @@
+// Author: Shrey Amin
+// Banner ID: B00822245
+
 import { Component, OnInit } from '@angular/core';
 import {User} from './user';
 import {RegisterService} from '../register.service';
@@ -47,7 +50,7 @@ export class RegistrationComponent implements OnInit {
     }, 1000)  
   }
 
-  // method for sending user data to the server
+  // method for sending user data to the server when form is submitted
   onSubmit(form){
 
     // encrypting password using ceasar cipher (reference:- http://codeniro.com/caesars-cipher-algorithm-javascript/ )

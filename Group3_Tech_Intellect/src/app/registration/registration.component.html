@@ -1,3 +1,6 @@
+<!-- Author: Shrey Amin
+Banner ID: B00822245 -->
+
 <!-- Registration Form with different fields-->
   <div class="container-fluid">
       <div class="row justify-content-center">
@@ -54,7 +57,7 @@
                 <label class="form-label">Courses</label>
                   <div class=" ">
                       <select class="selectpicker form-control" id="courses" multiple data-live-search="true" (ngModel)="courses" name="courses" #courses="ngModel" required>
-                          <option *ngFor="let course of CoursesList" [value]="course.Name">{{course.Name}}</option>
+                          <option *ngFor="let course of CoursesList" [value]="course.Code">{{course.Code}} {{course.Name}}</option>
                       </select>
                   </div>
               </div>

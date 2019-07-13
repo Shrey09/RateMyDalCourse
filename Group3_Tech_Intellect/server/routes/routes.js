@@ -1,3 +1,6 @@
+// Author: Shrey Amin
+// Banner ID: B00822245
+
 var express = require('express');
 var router = express.Router();
 // MongoClient to establish connection to mongodb database cluster on mongo atlas

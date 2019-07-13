@@ -1,3 +1,7 @@
+// Author: Shrey Amin
+// Banner ID: B00822245
+
+// service for registration
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {User} from './registration/user';
