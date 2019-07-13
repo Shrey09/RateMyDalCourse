@@ -36,6 +36,7 @@ export class NavbarComponent {
     }
 
     // Alert is displayed when user enters special character
+    // https://stackoverflow.com/questions/16667329/special-character-validation
     else if(/[^a-zA-Z0-9\-\/]/.test(searchString))
     {
       alert('Input should be only alphanumeric');

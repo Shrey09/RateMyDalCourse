@@ -41,6 +41,7 @@ export class DashboardComponent implements OnInit {
     console.log("dashboard loaded");
 
     // Fetching data from the method of getCourses of service
+    //https://www.pubnub.com/docs/nodejs-javascript/data-streams-publish-and-subscribe
     this.getCoursesService.getCourses().
       subscribe(
         data => {
@@ -57,6 +58,7 @@ export class DashboardComponent implements OnInit {
         data => {
           // List of the courses completed by the user.       
           this.myCoursesList = data["MyCourses"][0]["courses"];
+          // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/assign
           this.copyMyCourseSearchArray = Object.assign({}, this.myCoursesList);
         },
         error => {
@@ -71,7 +73,7 @@ export class DashboardComponent implements OnInit {
       this.searchedMyCourses = []
 
         
-
+      // https://stackoverflow.com/questions/154059/how-to-check-empty-undefined-null-string-in-javascript
       if (params.s != '') {
 
         // Fetching the string which user has entered in the searchbox
@@ -79,7 +81,7 @@ export class DashboardComponent implements OnInit {
 
           // Logic to check if the search course is present in the course list.
           for (var i in this.copyCourseSearchArray) {
-
+            // https://www.google.com/search?q=trim+in+javascript&oq=trim+in+java&aqs=chrome.1.69i57j0l5.5473j0j4&sourceid=chrome&ie=UTF-8
             if (this.copyCourseSearchArray[i].Name.toLowerCase().trim().includes(queryString.toLowerCase().trim()) ||
               this.copyCourseSearchArray[i].Code.toLowerCase().trim().includes(queryString.toLowerCase().trim())) {
               this.searchedCourses.push(this.copyCourseSearchArray[i])

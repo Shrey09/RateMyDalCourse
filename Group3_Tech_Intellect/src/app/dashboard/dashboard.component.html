@@ -12,7 +12,7 @@
 
 <div class="gallery-container cards-container">
     <div class="container">
-
+        <!-- reference from https://stackoverflow.com/questions/49418918/how-to-use-ngfor-in-angularjs -->
         <div class="row">
             <div *ngFor="let mycourse of myCoursesList" class="col-sm-6 col-md-4 col-lg-3 mb-3">
                 <div class="transform-on-hover card ">
@@ -21,7 +21,7 @@
                     <div class="card-body">
                         <h6>{{mycourse}}</h6>
                         <p><strong>Rate Subject :
-                            <!-- taken reference from https://codepen.io/tammykimkim/pen/yegZRw -->
+                            <!-- reference from https://codepen.io/tammykimkim/pen/yegZRw -->
                             <div class="rate">
                                 <input type="radio" id="star1_5" name="rate" value="5" />
                                 <label for="star1_5" title="text">5 stars</label>
@@ -51,11 +51,12 @@
                     <p class= "Subject" style="margin-bottom:1rem; margin-top: 2rem"> <strong><h3>All courses</h3></strong></p>
                      </div>
             
-            
+                <!-- reference from https://stackoverflow.com/questions/49418918/how-to-use-ngfor-in-angularjs -->
                 <div *ngFor="let course of coursesList" class="col-sm-6 col-md-4 col-lg-3 mb-3">
                     <div class="transform-on-hover card ">
                         <a class="lightbox"><img src="assets/image/gallery1.jpg" class="card-img-top" style="max-height:130px; width:100%" alt="error loading image"></a>
                         <div class="card-body">
+                 <!--reference from https://stackoverflow.com/questions/21053577/how-to-display-data-from-mongodb-to-the-frontend-via-node-js-without-using-a-fra -->
                         <h6>{{course.Code}} {{course.Name}}</h6>
                         
                         <a type="button" class="btn btn-dark" [href]="'discussion/' + course.Name">Discuss</a>

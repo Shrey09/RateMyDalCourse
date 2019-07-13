@@ -31,7 +31,7 @@ export class DiscussionforumComponent implements OnInit {
         this.RatingList = data["Ratecourses"];
         
         // Logic to Calculate Overall rating
-        
+        // https://stackoverflow.com/questions/15496508/how-to-iterate-object-in-javascript
         var calculate = 0;
         var listsize =this.RatingList.length;
         for(var i = 0; i < this.RatingList.length; i++){
