@@ -40,6 +40,7 @@ export class DashboardComponent implements OnInit {
   copyMyCourseSearchArray: any[];
   showRateMessage: boolean = false;
   ratemessage: string = null;
+  currentCourse:string=null;
 
   //first method which execute while page load
   ngOnInit() {
@@ -121,12 +122,14 @@ export class DashboardComponent implements OnInit {
     this.rateCourseModel.email=this.usernameModel.name;
     this.rateCourseModel.rating=rateForm.rate;
     this.rateCourseService.rateCourse(this.rateCourseModel)
+
     .subscribe(data=>{
       // handle the error or successful message response for the server
       if(data["Message"]){
         console.log(data);
         this.showRateMessage=true;
         this.ratemessage=data["Message"];
+        this.currentCourse=course;
       }
       
     },
