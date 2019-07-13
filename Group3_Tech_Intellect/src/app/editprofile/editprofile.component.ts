@@ -122,7 +122,7 @@ export class EditprofileComponent implements OnInit {
       }
     }
 
-    if (updated_password != null){
+    if (updated_password != null && updated_password != ''){
       // http://codeniro.com/caesars-cipher-algorithm-javascript/
       // this source is used to enrypt old password.
       // Some changes like function removal, shift key changes are made from this source.
@@ -150,7 +150,7 @@ export class EditprofileComponent implements OnInit {
     }
 
     // assign password to model
-    if (updated_password == '') {
+    if (updated_password == null || updated_password == '') {
       this.updateUserModel.password = encrypt_old_password;
     }
     else {
