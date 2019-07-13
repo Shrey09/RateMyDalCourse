@@ -5,6 +5,9 @@ import { GetCoursesService } from '../get-courses.service';
 import { Username } from './username';
 import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
+import {Rate} from './rate';
+import {RateCourseService} from '../rate-course.service';
+import {FormGroup} from '@angular/forms'
 
 
 // Import all the component of the dashboard
@@ -19,11 +22,13 @@ export class DashboardComponent implements OnInit {
      After Login feature is completed user email is passed after successful authentication
   */
   usernameModel = new Username('nitin@gmail.com');
+  rateCourseModel=new Rate('course','user@gmail.com',5);
+  form: FormGroup;
 
 
   constructor(
     public authenticationService: AuthenticationService, public getCoursesService: GetCoursesService,
-    private http: HttpClient, private router: Router, private route: ActivatedRoute
+    private http: HttpClient, private router: Router, private route: ActivatedRoute, private rateCourseService:RateCourseService
   ) {
   }
   //Defined Array to store list of courses while loading dashboard and search option
@@ -33,6 +38,8 @@ export class DashboardComponent implements OnInit {
   searchedMyCourses: any[];
   copyCourseSearchArray: any[];
   copyMyCourseSearchArray: any[];
+  showRateMessage: boolean = false;
+  ratemessage: string = null;
 
   //first method which execute while page load
   ngOnInit() {
@@ -106,4 +113,26 @@ export class DashboardComponent implements OnInit {
     })
   }
 
+  // function for course rating
+  onRate(rateForm,course)
+  {
+    console.log("form submitted with values ",rateForm.rate,course);
+    this.rateCourseModel.courseName=course;
+    this.rateCourseModel.email=this.usernameModel.name;
+    this.rateCourseModel.rating=rateForm.rate;
+    this.rateCourseService.rateCourse(this.rateCourseModel)
+    .subscribe(data=>{
+      // handle the error or successful message response for the server
+      if(data["Message"]){
+        console.log(data);
+        this.showRateMessage=true;
+        this.ratemessage=data["Message"];
+      }
+      
+    },
+     error=>{
+       console.log("Error",error);
+      });
+  }
+  
 }
