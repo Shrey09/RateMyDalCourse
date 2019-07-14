@@ -94,6 +94,8 @@ export class RegistrationComponent implements OnInit {
         (document.getElementById('password') as HTMLInputElement).value="";
         (document.getElementById('cpassword') as HTMLInputElement).value="";
         (document.getElementById('courses') as HTMLInputElement ).value="";
+        $("#courses").val('default');
+        $("#courses").selectpicker("refresh");
         console.log(data);
         this.showMessage=true;
         this.showErrorMessage=false;
