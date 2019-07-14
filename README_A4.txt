@@ -12,7 +12,7 @@ Project Links
 
  Git repository link:- https://git.cs.dal.ca/chintan/ratemydalcourse_group3
  Feature branch:- registration_shrey_amin
- Bluenose application link:- http://129.173.22.34:20001
+ Bluenose application link:- http://129.173.22.34:20002
  Files related to feature:- registration.component.ts
                             registration.component.html
                             register.service.ts
