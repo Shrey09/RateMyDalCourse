@@ -430,4 +430,31 @@ router.post('/rateCourse',function(req,res){
     })
 })
 
+// endpoint for fetching the rated courses
+router.post('/getRatedCourses',function(req,res){
+  // array to store the courses
+  console.log("user email",req.body.name)
+  var ratedcourses=[];
+  MongoClient.connect(url,function(err,client)
+  {
+      if(err)
+      {
+          res.status(501).send({"Error":"error in connecting to database"});
+      }
+      else
+      {
+          //fetching courses from the database
+          var cursor= client.db("RateMyDalCourse").collection('Rate').find({"Email": req.body.name});
+          cursor.forEach(function(course) { 
+              ratedcourses.push(course);
+          },function(){
+              // send the course list as the response
+              console.log("Rated courses array",ratedcourses);
+              res.send({"Courses":ratedcourses});  
+          });
+      client.close();
+      }
+  })
+})
+
 module.exports = router;

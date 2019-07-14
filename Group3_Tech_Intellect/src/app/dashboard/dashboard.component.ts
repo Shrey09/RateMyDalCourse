@@ -7,6 +7,7 @@ import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 import {Rate} from './rate';
 import {RateCourseService} from '../rate-course.service';
+import {FindratedcoursesService} from '../findratedcourses.service';
 import {FormGroup} from '@angular/forms'
 
 
@@ -25,10 +26,10 @@ export class DashboardComponent implements OnInit {
   rateCourseModel=new Rate('course','user@gmail.com',5);
   form: FormGroup;
 
-
   constructor(
     public authenticationService: AuthenticationService, public getCoursesService: GetCoursesService,
-    private http: HttpClient, private router: Router, private route: ActivatedRoute, private rateCourseService:RateCourseService
+    private http: HttpClient, private router: Router, private route: ActivatedRoute, private rateCourseService:RateCourseService,
+    private findRatedCourse:FindratedcoursesService
   ) {
   }
   //Defined Array to store list of courses while loading dashboard and search option
@@ -41,6 +42,7 @@ export class DashboardComponent implements OnInit {
   showRateMessage: boolean = false;
   ratemessage: string = null;
   currentCourse:string=null;
+  RatedCoursesList:any[];
 
   //first method which execute while page load
   ngOnInit() {
@@ -112,6 +114,20 @@ export class DashboardComponent implements OnInit {
         
       } 
     })
+
+        // find rated courses by the current logged in user
+        this.findRatedCourse.getRatedCourses(this.usernameModel)
+        .subscribe(data=>{
+            console.log('rated courses fetched form server', data['Courses']);
+          // data['Courses'].forEach(element => {
+          //   console.log(element['Name']);
+          //   });
+          //   console.log(this.RatedCoursesList);
+        },
+        error=>{
+          console.log("Error",error);
+          });
+  
   }
 
   // function for course rating
