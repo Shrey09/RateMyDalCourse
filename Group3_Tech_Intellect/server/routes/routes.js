@@ -123,7 +123,7 @@ router.get('/getCourses/:username', function (req, res) {
       res.status(501).send({ "Error": "error in connecting to database" });
     }
     else {
-      // check for the courses for a logged in user in the database          
+      // check for the courses for a logged in user in the database
       var cursor = client.db("RateMyDalCourse").collection('User').find({ email: username.substring(1) });
       cursor.forEach(function (course) {
         // store all the user's courses in the list
@@ -156,7 +156,7 @@ router.get('/displayrating/:subject', function (req, res) {
     }
     else {
 
-      // Query in the database to find overall rating of the subject 
+      // Query in the database to find overall rating of the subject
       var cursor = client.db("RateMyDalCourse").collection('Rate').find({ Name: subject });
       cursor.forEach(function (rate) {
 
@@ -177,206 +177,234 @@ router.get('/displayrating/:subject', function (req, res) {
 
 
 router.get('/fetchUserData', function (req, res) {
-    // Author: Chintan Patel
-    // Banner ID: B00826089
-    var user = [];   // store user data
+  // Author: Chintan Patel
+  // Banner ID: B00826089
+  var user = [];   // store user data
 
-    // connect to MongoClient
-    MongoClient.connect(url, function (err, client) {
-        if (err) {
-            res.status(501).send({ "Error": "error in connecting to database" });
+  // connect to MongoClient
+  MongoClient.connect(url, function (err, client) {
+    if (err) {
+      res.status(501).send({ "Error": "error in connecting to database" });
+    }
+    else {
+      //fetching user data from the database
+      var cursor = client.db("RateMyDalCourse").collection('User').findOne(
+        {
+          "email": "chintan.patel@dal.ca"   // this email can be made dynamic
+        }, function (err, result) {
+          if (err) {
+            res.status(501).send({ "Error": "error in finding the user" });
+          }
+          else {
+            encryptedPassword = result.password;   // fetched password which is encrypted
+            decryptedPassword = "";   // decrypted password will be stored here
+
+            // http://codeniro.com/caesars-cipher-algorithm-javascript/
+            // This source is used to decrypt the password.
+            // Some changes like function removal, shift changes are made in the code
+            // taken from the sourse.
+            // loop through each caharacter in the text
+            for (var i = 0; i < encryptedPassword.length; i++) {
+              var c = encryptedPassword.charCodeAt(i);
+
+              if (c >= 65 && c <= 90) {
+                decryptedPassword += String.fromCharCode((c - 65 + 13) % 26 + 65);
+              }
+              else if (c >= 97 && c <= 122) {
+                decryptedPassword += String.fromCharCode((c - 97 + 13) % 26 + 97);
+              }
+              else {
+                decryptedPassword += encryptedPassword.charAt(i);
+              }
+            }
+
+            result.password = decryptedPassword;
+            res.send({ "User": result });   // sent result to front end.
+          }
         }
-        else {
-            //fetching user data from the database
-            var cursor = client.db("RateMyDalCourse").collection('User').findOne(
-                {
-                    "email": "chintan.patel@dal.ca"   // this email can be made dynamic
-                }, function (err, result) {
-                    if (err) {
-                        res.status(501).send({ "Error": "error in finding the user" });
-                    }
-                    else {
-                        encryptedPassword = result.password;   // fetched password which is encrypted
-                        decryptedPassword = "";   // decrypted password will be stored here
+      );
 
-                        // http://codeniro.com/caesars-cipher-algorithm-javascript/
-                        // This source is used to decrypt the password.
-                        // Some changes like function removal, shift changes are made in the code
-                        // taken from the sourse.
-                        // loop through each caharacter in the text
-                        for (var i = 0; i < encryptedPassword.length; i++) {
-                            var c = encryptedPassword.charCodeAt(i);
-
-                            if (c >= 65 && c <= 90) {
-                                decryptedPassword += String.fromCharCode((c - 65 + 13) % 26 + 65);
-                            }
-                            else if (c >= 97 && c <= 122) {
-                                decryptedPassword += String.fromCharCode((c - 97 + 13) % 26 + 97);
-                            }
-                            else {
-                                decryptedPassword += encryptedPassword.charAt(i);
-                            }
-                        }
-                        
-                        result.password = decryptedPassword;
-                        res.send({ "User": result });   // sent result to front end.
-                    }
-                }
-            );
-
-            client.close();   // close the client.
-        }
-    })
+      client.close();   // close the client.
+    }
+  })
 })
 
 router.get('/fetchCourses', function (req, res) {
-    // Author: Chintan Patel
-    // Banner ID: B00826089
-    var courses = [];   // store courses
+  // Author: Chintan Patel
+  // Banner ID: B00826089
+  var courses = [];   // store courses
 
-    // connect to the MongoClient.
-    MongoClient.connect(url, function (err, client) {
-        if (err) {
-            res.status(501).send({ "Error": "error in connecting to database" });
-        }
-        else {
-            //fetching courses from the database
-            var cursor = client.db("RateMyDalCourse").collection('Courses').find();
-            cursor.forEach(function (course) {
-                courses.push(course);   // push course to courses array which will be returned.
-            }, function () {
-                //console.log("Courses: ",courses);
-                res.send({ "Courses": courses });
-            });
-            client.close();   // close the client
-        }
-    })
+  // connect to the MongoClient.
+  MongoClient.connect(url, function (err, client) {
+    if (err) {
+      res.status(501).send({ "Error": "error in connecting to database" });
+    }
+    else {
+      //fetching courses from the database
+      var cursor = client.db("RateMyDalCourse").collection('Courses').find();
+      cursor.forEach(function (course) {
+        courses.push(course);   // push course to courses array which will be returned.
+      }, function () {
+        //console.log("Courses: ",courses);
+        res.send({ "Courses": courses });
+      });
+      client.close();   // close the client
+    }
+  })
 })
 
 router.post('/updateUserData', function (req, res) {
-    // Author: Chintan Patel
-    // Banner ID: B00826089
-    data = req.body;   // data which is sent from fornt end and it is entered by the user.
-    updated_model = {   // updated model
-        "name": data.name, "email": data.email,
-        "password": data.password, "courses": data.courses
-    };
-    console.log(updated_model);
-    console.log(data);
-    MongoClient.connect(url, function (err, client) {
-        if (err) {
-            res.status(501).send({ "Error": "error in connecting to database" });
+  // Author: Chintan Patel
+  // Banner ID: B00826089
+  data = req.body;   // data which is sent from fornt end and it is entered by the user.
+  updated_model = {   // updated model
+    "name": data.name, "email": data.email,
+    "password": data.password, "courses": data.courses
+  };
+  console.log(updated_model);
+  console.log(data);
+  MongoClient.connect(url, function (err, client) {
+    if (err) {
+      res.status(501).send({ "Error": "error in connecting to database" });
+    }
+    else {
+
+      // update profile in the database
+      client.db("RateMyDalCourse").collection('User').updateOne(
+        { email: data.email, password: data.old_password },
+        { $set: updated_model },
+        function (err, result) {
+          if (err) {
+            res.status(501).send({ "Error": "error in updating profile" });
+          }
+          else {
+
+            // different status will be returned to front end
+
+            // If 0 rows are changed, then the old password is wrong or
+            // no data is to be changed.
+            if (result.modifiedCount == 0) {
+              console.log("Not Modified");
+              res.send({ "status": "NOT_MODIFIED" });
+            }
+
+            // If 1 row is changed, then the data is updated.
+            else if (result.modifiedCount == 1) {
+              console.log("Modified");
+              res.send({ "status": "MODIFIED" });
+            }
+
+            // If database is not able to connect to other errors.
+            else {
+              console.log("SOMETHING_WRONG: ", result);
+              res.send({ "status": "SOMETHING_WRONG" });
+            }
+          }
         }
-        else {
-
-            // update profile in the database
-            client.db("RateMyDalCourse").collection('User').updateOne(
-                { email: data.email, password: data.old_password },
-                { $set: updated_model },
-                function (err, result) {
-                    if (err) {
-                        res.status(501).send({ "Error": "error in updating profile" });
-                    }
-                    else {
-
-                        // different status will be returned to front end
-
-                        // If 0 rows are changed, then the old password is wrong or
-                        // no data is to be changed.
-                        if (result.modifiedCount == 0) {
-                            console.log("Not Modified");
-                            res.send({ "status": "NOT_MODIFIED" });
-                        }
-                        
-                        // If 1 row is changed, then the data is updated.
-                        else if (result.modifiedCount == 1) {
-                            console.log("Modified");
-                            res.send({ "status": "MODIFIED" });
-                        }
-
-                        // If database is not able to connect to other errors.
-                        else {
-                            console.log("SOMETHING_WRONG: ", result);
-                            res.send({ "status": "SOMETHING_WRONG" });
-                        }
-                    }
-                }
-            );
-            client.close();   // close the client.
-        }
-    })
+      );
+      client.close();   // close the client.
+    }
+  })
 })
 
 
 // endpoint handling request for user registration and storing user data in the database
-router.post('/register_user',function(req,res)
-{
-    console.log(req.body);
-    // fetching data from the request body
-    user=req.body;
-    MongoClient.connect(url,function(err,client) 
-    {
-        if(err){
-            res.status(501).send({"Error":"error in connecting to database"});
+router.post('/register_user', function (req, res) {
+  console.log(req.body);
+  // fetching data from the request body
+  user = req.body;
+  MongoClient.connect(url, function (err, client) {
+    if (err) {
+      res.status(501).send({ "Error": "error in connecting to database" });
+    }
+    //check if user has already resgistered or not
+    else {
+      // checking username or email already exists or not
+      client.db("RateMyDalCourse").collection('User').findOne({
+        "$or": [{
+          "email": user.email
+        }, {
+          "name": user.name
+        }]
+      }, function (err, result) {
+        // send error message to client
+        if (err) {
+          console.log("error");
+          res.send({ "Message": "error in connecting to database" });
         }
-        //check if user has already resgistered or not
-        else
-        {  
-            // checking username or email already exists or not
-            client.db("RateMyDalCourse").collection('User').findOne({
-                "$or": [{
-                    "email": user.email
-                }, {
-                    "name": user.name
-                }]
-            }, function(err, result) {
-                // send error message to client 
-                if(err) 
-                {
-                    console.log("error");
-                    res.send({"Message":"error in connecting to database"});
-                }
-                if(result) 
-                {
-                    res.send({"Message":"Entered email or username already exist"});
-                } 
-                // Add details of the new user in the mongodb database and send response message to client
-                else 
-                {
-                    client.db("RateMyDalCourse").collection('User').insertOne(user);
-                    console.log("User profile added to database");
-                    res.status(200).send({"Message":"Registration successful. Please login to continue"});
-                }
-            client.close();
-             }); 
+        if (result) {
+          res.send({ "Message": "Entered email or username already exist" });
         }
-    }); 
+        // Add details of the new user in the mongodb database and send response message to client
+        else {
+          client.db("RateMyDalCourse").collection('User').insertOne(user);
+          console.log("User profile added to database");
+          res.status(200).send({ "Message": "Registration successful. Please login to continue" });
+        }
+        client.close();
+      });
+    }
+  });
 })
 
 // endpoint for handling get request to fetch available courses from the database
-router.get('/getCourses',function(req,res){
-    // array to store the courses
-    var courses=[];
-    MongoClient.connect(url,function(err,client)
-    {
-        if(err)
-        {
-            res.status(501).send({"Error":"error in connecting to database"});
+router.get('/getCourses', function (req, res) {
+  // array to store the courses
+  var courses = [];
+  MongoClient.connect(url, function (err, client) {
+    if (err) {
+      res.status(501).send({ "Error": "error in connecting to database" });
+    }
+    else {
+      //fetching courses from the database
+      var cursor = client.db("RateMyDalCourse").collection('Courses').find();
+      cursor.forEach(function (course) {
+        courses.push(course);
+      }, function () {
+        // send the course list as the response
+        console.log("Courses array", courses);
+        res.send({ "Courses": courses });
+      });
+      client.close();
+    }
+  })
+});
+
+router.post("/login", (req, res, next) => {
+  userinput = req.body;
+  console.log("received credentials are this : ", userinput);
+
+  // Getting the course code from request
+  const emailFromClient = userinput.email;
+  const passwordfromclient = userinput.password;
+
+
+  // Connecting to mongodb database.
+  MongoClient.connect(mongoDbUrl, function (err, client) {
+    if (err) {
+      // Sending the error response message to client, in case of error.
+      res.status(501).send({ "Error": "error in connecting to database" });
+    }
+    else {
+      console.log("Server : email = " + emailFromClient + " and password = " + passwordfromclient);
+
+      // Fetching all the posts related to that course from database and sending it back to client.
+      client.db("RateMyDalCourse").collection('User').findOne(
+        { email: emailFromClient, password: passwordfromclient },
+        function (err, result) {
+          if (err) {
+            res.send({"responseMessage": "Server : DB Connection failed"});
+          } else if (result) {
+            res.send({"responseMessage": "login successful"});
+          } else {
+            res.send({"responseMessage": "login failure"});
+          }
         }
-        else
-        {
-            //fetching courses from the database
-            var cursor= client.db("RateMyDalCourse").collection('Courses').find();
-            cursor.forEach(function(course) { 
-                courses.push(course);
-            },function(){
-                // send the course list as the response
-                console.log("Courses array",courses);
-                res.send({"Courses":courses});  
-            });
-        client.close();
-        }
-    })
-})
+      );
+
+      client.close();
+    }
+  })
+});
 
 module.exports = router;
