@@ -7,6 +7,7 @@ const port=19999;
 
 //creating the express server
 const app=express();
+// using body parser and cors
 app.use(bodyParser.json());
 app.use(cors());
 
@@ -14,7 +15,7 @@ app.use(cors());
 var routes=require('./routes/routes');
 app.use('/',routes);
 
-// starting the server on port 3000
+// starting the server on port 19999
 app.listen(port,function(){
     console.log("Server runinng on localhost:"+port);
 })

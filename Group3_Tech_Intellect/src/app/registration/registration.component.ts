@@ -2,7 +2,7 @@
 // Banner ID: B00822245
 
 import { Component, OnInit } from '@angular/core';
-import {User} from './user';
+import {User} from './user';                          //user data model
 import {RegisterService} from '../register.service';
 import {CourseService} from '../course.service';
 declare var $: any;
@@ -45,6 +45,7 @@ export class RegistrationComponent implements OnInit {
         console.log('Some error in connecting to server', error);
       }
     );
+    //refereshing select picker 
     setTimeout(function () {
       $('.selectpicker').val('default').selectpicker('refresh');
     }, 1000)  
@@ -94,12 +95,14 @@ export class RegistrationComponent implements OnInit {
         (document.getElementById('password') as HTMLInputElement).value="";
         (document.getElementById('cpassword') as HTMLInputElement).value="";
         (document.getElementById('courses') as HTMLInputElement ).value="";
+        $("#courses").val('default');
+        $("#courses").selectpicker("refresh");
         console.log(data);
         this.showMessage=true;
         this.showErrorMessage=false;
         this.message=data["Message"];
       }      
-    },
+    },//displaying error message for bad network connection
      error=>{
        console.log("Error",error);
        this.showErrorMessage=true;
