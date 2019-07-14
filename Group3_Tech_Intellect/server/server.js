@@ -1,3 +1,5 @@
+// Author: Deep Nimesh Shah - B00796368
+// Define all the parameters and Libraries for the server
 const express=require('express');
 const bodyParser=require('body-parser');
 const cors=require('cors');
@@ -11,7 +13,7 @@ app.use(cors());
 var routes=require('./routes/routes');
 app.use('/',routes);
 
-// creating the server 
+// Started listening on the defined port which is 3000
 app.listen(port,function(){
     console.log("Server runinng on localhost:"+port);
 })

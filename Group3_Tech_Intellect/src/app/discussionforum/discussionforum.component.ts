@@ -1,3 +1,5 @@
+// Author: Deep Nimesh Shah - B00796368
+// Import all different component to load the dashboard
 import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from '../authentication/authentication.service';
 import {RatingService} from '../rating.service';
@@ -10,6 +12,7 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./discussionforum.component.css']
 })
 export class DiscussionforumComponent implements OnInit {
+  // Define all the public variable
   public id: string;
   public finalrate;
   constructor(

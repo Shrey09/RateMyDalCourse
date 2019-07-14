@@ -1,3 +1,6 @@
+ // Author: Deep Nimesh Shah - B00796368
+ 
+ // Import all different component to load the dashboard
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { AuthenticationService } from '../authentication/authentication.service';
@@ -37,12 +40,14 @@ export class NavbarComponent {
 
     // Alert is displayed when user enters special character
     // https://stackoverflow.com/questions/16667329/special-character-validation
+    
     else if(/[^a-zA-Z0-9\-\/]/.test(searchString))
     {
       alert('Input should be only alphanumeric');
     }
     else
     {
+      // string is attached to the URL of the dashboard.
       this.router.navigateByUrl('dashboard?s=' + searchString);
     }
     
