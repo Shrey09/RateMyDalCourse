@@ -20,6 +20,7 @@ export class NavbarComponent {
   ) {
   }
 
+
   // Operations perform when user clicks on the search button
   onSubmit(searchString: string) {
    

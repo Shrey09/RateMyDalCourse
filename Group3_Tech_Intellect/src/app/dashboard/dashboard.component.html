@@ -14,8 +14,8 @@
     <div class="container">
         <!-- reference from https://stackoverflow.com/questions/49418918/how-to-use-ngfor-in-angularjs -->
         <div class="row">
-                <div id="errorDiv" *ngIf="myCoursesList.length == 0"  style="font-size: large;color:red">
-                        Search Results not found for this category!!
+                <div id="errorDiv" *ngIf="myCoursesList.length == 0"  style="font-size: large;color:red;text-align: center">
+                        You have not completed any courses for this search..!!
                         </div> 
             <div *ngFor="let mycourse of myCoursesList" class="col-sm-6 col-md-4 col-lg-3 mb-3">
                 <div class="transform-on-hover card ">
@@ -55,7 +55,7 @@
                      </div>
                 
                 <div id="errorDiv" *ngIf="coursesList.length == 0"  style="font-size: large;color:red">
-                Search Results not found for this category!!
+                  NO course is available for this search..!! 
                 </div>     
                      
                 <!-- reference from https://stackoverflow.com/questions/49418918/how-to-use-ngfor-in-angularjs -->

@@ -29,7 +29,7 @@
             <a class="nav-link" href='dashboard'>Dashboard</a>
           </li>
         <form class="form-inline py-lg-0 py-pd-2 py-sm-2 py-xs-2 ml-auto mr-2" id="search-form" *ngIf="(authenticationService.isUserAuthenticated$ | async) === true" method="POST" novalidate (ngSubmit)="onSubmit(searchcourse.value)">
-            <input class="form-control mr-sm-2" type="text" placeholder="Search Courses" aria-label="Search" #searchcourse>
+            <input  class="form-control mr-sm-2" type="text" placeholder="Search Courses" aria-label="Search" #searchcourse>
            <button class="btn btn-outline-primary nav-link-btn mt-2 mt-sm-0" type="submit"> Search </button>
        </form>
 
