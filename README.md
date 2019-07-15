@@ -5,7 +5,7 @@ This README file contains detailed information about Assignment-4 related to Rat
 # Git repository link and Web application URL
 ***Git Repository Link***
 https://git.cs.dal.ca/chintan/ratemydalcourse_group3
-Branch Name : create_post_harsh_pamnani (https://git.cs.dal.ca/chintan/ratemydalcourse_group3/tree/create_post_harsh_pamnani)
+<br/> Branch Name : create_post_harsh_pamnani (https://git.cs.dal.ca/chintan/ratemydalcourse_group3/tree/create_post_harsh_pamnani)
 
 ***Web Application URL***
 http://129.173.22.34:24126/home
@@ -95,34 +95,34 @@ RateMyDalCourse web application is developed using JavaScript software stack –
 
 2. Bootstrap Version 4.3
 Bootstrap is a framework which helps to build websites faster and in much simpler way. It includes numerous templates for NavBar, Buttons, Tables, Carousels etc. It also has built-in Javasctipt plugins. In my web applicaiton I have made the applicaiton responsive using bootstrap. Also, NavBar and Buttons are designed using Bootstrap. It is free to download and anyone can modify it according to their requirements. I have used CDN for getting CSS and Javascript file for bootstrap. Following are the CDNs I have used for Bootstrap. 
-	  **CSS for Bootstrap**
+	  <br/> **CSS for Bootstrap**
 	`<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">`
 
-	  **Javascript for Bootstrap**
+	  <br/> **Javascript for Bootstrap**
 	`<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>`
 
 	
 3. JQuery
 JQuery is JS library which aims to simplify DOM traversal for HTML web-pages. Apart from that, it has build-in functionalities for event handling. In my applicaiton, I have used JQuery to handle the click events using bootstrap. For example, Screen Size changes, the navigation bar will be collapsed and it can be accessed using the toggle button on top-right hand corner. I have included the CDN for JQuery. I have used following is the CDN for JQuery.
-	  **Javascript for JQuery**
+	  <br/> **Javascript for JQuery**
 	`<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>`
 
 
 4. Popper
 Popper is a extensive library used to manager popper in any web applicaiton. I have used this library as it is required to communicate with bootstrap. 
-	  **Javascript for Popper**
+	 <br/>  **Javascript for Popper**
 	`<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>`
 
 
 5. Font Awesome
 Font Awesome is the most popular toolkit for icons. The toolkit provides numerous free icons, which can be directly integrated with any web applicaiton. I have used font awesome icons on Login page, Registration page and Web application's footer. I have imported the font awesome CSS using below CDN.
-	  **CSS for Font Awesome**
+	  <br/> **CSS for Font Awesome**
 	`<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">`
 
 
 6. Google Fonts
 Google Fonts is the collection of varities of fonts, which can be used to make the website more aesthetic by using different eye-catching fonts. I have used "Raleway" and "Ubuntu" fonts from Google Fonts. Below is the stylesheet imported for using this 2 fonts from Google Fonts.
-	  **Style Sheet for Google Fonts**
+	  <br/> **Style Sheet for Google Fonts**
 	`<link href="https://fonts.googleapis.com/css?family=Raleway|Ubuntu&display=swap" rel="stylesheet">`
 
 
