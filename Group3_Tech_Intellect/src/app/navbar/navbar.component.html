@@ -12,28 +12,28 @@
 
 
         <!-- NavBar for not logged-in users -->
-        <li class="nav-item mr-2" *ngIf="(authenticationService.isUserAuthenticated$ | async) === false">
+        <li class="nav-item mr-2" *ngIf="!userIsAuthenticated">
             <a class="nav-link" href="home#about_us_redirect">About Us</a>
         </li>
-        <li class="nav-item mr-2" *ngIf="(authenticationService.isUserAuthenticated$ | async) === false">
+        <li class="nav-item mr-2" *ngIf="!userIsAuthenticated">
           <a class="nav-link" href='login'>Login</a>
         </li>
-        <li id="reigster-icon" class="nav-item mr-2" *ngIf="(authenticationService.isUserAuthenticated$ | async) === false">
+        <li id="reigster-icon" class="nav-item mr-2" *ngIf="!userIsAuthenticated">
           <a class="nav-link" href='register'>Register</a>
         </li>
 
 
 
         <!-- NavBar for logged-in users -->
-        <li class="nav-item mr-2" *ngIf="(authenticationService.isUserAuthenticated$ | async) === true">
+        <li class="nav-item mr-2" *ngIf="userIsAuthenticated">
             <a class="nav-link" href='dashboard'>Dashboard</a>
           </li>
-        <form class="form-inline py-lg-0 py-pd-2 py-sm-2 py-xs-2 ml-auto mr-2" id="search-form" *ngIf="(authenticationService.isUserAuthenticated$ | async) === true" method="POST" novalidate (ngSubmit)="onSubmit(searchcourse.value)">
+        <form class="form-inline py-lg-0 py-pd-2 py-sm-2 py-xs-2 ml-auto mr-2" id="search-form" *ngIf="userIsAuthenticated" method="POST" novalidate (ngSubmit)="onSubmit(searchcourse.value)">
             <input class="form-control mr-sm-2" type="text" placeholder="Search Courses" aria-label="Search" #searchcourse>
            <button class="btn btn-outline-primary nav-link-btn mt-2 mt-sm-0" type="submit"> Search </button>
        </form>
 
-      <ul id="profile-drop" class="navbar-nav ml-auto" *ngIf="(authenticationService.isUserAuthenticated$ | async) === true">
+      <ul id="profile-drop" class="navbar-nav ml-auto" *ngIf="userIsAuthenticated">
         <li class="nav-item dropdown mr-2">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               Profile
@@ -41,7 +41,7 @@
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
               <a class="dropdown-item" href="editprofile"> Edit Profile </a>
               <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="/"> Logout </a>
+              <a class="dropdown-item" (click)="onLogout()"> Logout </a>
             </div>
         </li>
       </ul>

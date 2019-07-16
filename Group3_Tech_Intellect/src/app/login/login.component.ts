@@ -16,6 +16,7 @@ export class LoginComponent {
   }
 
   isLoading = false;
+  isErrorPresent = false;
   userinput: Userinput = new Userinput('harshpam1993@gmail.com', 'Harsh@123');
 
 
@@ -38,18 +39,6 @@ export class LoginComponent {
     this.userinput.email = form.value.email;
     this.userinput.password = encryptedText;
 
-    this.authenticateUserService.validateUser(this.userinput).
-      subscribe(
-        // Receiving the data back from the service.
-        data => {
-          // Assigning all posts received from server to a postsList array in the component.
-          console.log('Client : Response from server is: ');
-          console.log(data);
-        },
-        // Handling the error scenario if server connection fails or any other error occurs.
-        error => {
-          console.log('Client : Error in connecting to server: ', error);
-        }
-      );
+    this.authenticateUserService.validateUser(this.userinput);
   }
 }

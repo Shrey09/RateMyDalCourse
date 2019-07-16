@@ -11,8 +11,15 @@ var url = "mongodb+srv://shrey:web12345@ratemydalcourse-rqsoy.mongodb.net/test?r
 var badWords = require('bad-words');
 var badWordsFilter = new badWords();
 
+const jwt = require('jsonwebtoken');
+
+
+const checkAuth = require("../middleware/check-auth");
+
 // Creating a post mapping for route /createPost.
-router.post('/createPost', function (req, res) {
+router.post('/createPost', checkAuth, function (req, res) {
+  // Author - Harsh Pamnani - B00802614
+
   post = req.body;
   console.log('Server : New post received: ', post)
 
@@ -53,7 +60,7 @@ router.post('/createPost', function (req, res) {
 
 // Creating a post mapping for route /createPost.
 router.get('/getPosts/:courseCode', function (req, res) {
-
+  // Author - Harsh Pamnani - B00802614
   // Creating an empty array for storing posts.
   var posts = [];
 
@@ -393,11 +400,12 @@ router.post("/login", (req, res, next) => {
         { email: emailFromClient, password: passwordfromclient },
         function (err, result) {
           if (err) {
-            res.send({"responseMessage": "Server : DB Connection failed"});
+            res.send({"authRepsonseMessage": "Server : DB Connection failed"});
           } else if (result) {
-            res.send({"responseMessage": "login successful"});
+            const token = jwt.sign({email: emailFromClient}, 'this_is_the_secret_key', {expiresIn: '1h'});
+            res.status(200).send({"authRepsonseMessage": "Login successful", "token": token, "expiresIn": 3600});
           } else {
-            res.send({"responseMessage": "login failure"});
+            res.send({"authRepsonseMessage": "Authentication failure"});
           }
         }
       );

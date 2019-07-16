@@ -11,13 +11,12 @@
         <div class="form-group">
           <label> Email address </label>
           <input #email="ngModel" ngModel type="email" name="email" class="form-control" placeholder="Enter Your Email" required email>
-          <div *ngIf="email.invalid"> Please enter a valid email. </div>
         </div>
 
         <div class="form-group">
           <label> Password </label>
           <input type="password" ngModel #password="ngModel" name="password" class="form-control" placeholder="Enter your password" required>
-          <div *ngIf="password.invalid"> Please enter a valid password. </div>
+          <div class="alert alert-danger mt-2" *ngIf="isErrorPresent"> Invalid credentials. Please try again. </div>
         </div>
 
         <div class="form-button">
@@ -27,6 +26,10 @@
         <div class="forgot-password ">
           <a href="register"> New User? </a><br>
         </div>
+
+        <!-- <div class="form-button">
+          <a class="btn btn-primary" [routerLink]="['/discussion', 'web technology']"> Discussion </a>
+        </div> -->
       </form>
 
     </div>

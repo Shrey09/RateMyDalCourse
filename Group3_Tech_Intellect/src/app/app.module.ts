@@ -16,8 +16,9 @@ import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
 import { UrlSerializer } from '@angular/router';
 import { LowerCaseUrlSerializer } from './lowerCaseUrlSerializer';
 import { AuthenticationService } from './authentication/authentication.service';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import {NgMultiSelectDropDownModule} from 'ng-multiselect-dropdown';
+import { AuthInterceptor } from './auth-interceptor';
 // import {LoginValidatorDirective} from './login/login-validator.directive';
 // import {EmailValidatorDirective} from './login/login-email-validator.directive';
 
@@ -44,9 +45,14 @@ import {NgMultiSelectDropDownModule} from 'ng-multiselect-dropdown';
   ],
   providers: [
     {
-      provide:UrlSerializer,
-      useClass:LowerCaseUrlSerializer
+      provide: UrlSerializer,
+      useClass: LowerCaseUrlSerializer
     },  AuthenticationService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    }
   ],
   bootstrap: [AppComponent]
 })
