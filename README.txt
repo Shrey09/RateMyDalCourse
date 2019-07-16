@@ -10,7 +10,7 @@ https://git.cs.dal.ca/chintan/ratemydalcourse_group3
 Branch Name : create_post_harsh_pamnani (https://git.cs.dal.ca/chintan/ratemydalcourse_group3/tree/create_post_harsh_pamnani)
 
 ***Web Application URL***
-http://129.173.22.34:24126/home
+http://129.173.22.35:24126/home
 
 
 
@@ -31,6 +31,28 @@ For the "Create Post" feature, I have developed end-to-end functionalities for c
 
 2. View Post
 I have also developed end-to-end functionalities for the "View Post" feature. Whenever the user visits the discussion forum page, posts from the other users will be displayed on the page. The posts will be sorted on the basis of time when the post was posted. For now, the discussion forum will load all the posts for "CSCI5408 Mobile Computing" course. Once this feature is intergrated with the dashboard page, the discussion forum page will receive a course code from the dashboard page and comments will be loaded for that particular course only.
+
+
+
+==================================================
+Interacting with the feature
+==================================================
+Please follow below steps for interacting with the "create post" and "view post" features.
+1. Open the URL http://129.173.22.35:24126/home to access the homepage of the application.
+2. Click on "Login" button on the top-right corner.
+3. Enter any valid email id and 8 characters password. For exmaple, I entered email as "harsh@gmail.com" and password as "Harsh@123".
+4. On successful login, it will redirect you to "Dashboard" page.
+5. On the dashboard page, click on "Discuss" button for "CSCI5408 Mobile Computing" subject under "All courses".
+6. This action will redirect you to "Discussion Forum" page for "CSCI5408 Mobile Computing".
+7. The discussion forum page will show course details like course name, credit hours, avrage rating, and comments on the discussion forum for that specific course.
+8. There will be a text input for creating a new post on the discussion forum page. For the post to be valid, I have entered 3 validations:
+	- Without entering any comment, hit the "Add Post" button. This will display error message as "Please enter some content for the post."
+	- Enter only 10 characters in the input text, and hit the "Add Post" button. For example I entered "Fun subject" in the input text. This will display error message as "Please enter at least 20 characters for the post."
+	- Enter some bad/vulgar words in the input text, and hit the "Add Post" button. For example I entered "What the hell the subject is." in the input text. This will display error message as "Your post contains bad words. Please remove them and try again."
+	- Enter some good comment in the input, and hit the "Add Post" button. For example I entered "This was a really fun subject and I learnt a lot from the professor in this subject." in the input text. As this is a valid post, it will be added on the discussion forum page, comments count will increase, and the success message "Post successfully created on discussion forum." will be displayed the user.
+9. The comments which are displayed on the discussion forum page are not static and it is being fetched from the database. Hence, even if you refresh the page, the newly added comments will be still present on the page.
+
+NOTE: As mentioned above, for now, the posts will be created for "CSCI5408" subject and the user will be "Harsh Pamnani". After the integration of Dashboard, Login, and Discussion forum page, the user and the subject will be loaded dynamically.
 
 
 
@@ -68,28 +90,6 @@ Steps to Run
 	- cd server
 	- nodemon server
 	- Hit the URL http://localhost:3000/getPosts/CSCI5408/ to access the posts for specific course from server
-
-
-
-==================================================
-Interacting with the feature
-==================================================
-Please follow below steps for interacting with the "create post" and "view post" features.
-1. Open the URL http://129.173.22.35:24126/home to access the homepage of the application.
-2. Click on "Login" button on the top-right corner.
-3. Enter any valid email id and 8 characters password. For exmaple, I entered email as "harsh@gmail.com" and password as "Harsh@123".
-4. On successful login, it will redirect you to "Dashboard" page.
-5. On the dashboard page, click on "Discuss" button for "CSCI5408 Mobile Computing" subject under "All courses".
-6. This action will redirect you to "Discussion Forum" page for "CSCI5408 Mobile Computing".
-7. The discussion forum page will show course details like course name, credit hours, avrage rating, and comments on the discussion forum for that specific course.
-8. There will be a text input for creating a new post on the discussion forum page. For the post to be valid, I have entered 3 validations:
-	- Without entering any comment, hit the "Add Comment" button. This will display error message as "Please enter some content for the post."
-	- Enter only 10 characters in the input text, and hit the "Add Comment" button. For example I entered "Fun subject" in the input text. This will display error message as "Please enter at least 20 characters for the post."
-	- Enter some bad/vulgar words in the input text, and hit the "Add Comment" button. For example I entered "What the hell the subject is." in the input text. This will display error message as "Your post contains bad words. Please remove them and try again."
-	- Enter some good comment in the input, and hit the "Add Comment" button. For example I entered "This was a really fun subject and I learnt a lot from the professor in this subject." in the input text. As this is a valid post, it will be added on the discussion forum page, comments count will increase, and the success message "Post successfully created on discussion forum." will be displayed the user.
-9. The comments which are displayed on the discussion forum page are not static and it is being fetched from the database. Hence, even if you refresh the page, the newly added comments will be still present on the page.
-
-NOTE: As mentioned above, for now, the posts will be created for "CSCI5408" subject and the user will be "Harsh Pamnani". After the integration of Dashboard, Login, and Discussion forum page, the user and the subject will be loaded dynamically.
 
 
 
