@@ -15,7 +15,7 @@ export class AuthenticateUserService {
   private tokenTimer: any;
 
   getToken() {
-    console.log("Auth Service : Inside GetToken method token is :", this.token);
+    // console.log("Auth Service : Inside GetToken method token is :", this.token);
     return this.token;
   }
 
@@ -46,9 +46,9 @@ export class AuthenticateUserService {
     this.httpClient.post<any>(url, userinput)
       .subscribe(response => {
         const token = response.token;
-        console.log("Auth Service : Token received from server is :", this.token);
+        // console.log("Auth Service : Token received from server is :", this.token);
         this.token = token;
-        console.log("Auth Service : Token is :", this.token);
+        // console.log("Auth Service : Token is :", this.token);
 
         if (token) {
           const expiresInDuration = response.expiresIn;

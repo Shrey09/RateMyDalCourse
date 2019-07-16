@@ -415,4 +415,32 @@ router.post("/login", (req, res, next) => {
   })
 });
 
+router.get('/getCourseFromCode/:courseCode',function(req,res){
+  var courseFromDB;
+
+  const courseCodeFromClient = req.params.courseCode.substring(1);
+  MongoClient.connect(mongoDbUrl,function(err,client)
+  {
+      if(err)
+      {
+          res.status(501).send({"Error":"error in connecting to database"});
+      }
+      else
+      {
+        // console.log("Course code received from client is: " + courseCodeFromClient);
+
+        var cursor = client.db("RateMyDalCourse").collection('Courses').find({ Code: courseCodeFromClient});
+        cursor.forEach(function(dbCourse) {
+          // console.log("Course from DB is HPHPHP: ",dbCourse);
+            courseFromDB = dbCourse;
+        },function(){
+            // console.log("Course from DB is HP: ",courseFromDB);
+            res.send({"Course":courseFromDB});
+        });
+
+        client.close();
+      }
+  })
+});
+
 module.exports = router;

@@ -1,7 +1,6 @@
 // Author: Harsh Pamnani - B00802614
 
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { AuthenticationService } from '../authentication/authentication.service';
 import { Post } from './post';
 import { CreatePostService } from '../create-post.service';
 import { GetPostsService } from '../get-posts.service';
@@ -24,28 +23,25 @@ export class DiscussionforumComponent implements OnInit {
   public id: string;
   public finalrate;
   // list to store overall rating and individual rating
-  RatingList : any[];
-  rate : any[];
+  RatingList: any[];
+  rate: any[];
   // Craeting an empty array for storing posts.
   postsList: any[] = [];
+  course: any[] = [];
 
   // Getting all the service in the constructor.
   constructor(
-    public authenticationService: AuthenticationService, private createPostService: CreatePostService,
-    private getPostsService: GetPostsService,private route: ActivatedRoute, public ratingService : RatingService,
+    private createPostService: CreatePostService,
+    private getPostsService: GetPostsService, private route: ActivatedRoute, public ratingService : RatingService,
   ) {
   }
-  
 
-  
   ngOnInit() {
-
-
     // This course code will be dynamically loaded for whichever course the user clicks.
-    const courseCode = 'CSCI5408';
+    const courseCode = this.route.snapshot.paramMap.get('id');
     console.log('Client : Posts will be fetched for course code: ', courseCode);
 
-    this.getPostsService.getPosts(courseCode).
+    this.getPostsService.getPosts(courseCode.toUpperCase()).
     subscribe(
       // Receiving the data back from the service.
       data => {
@@ -59,25 +55,35 @@ export class DiscussionforumComponent implements OnInit {
       }
     );
 
-    this.authenticationService.authenticate();
+    this.getPostsService.getCourseFromCode(courseCode.toUpperCase()).
+    subscribe(
+      data => {
+      console.log('Course fetched form server HP HP HP: ', data.Course);
+      this.course = data.Course;
+    },
+      error => {
+        console.log('Some error in connecting to server', error);
+      }
+    );
+
     // fetch the course code which is passed from the service
     this.id = this.route.snapshot.paramMap.get('id');
 
     // subscribe the ratingservice by passing the courseid
     this.ratingService.displayrating(this.id).subscribe(
-      data =>{        
-        this.RatingList = data["Ratecourses"];
-        
+      data => {
+        this.RatingList = data['Ratecourses'];
+
         // Logic to Calculate Overall rating
         // https://stackoverflow.com/questions/15496508/how-to-iterate-object-in-javascript
         var calculate = 0;
         var listsize =this.RatingList.length;
         for(var i = 0; i < this.RatingList.length; i++){
-          
+
           calculate= calculate + this.RatingList[i]['Rate'];
-          
-          
-        } 
+
+
+        }
 
         // Dispaly the message when there is no ratings present
        /* if(isNaN(this.finalrate))
@@ -85,12 +91,12 @@ export class DiscussionforumComponent implements OnInit {
           this.finalrate='No Ratings Available';
           console.log("deep");
         }
-        // Round off overall rating to one decimal point 
+        // Round off overall rating to one decimal point
         else{*/
-          this.finalrate = (calculate/listsize).toFixed(1);   
-          console.log("Meet"); 
-       // }     
-           
+          this.finalrate = (calculate/listsize).toFixed(1);
+          // console.log("Meet");
+       // }
+
       },
       error=>{
         // Error Message when connection with server
@@ -98,7 +104,7 @@ export class DiscussionforumComponent implements OnInit {
       });
   }
 
-  
+
 
   onSubmit(form) {
     // Retrieving post content from the form values.
@@ -139,5 +145,5 @@ export class DiscussionforumComponent implements OnInit {
         }
       );
   }
-  
+
 }

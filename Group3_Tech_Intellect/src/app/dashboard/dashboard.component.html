@@ -4,15 +4,11 @@
       <p class="Subject" style="margin-bottom:1rem; margin-top: 2rem"> <strong>
           <h3>Courses you have completed</h3>
         </strong></p>
-
-
     </div>
-
   </div>
   <!--end of row-->
 </div>
 <!--end of container-->
-
 
 <div class="gallery-container cards-container">
   <div class="container">
@@ -20,7 +16,6 @@
     <div class="row">
       <div *ngFor="let mycourse of myCoursesList" class="col-sm-6 col-md-4 col-lg-3 mb-3">
         <div class="transform-on-hover card ">
-
           <a class="lightbox"><img src="assets/image/gallery1.jpg" class="card-img-top"
               style="max-height:130px; width:100%" alt="error loading image"></a>
           <div class="card-body">
@@ -46,11 +41,7 @@
 
           </div>
         </div>
-
       </div>
-
-
-
 
       <div class="col-sm-12">
         <p class="Subject" style="margin-bottom:1rem; margin-top: 2rem"> <strong>
@@ -67,13 +58,10 @@
             <!--reference from https://stackoverflow.com/questions/21053577/how-to-display-data-from-mongodb-to-the-frontend-via-node-js-without-using-a-fra -->
             <h6>{{course.Code}} {{course.Name}}</h6>
 
-            <a type="button" class="btn btn-dark" [routerLink]="['/discussion', 'CSCI5408']">Discuss</a>
+            <a type="button" class="btn btn-dark" [routerLink]="['/discussion', course.Code]">Discuss</a>
           </div>
         </div>
       </div>
-
-
     </div>
-
   </div>
 </div>
