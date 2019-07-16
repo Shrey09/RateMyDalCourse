@@ -4,7 +4,7 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Post } from './post';
 import { CreatePostService } from '../create-post.service';
 import { GetPostsService } from '../get-posts.service';
-import {RatingService} from '../rating.service';
+import { RatingService } from '../rating.service';
 import { ActivatedRoute } from '@angular/router';
 
 

@@ -1,6 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { AuthenticationService } from '../authentication/authentication.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AuthenticateUserService } from '../authenticate-user.service';
 
@@ -16,7 +15,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   private authListenerSubs: Subscription;
   public userIsAuthenticated = false;
   constructor(
-    public authenticationService: AuthenticationService, private router: Router,
+    private router: Router,
     private authUserService: AuthenticateUserService
   ) {
   }

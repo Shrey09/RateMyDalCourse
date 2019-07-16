@@ -1,6 +1,5 @@
 // Import all different component to load the dashboard
 import { Component, OnInit } from '@angular/core';
-import { AuthenticationService } from '../authentication/authentication.service';
 import { GetCoursesService } from '../get-courses.service';
 import { Username } from './username';
 import { HttpClient } from '@angular/common/http';
@@ -22,11 +21,11 @@ export class DashboardComponent implements OnInit {
 
 
   constructor(
-    public authenticationService: AuthenticationService, public getCoursesService: GetCoursesService,
+    public getCoursesService: GetCoursesService,
     private http: HttpClient, private router: Router, private route: ActivatedRoute
   ) {
   }
-  //Defined Array to store list of courses while loading dashboard and search option
+  // Defined Array to store list of courses while loading dashboard and search option
   coursesList: any[];
   myCoursesList: any[];
   searchedCourses: any[];
@@ -34,10 +33,9 @@ export class DashboardComponent implements OnInit {
   copyCourseSearchArray: any[];
   copyMyCourseSearchArray: any[];
 
-  //first method which execute while page load
+  // First method which execute while page load
   ngOnInit() {
     // User should be authenticated when he access the dashboard
-    this.authenticationService.authenticate();
     console.log("dashboard loaded");
 
     // Fetching data from the method of getCourses of service
@@ -56,7 +54,7 @@ export class DashboardComponent implements OnInit {
     this.getCoursesService.getMyCourses(this.usernameModel).
       subscribe(
         data => {
-          // List of the courses completed by the user.       
+          // List of the courses completed by the user.
           this.myCoursesList = data["MyCourses"][0]["courses"];
           // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/assign
           this.copyMyCourseSearchArray = Object.assign({}, this.myCoursesList);
@@ -72,7 +70,7 @@ export class DashboardComponent implements OnInit {
       this.searchedCourses = []
       this.searchedMyCourses = []
 
-        
+
       // https://stackoverflow.com/questions/154059/how-to-check-empty-undefined-null-string-in-javascript
       if (params.s != '') {
 
@@ -101,8 +99,8 @@ export class DashboardComponent implements OnInit {
           console.log("courses :", this.searchedMyCourses)
           this.myCoursesList = this.searchedMyCourses
 
-        
-      } 
+
+      }
     })
   }
 
