@@ -443,4 +443,82 @@ router.get('/getCourseFromCode/:courseCode',function(req,res){
   })
 });
 
+// rate the course
+router.post('/rateCourse',function(req,res){
+    console.log("rate model at server",req.body)
+    var email=req.body.email;
+    var rating=req.body.rating;
+    var course=req.body.courseName;
+    var rateObj={"Email":email,"Name":course,"Rate":rating};
+    MongoClient.connect(url,function(err,client)
+    {
+        if(err){
+            res.status(501).send({"Error":"error in connecting to database"});
+        }
+        //check if user has already rated the course
+        else
+        {  
+            // checking username or email already exists or not
+            client.db("RateMyDalCourse").collection('Rate').findOne({
+                "$and": [{
+                    "Email": email
+                }, {
+                    "Name": course
+                }]
+            }, function(err, result) {
+                // send error message to the client 
+                if(err) 
+                {
+                    console.log("error");
+                    res.send({"Message":"error in connecting to database"});
+                }
+                // update rating of the user
+                if(result) 
+                {
+                    var query = { "Name": course,"Email":email };
+                    var newRating = { $set: {"Rate":rating } };
+                    client.db("RateMyDalCourse").collection("Rate").updateOne(query, newRating)
+                    console.log("Youe rating has been updated");
+                    res.status(200).send({"Message":"Your course rating has been updated"});  
+                } 
+                // insert rating of the user in the database
+                else 
+                {
+                    client.db("RateMyDalCourse").collection('Rate').insertOne(rateObj);
+                    console.log("course rating added to database");
+                    res.status(200).send({"Message":"Thank you for rating the course"});
+                }
+            client.close();
+             }); 
+        }
+    })
+})
+
+// endpoint for fetching the rated courses
+router.post('/getRatedCourses',function(req,res){
+  // array to store the courses
+  console.log("user email",req.body.name)
+  var ratedcourses=[];
+  MongoClient.connect(url,function(err,client)
+  {
+      if(err)
+      {
+          res.status(501).send({"Error":"error in connecting to database"});
+      }
+      else
+      {
+          //fetching courses from the database
+          var cursor= client.db("RateMyDalCourse").collection('Rate').find({"Email": req.body.name});
+          cursor.forEach(function(course) { 
+              ratedcourses.push(course);
+          },function(){
+              // send the course list as the response
+              console.log("Rated courses array",ratedcourses);
+              res.send({"Courses":ratedcourses});  
+          });
+      client.close();
+      }
+  })
+})
+
 module.exports = router;

@@ -80,6 +80,8 @@ export class AuthenticateUserService {
   private clearAuthData() {
     localStorage.removeItem('token');
     localStorage.removeItem('expiration');
+    localStorage.removeItem('user_name');
+    localStorage.removeItem('user_email');
   }
 
   public autoAuthUser() {

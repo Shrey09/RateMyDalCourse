@@ -75,33 +75,35 @@ export class RegistrationComponent implements OnInit {
     console.log("user model", this.userModel);
     // send user data to the server using register event
     this._registerService.register(this.userModel)
-      .subscribe(data => {
-        // handle the error or successful message response for the server
-        if (data["Message"] == "Entered email or username already exist") {
-          console.log(data);
-          this.showErrorMessage = true;
-          this.showMessage = false;
-          this.message = data["Message"];
-        }
-        if (data["Message"] == "Registration successful. Please login to continue") {
-          // reseting form after successful registration`
-          (document.getElementById('name') as HTMLInputElement).value = "";
-          (document.getElementById('email') as HTMLInputElement).value = "";
-          (document.getElementById('password') as HTMLInputElement).value = "";
-          (document.getElementById('cpassword') as HTMLInputElement).value = "";
-          (document.getElementById('courses') as HTMLInputElement).value = "";
-          console.log(data);
-          this.showMessage = true;
-          this.showErrorMessage = false;
-          this.message = data["Message"];
-        }
-      },
-        error => {
-          console.log("Error", error);
-          this.showErrorMessage = true;
-          this.showMessage = false;
-          this.message = "Improper network connection. Please try after sometime";
-        });
+    .subscribe(data=>{
+      // handle the error or successful message response for the server
+      if(data["Message"]=="Entered email or username already exist"){
+        console.log(data);
+        this.showErrorMessage=true;
+        this.showMessage=false;
+        this.message=data["Message"];
+      }
+      if(data["Message"]=="Registration successful. Please login to continue"){
+        // reseting form after successful registration`
+        (document.getElementById('name') as HTMLInputElement).value="";
+        (document.getElementById('email') as HTMLInputElement).value="";
+        (document.getElementById('password') as HTMLInputElement).value="";
+        (document.getElementById('cpassword') as HTMLInputElement).value="";
+        (document.getElementById('courses') as HTMLInputElement ).value="";
+        $("#courses").val('default');
+        $("#courses").selectpicker("refresh");
+        console.log(data);
+        this.showMessage=true;
+        this.showErrorMessage=false;
+        this.message=data["Message"];
+      }
+    },
+     error=>{
+       console.log("Error",error);
+       this.showErrorMessage=true;
+        this.showMessage=false;
+        this.message="Improper network connection. Please try after sometime";
+      });
 
   }
 

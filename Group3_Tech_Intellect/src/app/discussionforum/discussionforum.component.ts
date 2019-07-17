@@ -32,7 +32,7 @@ export class DiscussionforumComponent implements OnInit {
   // Getting all the service in the constructor.
   constructor(
     private createPostService: CreatePostService,
-    private getPostsService: GetPostsService, private route: ActivatedRoute, public ratingService : RatingService,
+    private getPostsService: GetPostsService, private route: ActivatedRoute, public ratingService: RatingService,
   ) {
   }
 
@@ -43,29 +43,29 @@ export class DiscussionforumComponent implements OnInit {
     console.log('Client : Posts will be fetched for course code: ', courseCode);
 
     this.getPostsService.getPosts(courseCode.toUpperCase()).
-    subscribe(
-      // Receiving the data back from the service.
-      data => {
-        // Assigning all posts received from server to a postsList array in the component.
-        this.postsList = data.Posts;
-        console.log('Client : Posts fetched form server are: ', this.postsList);
-      },
-      // Handling the error scenario if server connection fails or any other error occurs.
-      error => {
-        console.log('Client : Error in connecting to server: ', error);
-      }
-    );
+      subscribe(
+        // Receiving the data back from the service.
+        data => {
+          // Assigning all posts received from server to a postsList array in the component.
+          this.postsList = data.Posts;
+          console.log('Client : Posts fetched form server are: ', this.postsList);
+        },
+        // Handling the error scenario if server connection fails or any other error occurs.
+        error => {
+          console.log('Client : Error in connecting to server: ', error);
+        }
+      );
 
     this.getPostsService.getCourseFromCode(courseCode.toUpperCase()).
-    subscribe(
-      data => {
-      console.log('Course fetched form server HP HP HP: ', data.Course);
-      this.course = data.Course;
-    },
-      error => {
-        console.log('Some error in connecting to server', error);
-      }
-    );
+      subscribe(
+        data => {
+          console.log('Course fetched form server HP HP HP: ', data.Course);
+          this.course = data.Course;
+        },
+        error => {
+          console.log('Some error in connecting to server', error);
+        }
+      );
 
     // fetch the course code which is passed from the service
     this.id = this.route.snapshot.paramMap.get('id');
@@ -78,30 +78,37 @@ export class DiscussionforumComponent implements OnInit {
         // Logic to Calculate Overall rating
         // https://stackoverflow.com/questions/15496508/how-to-iterate-object-in-javascript
         var calculate = 0;
-        var listsize =this.RatingList.length;
-        for(var i = 0; i < this.RatingList.length; i++){
+        var listsize = this.RatingList.length;
+        for (var i = 0; i < this.RatingList.length; i++) {
 
-          calculate= calculate + this.RatingList[i]['Rate'];
+          calculate = calculate + this.RatingList[i]['Rate'];
 
 
         }
 
         // Dispaly the message when there is no ratings present
-       /* if(isNaN(this.finalrate))
-        {
-          this.finalrate='No Ratings Available';
-          console.log("deep");
+        /* if(isNaN(this.finalrate))
+         {
+           this.finalrate='No Ratings Available';
+           console.log("deep");
+         }
+         // Round off overall rating to one decimal point
+         else{*/
+        this.finalrate = (calculate / listsize).toFixed(1);
+        //  console.log("Meet");
+        // }
+        // Dispaly the message when there is no ratings present
+        if (isNaN(this.finalrate)) {
+          console.log(this.finalrate);
+          this.finalrate = 'No Ratings Available';
+
         }
-        // Round off overall rating to one decimal point
-        else{*/
-          this.finalrate = (calculate/listsize).toFixed(1);
-          // console.log("Meet");
-       // }
+
 
       },
-      error=>{
+      error => {
         // Error Message when connection with server
-        console.log("error in connecting to the server service",error)
+        console.log("error in connecting to the server service", error)
       });
   }
 

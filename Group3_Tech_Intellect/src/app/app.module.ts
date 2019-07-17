@@ -18,6 +18,7 @@ import { LowerCaseUrlSerializer } from './lowerCaseUrlSerializer';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import {NgMultiSelectDropDownModule} from 'ng-multiselect-dropdown';
 import { AuthInterceptor } from './auth-interceptor';
+import { RatingModule } from 'ngx-bootstrap/rating';
 // import {LoginValidatorDirective} from './login/login-validator.directive';
 // import {EmailValidatorDirective} from './login/login-email-validator.directive';
 
@@ -40,7 +41,8 @@ import { AuthInterceptor } from './auth-interceptor';
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    NgMultiSelectDropDownModule.forRoot()
+    NgMultiSelectDropDownModule.forRoot(),
+    RatingModule.forRoot()
   ],
   providers: [
     {
