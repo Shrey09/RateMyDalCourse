@@ -88,8 +88,16 @@ export class DiscussionforumComponent implements OnInit {
         // Round off overall rating to one decimal point 
         else{*/
           this.finalrate = (calculate/listsize).toFixed(1);   
-          console.log("Meet"); 
+        //  console.log("Meet"); 
        // }     
+       // Dispaly the message when there is no ratings present
+       if(isNaN(this.finalrate))
+       {
+           console.log(this.finalrate);
+           this.finalrate='No Ratings Available';
+                         
+       }
+
            
       },
       error=>{

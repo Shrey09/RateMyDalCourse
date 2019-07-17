@@ -22,7 +22,7 @@ export class DashboardComponent implements OnInit {
   /* Load all the courses for specific user
      After Login feature is completed user email is passed after successful authentication
   */
-  usernameModel = new Username('harit@gmail.com');
+  usernameModel = new Username('chintan.patel@dal.ca');
   rateCourseModel = new Rate('course', 'user@gmail.com', 5);
   form: FormGroup;
 
