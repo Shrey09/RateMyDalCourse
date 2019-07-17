@@ -403,7 +403,7 @@ router.post("/login", (req, res, next) => {
             res.send({"authRepsonseMessage": "Server : DB Connection failed"});
           } else if (result) {
             const token = jwt.sign({email: emailFromClient}, 'this_is_the_secret_key', {expiresIn: '1h'});
-            res.status(200).send({"authRepsonseMessage": "Login successful", "token": token, "expiresIn": 3600});
+            res.status(200).send({"authRepsonseMessage": "Login successful", "token": token, "expiresIn": 3600, "user_data": result});
           } else {
             res.send({"authRepsonseMessage": "Authentication failure"});
           }
