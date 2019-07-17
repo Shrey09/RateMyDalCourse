@@ -37,6 +37,7 @@ export class DiscussionforumComponent implements OnInit {
   }
 
   ngOnInit() {
+
     // This course code will be dynamically loaded for whichever course the user clicks.
     const courseCode = this.route.snapshot.paramMap.get('id');
     console.log('Client : Posts will be fetched for course code: ', courseCode);
@@ -110,6 +111,9 @@ export class DiscussionforumComponent implements OnInit {
     // Retrieving post content from the form values.
     // Other attributes for post like emailId, username, postTime, and courseCode
     // will be added once the login and session management feature is implemented.
+    this.postModel.postedByEmail = localStorage.getItem('user_email');
+    this.postModel.postedByName = localStorage.getItem('user_name');
+    this.postModel.courseCode = this.course['Code'];
     this.postModel.postContent = form.postContent;
 
     // Subscribing to the createPost service for validation of post and

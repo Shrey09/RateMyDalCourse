@@ -49,6 +49,8 @@ export class AuthenticateUserService {
         // console.log("Auth Service : Token received from server is :", this.token);
         this.token = token;
         // console.log("Auth Service : Token is :", this.token);
+        localStorage.setItem('user_name', response.user_data.name);
+        localStorage.setItem('user_email', response.user_data.email);
 
         if (token) {
           const expiresInDuration = response.expiresIn;
