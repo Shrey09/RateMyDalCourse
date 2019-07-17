@@ -74,7 +74,7 @@
           <div class="card-body comment">
             <h5 class="card-title"> {{ post.postedByName }} </h5>
             <p class="card-text"> {{ post.postContent }} </p>
-            <div class="card-text helpful"><span><i onclick="markHelpful()" lass="fas fa-thumbs-up"></i></span> Mark as Helpful
+            <div class="card-text helpful"><span (click)="markHelpful(post._id)"><i class="fas fa-thumbs-up"></i></span> Mark as Helpful
               ({{ post.likedByUsers.length }}) </div>
           </div>
         </div>
