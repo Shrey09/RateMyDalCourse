@@ -11,7 +11,7 @@ import {HttpClient} from '@angular/common/http';
 export class CourseService {
 
   // url for making get request
-  _url="http://129.173.22.35:19999/getCourses";
+  _url="http://localhost:3000/getCoursesShrey";
   constructor(private _http:HttpClient) { }
 
   getCourse(){

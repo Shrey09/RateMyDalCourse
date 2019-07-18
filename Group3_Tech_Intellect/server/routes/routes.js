@@ -4,8 +4,8 @@
 var express = require('express');
 var router = express.Router();
 var MongoClient = require('mongodb').MongoClient;
-var mongoDbUrl = "mongodb+srv://shrey:web12345@ratemydalcourse-rqsoy.mongodb.net/test?retryWrites=true&w=majority";
-var url = "mongodb+srv://shrey:web12345@ratemydalcourse-rqsoy.mongodb.net/test?retryWrites=true&w=majority";
+var mongoDbUrl = "mongodb+srv://deep55:cr7cr7cr7@webcluster-sepnh.mongodb.net/test?retryWrites=true&w=majority";
+var url = "mongodb+srv://deep55:cr7cr7cr7@webcluster-sepnh.mongodb.net/test?retryWrites=true&w=majority";
 
 // Initializing the bad-words library.
 var badWords = require('bad-words');
@@ -188,7 +188,6 @@ router.get('/fetchUserData/:email', function (req, res) {
   // Banner ID: B00826089
   var user = [];   // store user data
   var email = req.params.email;
-  console.log("HP EMAIL IS : ", email);
 
   // connect to MongoClient
   MongoClient.connect(url, function (err, client) {
@@ -338,7 +337,6 @@ router.post('/register_user', function (req, res) {
       }, function (err, result) {
         // send error message to client
         if (err) {
-          console.log("error");
           res.send({ "Message": "error in connecting to database" });
         }
         if (result) {
@@ -357,7 +355,7 @@ router.post('/register_user', function (req, res) {
 })
 
 // endpoint for handling get request to fetch available courses from the database
-router.get('/getCourses', function (req, res) {
+router.get('/getCoursesShrey', function (req, res) {
   // array to store the courses
   var courses = [];
   MongoClient.connect(url, function (err, client) {
@@ -402,12 +400,12 @@ router.post("/login", (req, res, next) => {
         { email: emailFromClient, password: passwordfromclient },
         function (err, result) {
           if (err) {
-            res.send({"authRepsonseMessage": "Server : DB Connection failed"});
+            res.send({ "authRepsonseMessage": "Server : DB Connection failed" });
           } else if (result) {
-            const token = jwt.sign({email: emailFromClient}, 'this_is_the_secret_key', {expiresIn: '1h'});
-            res.status(200).send({"authRepsonseMessage": "Login successful", "token": token, "expiresIn": 3600, "user_data": result});
+            const token = jwt.sign({ email: emailFromClient }, 'this_is_the_secret_key', { expiresIn: '1h' });
+            res.status(200).send({ "authRepsonseMessage": "Login successful", "token": token, "expiresIn": 3600, "user_data": result });
           } else {
-            res.send({"authRepsonseMessage": "Authentication failure"});
+            res.send({ "authRepsonseMessage": "Authentication failure" });
           }
         }
       );
@@ -417,109 +415,96 @@ router.post("/login", (req, res, next) => {
   })
 });
 
-router.get('/getCourseFromCode/:courseCode',function(req,res){
+router.get('/getCourseFromCode/:courseCode', function (req, res) {
   var courseFromDB;
 
   const courseCodeFromClient = req.params.courseCode.substring(1);
-  MongoClient.connect(mongoDbUrl,function(err,client)
-  {
-      if(err)
-      {
-          res.status(501).send({"Error":"error in connecting to database"});
-      }
-      else
-      {
-        // console.log("Course code received from client is: " + courseCodeFromClient);
+  MongoClient.connect(mongoDbUrl, function (err, client) {
+    if (err) {
+      res.status(501).send({ "Error": "error in connecting to database" });
+    }
+    else {
+      // console.log("Course code received from client is: " + courseCodeFromClient);
 
-        var cursor = client.db("RateMyDalCourse").collection('Courses').find({ Code: courseCodeFromClient});
-        cursor.forEach(function(dbCourse) {
-          // console.log("Course from DB is HPHPHP: ",dbCourse);
-            courseFromDB = dbCourse;
-        },function(){
-            // console.log("Course from DB is HP: ",courseFromDB);
-            res.send({"Course":courseFromDB});
-        });
+      var cursor = client.db("RateMyDalCourse").collection('Courses').find({ Code: courseCodeFromClient });
+      cursor.forEach(function (dbCourse) {
+        courseFromDB = dbCourse;
+      }, function () {
+        res.send({ "Course": courseFromDB });
+      });
 
-        client.close();
-      }
+      client.close();
+    }
   })
 });
 
 // rate the course
-router.post('/rateCourse',function(req,res){
-    console.log("rate model at server",req.body)
-    var email=req.body.email;
-    var rating=req.body.rating;
-    var course=req.body.courseName;
-    var rateObj={"Email":email,"Name":course,"Rate":rating};
-    MongoClient.connect(url,function(err,client)
-    {
-        if(err){
-            res.status(501).send({"Error":"error in connecting to database"});
+router.post('/rateCourse', function (req, res) {
+  console.log("rate model at server", req.body)
+  var email = req.body.email;
+  var rating = req.body.rating;
+  var course = req.body.courseName;
+  var rateObj = { "Email": email, "Name": course, "Rate": rating };
+  MongoClient.connect(url, function (err, client) {
+    if (err) {
+      res.status(501).send({ "Error": "error in connecting to database" });
+    }
+    //check if user has already rated the course
+    else {
+      // checking username or email already exists or not
+      client.db("RateMyDalCourse").collection('Rate').findOne({
+        "$and": [{
+          "Email": email
+        }, {
+          "Name": course
+        }]
+      }, function (err, result) {
+        // send error message to the client
+        if (err) {
+          console.log("error");
+          res.send({ "Message": "error in connecting to database" });
         }
-        //check if user has already rated the course
-        else
-        {
-            // checking username or email already exists or not
-            client.db("RateMyDalCourse").collection('Rate').findOne({
-                "$and": [{
-                    "Email": email
-                }, {
-                    "Name": course
-                }]
-            }, function(err, result) {
-                // send error message to the client
-                if(err)
-                {
-                    console.log("error");
-                    res.send({"Message":"error in connecting to database"});
-                }
-                // update rating of the user
-                if(result)
-                {
-                    var query = { "Name": course,"Email":email };
-                    var newRating = { $set: {"Rate":rating } };
-                    client.db("RateMyDalCourse").collection("Rate").updateOne(query, newRating)
-                    console.log("Youe rating has been updated");
-                    res.status(200).send({"Message":"Your course rating has been updated"});
-                }
-                // insert rating of the user in the database
-                else
-                {
-                    client.db("RateMyDalCourse").collection('Rate').insertOne(rateObj);
-                    console.log("course rating added to database");
-                    res.status(200).send({"Message":"Thank you for rating the course"});
-                }
-            client.close();
-             });
+        // update rating of the user
+        if (result) {
+          var query = { "Name": course, "Email": email };
+          var newRating = { $set: { "Rate": rating } };
+          client.db("RateMyDalCourse").collection("Rate").updateOne(query, newRating)
+          console.log("Youe rating has been updated");
+          res.status(200).send({ "Message": "Your course rating has been updated" });
         }
-    })
+        // insert rating of the user in the database
+        else {
+          client.db("RateMyDalCourse").collection('Rate').insertOne(rateObj);
+          console.log("course rating added to database");
+          res.status(200).send({ "Message": "Thank you for rating the course" });
+        }
+        client.close();
+      });
+    }
+  })
 })
 
 // endpoint for fetching the rated courses
-router.post('/getRatedCourses',function(req,res){
+router.post('/getRatedCourses', function (req, res) {
   // array to store the courses
-  console.log("user email",req.body.name)
-  var ratedcourses=[];
-  MongoClient.connect(url,function(err,client)
-  {
-      if(err)
-      {
-          res.status(501).send({"Error":"error in connecting to database"});
-      }
-      else
-      {
-          //fetching courses from the database
-          var cursor= client.db("RateMyDalCourse").collection('Rate').find({"Email": req.body.name});
-          cursor.forEach(function(course) {
-              ratedcourses.push(course);
-          },function(){
-              // send the course list as the response
-              console.log("Rated courses array",ratedcourses);
-              res.send({"Courses":ratedcourses});
-          });
+  console.log("user email", req.body.name)
+  var ratedcourses = [];
+  MongoClient.connect(url, function (err, client) {
+    if (err) {
+      res.status(501).send({ "Error": "error in connecting to database" });
+    }
+    else {
+      //fetching courses from the database
+      var cursor = client.db("RateMyDalCourse").collection('Rate').find({ "Email": req.body.name });
+      cursor.forEach(function (course) {
+        ratedcourses.push(course);
+      }, function () {
+        // send the course list as the response
+        console.log("Rated courses array", ratedcourses);
+        res.send({ "Courses": ratedcourses });
+      });
       client.close();
-      }
+    }
   })
 })
 

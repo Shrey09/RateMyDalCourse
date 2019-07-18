@@ -13,9 +13,9 @@ import {User} from './registration/user';
 export class RegisterService {
 
   // sending request to server on port 19999
-  _url="http://129.173.22.35:19999/register_user";
+  _url="http://localhost:3000/register_user";
   constructor(private _http:HttpClient) {
-    
+
    }
    // calling register event
    register(user: User){

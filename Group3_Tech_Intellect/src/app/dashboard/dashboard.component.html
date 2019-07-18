@@ -4,10 +4,7 @@
       <p class="Subject" style="margin-bottom:1rem; margin-top: 2rem"> <strong>
           <h3>Courses you have completed</h3>
         </strong></p>
-
-
     </div>
-
   </div>
   <!--end of row-->
 </div>
@@ -21,7 +18,6 @@
     </div>
 
     <!-- reference from https://stackoverflow.com/questions/49418918/how-to-use-ngfor-in-angularjs -->
-
     <div class="row">
       <div *ngFor="let mycourse of RatedCoursesList; let i=index" class="col-sm-6 col-md-4 col-lg-3 mb-3">
         <div class="transform-on-hover card ">
@@ -44,9 +40,7 @@
             </form>
           </div>
         </div>
-
       </div>
-
 
       <div class="col-sm-12">
         <p class="Subject" style="margin-bottom:1rem; margin-top: 2rem"> <strong>
@@ -64,14 +58,10 @@
           <div class="card-body">
             <!--reference from https://stackoverflow.com/questions/21053577/how-to-display-data-from-mongodb-to-the-frontend-via-node-js-without-using-a-fra -->
             <h6>{{course.Code}} {{course.Name}}</h6>
-
             <a type="button" class="btn btn-dark" [href]="'discussion/' + course.Code">Discuss</a>
           </div>
         </div>
       </div>
-
-
     </div>
-
   </div>
 </div>
