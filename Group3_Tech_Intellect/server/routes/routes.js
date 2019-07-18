@@ -183,10 +183,12 @@ router.get('/displayrating/:subject', function (req, res) {
 });
 
 
-router.get('/fetchUserData', function (req, res) {
+router.get('/fetchUserData/:email', function (req, res) {
   // Author: Chintan Patel
   // Banner ID: B00826089
   var user = [];   // store user data
+  var email = req.params.email;
+  console.log("HP EMAIL IS : ", email);
 
   // connect to MongoClient
   MongoClient.connect(url, function (err, client) {
@@ -197,7 +199,7 @@ router.get('/fetchUserData', function (req, res) {
       //fetching user data from the database
       var cursor = client.db("RateMyDalCourse").collection('User').findOne(
         {
-          "email": "chintan.patel@dal.ca"   // this email can be made dynamic
+          "email": email   // this email can be made dynamic
         }, function (err, result) {
           if (err) {
             res.status(501).send({ "Error": "error in finding the user" });
@@ -234,7 +236,7 @@ router.get('/fetchUserData', function (req, res) {
       client.close();   // close the client.
     }
   })
-})
+});
 
 router.get('/fetchCourses', function (req, res) {
   // Author: Chintan Patel
@@ -457,7 +459,7 @@ router.post('/rateCourse',function(req,res){
         }
         //check if user has already rated the course
         else
-        {  
+        {
             // checking username or email already exists or not
             client.db("RateMyDalCourse").collection('Rate').findOne({
                 "$and": [{
@@ -466,30 +468,30 @@ router.post('/rateCourse',function(req,res){
                     "Name": course
                 }]
             }, function(err, result) {
-                // send error message to the client 
-                if(err) 
+                // send error message to the client
+                if(err)
                 {
                     console.log("error");
                     res.send({"Message":"error in connecting to database"});
                 }
                 // update rating of the user
-                if(result) 
+                if(result)
                 {
                     var query = { "Name": course,"Email":email };
                     var newRating = { $set: {"Rate":rating } };
                     client.db("RateMyDalCourse").collection("Rate").updateOne(query, newRating)
                     console.log("Youe rating has been updated");
-                    res.status(200).send({"Message":"Your course rating has been updated"});  
-                } 
+                    res.status(200).send({"Message":"Your course rating has been updated"});
+                }
                 // insert rating of the user in the database
-                else 
+                else
                 {
                     client.db("RateMyDalCourse").collection('Rate').insertOne(rateObj);
                     console.log("course rating added to database");
                     res.status(200).send({"Message":"Thank you for rating the course"});
                 }
             client.close();
-             }); 
+             });
         }
     })
 })
@@ -509,12 +511,12 @@ router.post('/getRatedCourses',function(req,res){
       {
           //fetching courses from the database
           var cursor= client.db("RateMyDalCourse").collection('Rate').find({"Email": req.body.name});
-          cursor.forEach(function(course) { 
+          cursor.forEach(function(course) {
               ratedcourses.push(course);
           },function(){
               // send the course list as the response
               console.log("Rated courses array",ratedcourses);
-              res.send({"Courses":ratedcourses});  
+              res.send({"Courses":ratedcourses});
           });
       client.close();
       }

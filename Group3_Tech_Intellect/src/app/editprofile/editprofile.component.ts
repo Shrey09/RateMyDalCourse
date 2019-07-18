@@ -15,7 +15,9 @@ declare var $: any;
 })
 export class EditprofileComponent implements OnInit {
 
-  updateUserModel: UpdateUser = new UpdateUser('Chintan Patel', 'chintan.patel@dal.ca', '@Passw0rd', '@Passw0rd', new Array());
+  user_name = localStorage.getItem('user_name');
+  user_email = localStorage.getItem('user_email');
+  updateUserModel: UpdateUser = new UpdateUser(this.user_name, this.user_email, '@Passw0rd', '@Passw0rd', new Array());
 
   // flags to check updates in data
   errorFlag = false;   // it will be set to true if error is present
@@ -37,7 +39,7 @@ export class EditprofileComponent implements OnInit {
       data => {
         this.CoursesList = data['Courses'];
 
-        this._userdata.fetchUserData().subscribe(
+        this._userdata.fetchUserData(this.updateUserModel.email).subscribe(
           data => {
             this.UserData = data['User'];
             this.UserRegisteredCourses = data['User']['courses'];
@@ -190,6 +192,7 @@ export class EditprofileComponent implements OnInit {
           this.errorFlag = false;
           this.successFlag = true;
           this.showMessage = "Profile successfully updated.";
+          localStorage.setItem('user_name', this.updateUserModel.name);
         }
         else if (data['status'] == 'NOT_MODIFIED'){
           this.errorFlag = true;
