@@ -31,6 +31,7 @@ export class DiscussionforumComponent implements OnInit {
   course: any[] = [];
   postIDToUpdate: string;   // post ID for which user wants for upvote
   updatedUserList: any[];
+  loggedInUserEmail: string;
 
   // Getting all the service in the constructor.
   constructor(
@@ -40,7 +41,7 @@ export class DiscussionforumComponent implements OnInit {
   }
 
   ngOnInit() {
-
+    this.loggedInUserEmail = localStorage.getItem('user_email');
     // This course code will be dynamically loaded for whichever course the user clicks.
     const courseCode = this.route.snapshot.paramMap.get('id');
     console.log('Client : Posts will be fetched for course code: ', courseCode);
