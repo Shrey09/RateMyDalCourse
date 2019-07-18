@@ -74,8 +74,14 @@
           <div class="card-body comment">
             <h5 class="card-title"> {{ post.postedByName }} </h5>
             <p class="card-text"> {{ post.postContent }} </p>
-            <div class="card-text helpful"><span><i onclick="markHelpful()" lass="fas fa-thumbs-up"></i></span> Mark as Helpful
-              ({{ post.likedByUsers.length }}) </div>
+            <div (click)="markHelpful(post._id)" class="card-text helpful" *ngIf="post.likedByUsers.includes(loggedInUserEmail)" style="color: blue">
+              <span><i class="fas fa-thumbs-up"></i></span> Mark as Helpful
+              ({{ post.likedByUsers.length }}) 
+            </div>
+            <div (click)="markHelpful(post._id)" class="card-text helpful" *ngIf="!post.likedByUsers.includes(loggedInUserEmail)">
+              <span><i class="fas fa-thumbs-up"></i></span> Mark as Helpful
+              ({{ post.likedByUsers.length }}) 
+            </div>
           </div>
         </div>
       </div>

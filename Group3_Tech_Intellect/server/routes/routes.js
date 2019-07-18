@@ -1,8 +1,7 @@
-// Author: Harsh Pamnani - B00802614
-
 // Defining all the libraries required.
 var express = require('express');
 var router = express.Router();
+var mongo = require('mongodb');
 var MongoClient = require('mongodb').MongoClient;
 var mongoDbUrl = "mongodb+srv://deep55:cr7cr7cr7@webcluster-sepnh.mongodb.net/test?retryWrites=true&w=majority";
 var url = "mongodb+srv://deep55:cr7cr7cr7@webcluster-sepnh.mongodb.net/test?retryWrites=true&w=majority";
@@ -506,6 +505,42 @@ router.post('/getRatedCourses', function (req, res) {
       client.close();
     }
   })
-})
+});
+
+router.post('/markPostAsHelpful', function(req, res){
+  // Author: Chintan Patel
+  // Banner ID: B00826089
+  postID = req.body.postID;
+  updatedUsers = req.body.updatedUsers;
+  console.log("Mark post as helpful called for postID: ", postID);
+  MongoClient.connect(url, function (err, client) {
+    if (err) {
+      res.status(501).send({ "Error": "error in connecting to database" });
+    }
+    else {
+
+      // https://stackoverflow.com/a/5186713/8243992
+      // This source is used to get an idea about updating the post by _id.
+      client.db("RateMyDalCourse").collection('Posts').updateOne(
+        { '_id': mongo.ObjectID(postID) },
+        { $set: { likedByUsers: updatedUsers } },
+        function (err, result) {
+          if (err) {
+            res.status(501).send({ "Error": "error in marking post as helpful" });
+          }
+          else if (result.modifiedCount == 1) {
+            res.send({"status": "SUCCESS"});    
+          }
+          else {
+            res.status(501).send({ "Error": "No updates made" });
+          }
+        }
+      );
+      client.close();   // close the client.
+    }
+  });
+
+});
+
 
 module.exports = router;

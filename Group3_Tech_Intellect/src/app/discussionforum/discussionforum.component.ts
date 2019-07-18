@@ -5,6 +5,7 @@ import { Post } from './post';
 import { CreatePostService } from '../create-post.service';
 import { GetPostsService } from '../get-posts.service';
 import { RatingService } from '../rating.service';
+import { UpdatePostService } from '../update-post.service';
 import { ActivatedRoute } from '@angular/router';
 
 
@@ -28,16 +29,19 @@ export class DiscussionforumComponent implements OnInit {
   // Craeting an empty array for storing posts.
   postsList: any[] = [];
   course: any[] = [];
+  postIDToUpdate: string;   // post ID for which user wants for upvote
+  updatedUserList: any[];
+  loggedInUserEmail: string;
 
   // Getting all the service in the constructor.
   constructor(
     private createPostService: CreatePostService,
-    private getPostsService: GetPostsService, private route: ActivatedRoute, public ratingService: RatingService,
+    private getPostsService: GetPostsService, private route: ActivatedRoute, public ratingService: RatingService, private updatePostService: UpdatePostService
   ) {
   }
 
   ngOnInit() {
-
+    this.loggedInUserEmail = localStorage.getItem('user_email');
     // This course code will be dynamically loaded for whichever course the user clicks.
     const courseCode = this.route.snapshot.paramMap.get('id');
     console.log('Client : Posts will be fetched for course code: ', courseCode);
@@ -155,6 +159,48 @@ export class DiscussionforumComponent implements OnInit {
           this.postMessage = 'We could not reach our server. Please try again after some time.';
         }
       );
+  }
+
+  markHelpful(postId) {
+    console.log(postId);
+    var save_i;   // it will be used to re assign previous users list if operation fails in database
+    for (let i = 0; i < this.postsList.length; i++) {
+      if (this.postsList[i]['_id'] == postId) {
+        save_i = i;
+        const copy_postsList = Object.assign([], this.postsList[i]['likedByUsers']);
+
+        // if the likes include user email, that email should be removed as the user wants to 
+        // undo the rate post as helpful
+        if (this.postsList[i]['likedByUsers'].includes(localStorage.getItem('user_email'))) {
+          const index = this.postsList[i]['likedByUsers'].indexOf(localStorage.getItem('user_email'));
+          this.postsList[i]['likedByUsers'].splice(index, 1);
+
+          this.postIDToUpdate = postId;
+          this.updatedUserList = this.postsList[i]['likedByUsers'];
+        }
+
+        else {
+          this.postsList[i]['likedByUsers'].push(localStorage.getItem('user_email'));
+        }
+        this.updatePostService.markPostAsHelpful(postId, this.postsList[i]['likedByUsers']).subscribe(
+          data => {
+            console.log("SUCCESS");
+            this.isErrorPresent = false;
+            this.isSuccess = true;
+            this.postMessage = 'Post marked as helpful';
+          },
+          error => {
+            this.postsList[save_i]['likedByUsers'] = copy_postsList;
+            console.log("SOMETHING WRONG", error);
+            this.isErrorPresent = true;
+            this.isSuccess = false;
+            this.postMessage = 'Error while marking post as helpful. Please try again later.';
+          }
+        );
+
+        break;
+      }
+    }
   }
 
 }
