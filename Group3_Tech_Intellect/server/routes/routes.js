@@ -465,8 +465,11 @@ router.post('/markPostAsHelpful', function(req, res){
           if (err) {
             res.status(501).send({ "Error": "error in marking post as helpful" });
           }
-          else {
+          else if (result.modifiedCount == 1) {
             res.send({"status": "SUCCESS"});    
+          }
+          else {
+            res.status(501).send({ "Error": "No updates made" });
           }
         }
       );

@@ -155,8 +155,11 @@ export class DiscussionforumComponent implements OnInit {
 
   markHelpful(postId) {
     console.log(postId);
+    var save_i;   // it will be used to re assign previous users list if operation fails in database
     for (let i = 0; i < this.postsList.length; i++) {
       if (this.postsList[i]['_id'] == postId) {
+        save_i = i;
+        const copy_postsList = Object.assign([], this.postsList[i]['likedByUsers']);
 
         // if the likes include user email, that email should be removed as the user wants to 
         // undo the rate post as helpful
@@ -174,9 +177,16 @@ export class DiscussionforumComponent implements OnInit {
         this.updatePostService.markPostAsHelpful(postId, this.postsList[i]['likedByUsers']).subscribe(
           data => {
             console.log("SUCCESS");
+            this.isErrorPresent = false;
+            this.isSuccess = true;
+            this.postMessage = 'Post marked as helpful';
           },
           error => {
+            this.postsList[save_i]['likedByUsers'] = copy_postsList;
             console.log("SOMETHING WRONG", error);
+            this.isErrorPresent = true;
+            this.isSuccess = false;
+            this.postMessage = 'Error while marking post as helpful. Please try again later.';
           }
         );
 
