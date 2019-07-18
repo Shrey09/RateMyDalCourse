@@ -13,6 +13,7 @@ export class AuthenticateUserService {
   private authStatusListener = new Subject<boolean>();
   private isAuthenticated = false;
   private tokenTimer: any;
+  private flagError = false;
 
   getToken() {
     // console.log("Auth Service : Inside GetToken method token is :", this.token);
@@ -49,8 +50,15 @@ export class AuthenticateUserService {
         // console.log("Auth Service : Token received from server is :", this.token);
         this.token = token;
         // console.log("Auth Service : Token is :", this.token);
-        localStorage.setItem('user_name', response.user_data.name);
-        localStorage.setItem('user_email', response.user_data.email);
+
+        if (response.authRepsonseMessage == 'Login successful') {
+          localStorage.setItem('user_name', response.user_data.name);
+          localStorage.setItem('user_email', response.user_data.email);
+        }
+        else {
+          this.flagError = true;
+        }
+        
 
         if (token) {
           const expiresInDuration = response.expiresIn;
@@ -75,6 +83,15 @@ export class AuthenticateUserService {
   private saveAuthData(token: string, expirationDate: Date) {
     localStorage.setItem('token', token);
     localStorage.setItem('expiration', expirationDate.toISOString());
+  }
+
+  checkFlag(){
+    if (this.flagError) {
+      return {'value': 'true'};
+    }
+    else {
+      return {'value': 'false'};
+    }
   }
 
   private clearAuthData() {

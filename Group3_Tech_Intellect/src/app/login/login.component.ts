@@ -40,5 +40,10 @@ export class LoginComponent {
     this.userinput.password = encryptedText;
 
     this.authenticateUserService.validateUser(this.userinput);
+
+    if (this.authenticateUserService.checkFlag().value == 'true') {
+      console.log("Wrong credentials");
+      this.isErrorPresent = true;
+    }
   }
 }
