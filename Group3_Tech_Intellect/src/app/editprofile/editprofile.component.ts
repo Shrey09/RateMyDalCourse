@@ -1,7 +1,6 @@
 // Author: Chintan Patel
 // Banner ID: B00826089
 import { Component, OnInit } from '@angular/core';
-import { AuthenticationService } from '../authentication/authentication.service';
 import { GetcourseService } from '../getcourse.service';
 import { GetuserService } from '../getuser.service';
 import { UpdateuserService } from '../updateuser.service';
@@ -16,7 +15,9 @@ declare var $: any;
 })
 export class EditprofileComponent implements OnInit {
 
-  updateUserModel: UpdateUser = new UpdateUser('Chintan Patel', 'chintan.patel@dal.ca', '@Passw0rd', '@Passw0rd', new Array());
+  user_name = localStorage.getItem('user_name');
+  user_email = localStorage.getItem('user_email');
+  updateUserModel: UpdateUser = new UpdateUser(this.user_name, this.user_email, '@Passw0rd', '@Passw0rd', new Array());
 
   // flags to check updates in data
   errorFlag = false;   // it will be set to true if error is present
@@ -33,14 +34,12 @@ export class EditprofileComponent implements OnInit {
   NewCourses: any[] = [];   // This array will be passed to database as new list of registered courses
 
   ngOnInit() {
-    this.authenticationService.authenticate();
-
     // fetch courses using getcourse service
     this._courseService.fetchCourses().subscribe(
       data => {
         this.CoursesList = data['Courses'];
 
-        this._userdata.fetchUserData().subscribe(
+        this._userdata.fetchUserData(this.updateUserModel.email).subscribe(
           data => {
             this.UserData = data['User'];
             this.UserRegisteredCourses = data['User']['courses'];
@@ -83,7 +82,6 @@ export class EditprofileComponent implements OnInit {
   }
 
   constructor(
-    public authenticationService: AuthenticationService,
     private _courseService: GetcourseService,
     private _userdata: GetuserService,
     private _updateuserService: UpdateuserService,
@@ -92,9 +90,9 @@ export class EditprofileComponent implements OnInit {
 
   onSubmit(formData: NgForm, data) {
     // console.log(data);
-    var updated_name = data.name;   // updated name 
+    var updated_name = data.name;   // updated name
     var updated_password = data.password;   // updated new password
-    var old_password = data.old_password;   // updated old password 
+    var old_password = data.old_password;   // updated old password
     var updated_add_course = data.add_courses;   // updated list of add courses
     var updated_drop_course = data.drop_courses;   // updated list of drop courses
     var copy_UserRegisteredCourses = this.UserRegisteredCourses.slice();   // make copy of previously registered courses
@@ -194,14 +192,15 @@ export class EditprofileComponent implements OnInit {
           this.errorFlag = false;
           this.successFlag = true;
           this.showMessage = "Profile successfully updated.";
-        } 
+          localStorage.setItem('user_name', this.updateUserModel.name);
+        }
         else if (data['status'] == 'NOT_MODIFIED'){
           this.errorFlag = true;
           this.successFlag = false;
           this.showMessage = "Old password not matched or nothing to update.";
           this.UserRegisteredCourses = copy_UserRegisteredCourses;
           this.CourseAddChoices = copy_CourseAddChoices;
-        } 
+        }
         else {
           this.errorFlag = true;
           this.successFlag = false;
@@ -220,13 +219,13 @@ export class EditprofileComponent implements OnInit {
         else {
           (document.getElementById('name') as HTMLInputElement).value = this.UserData['name'];
         }
-        
-        
+
+
         // https://stackoverflow.com/a/55257919
         setTimeout(function () {
           $('.selectpicker').selectpicker('refresh');   // refresh selectpicker
         }, 1000);
-        
+
       },
       error => {
         this.errorFlag = true;

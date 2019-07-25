@@ -16,4 +16,9 @@ export class GetPostsService {
     const url = 'http://localhost:3000/getPosts/' + courseCode;
     return this.http.get<any>(url);
   }
+
+  getCourseFromCode(courseCode: string) {
+    const url = 'http://localhost:3000/getCourseFromCode/:' + courseCode;
+    return this.http.get<any>(url);
+  }
 }

@@ -7,7 +7,7 @@
     <!-- Displaying course code and course name -->
     <div class="row">
       <h1 class="display-3 pb-1 subject"> <span><i class="fab fa-discourse"></i></span>
-        CSCI5408 Mobile Compting</h1>
+        {{course.Code}} {{course.Name}}</h1>
     </div>
 
     <!-- Displaying Overall Rating of the course -->
@@ -19,7 +19,7 @@
     <!-- Displaying the credit hours of the course -->
     <div class="row">
       <h1 class="display-4 pb-3 subject-fields"><span><i class="far fa-calendar-plus"></i></span>
-        Credit Hours: 3.0</h1>
+        Credit Hours: {{ course.Credit }}</h1>
     </div>
 
     <!-- Displaying comments count -->
@@ -74,8 +74,14 @@
           <div class="card-body comment">
             <h5 class="card-title"> {{ post.postedByName }} </h5>
             <p class="card-text"> {{ post.postContent }} </p>
-            <div class="card-text helpful"><span><i class="fas fa-thumbs-up"></i></span> Mark as Helpful
-              ({{ post.likedByUsers.length }}) </div>
+            <div (click)="markHelpful(post._id)" class="card-text helpful" *ngIf="post.likedByUsers.includes(loggedInUserEmail)" style="color: blue">
+              <span><i class="fas fa-thumbs-up"></i></span> Mark as Helpful
+              ({{ post.likedByUsers.length }}) 
+            </div>
+            <div (click)="markHelpful(post._id)" class="card-text helpful" *ngIf="!post.likedByUsers.includes(loggedInUserEmail)">
+              <span><i class="fas fa-thumbs-up"></i></span> Mark as Helpful
+              ({{ post.likedByUsers.length }}) 
+            </div>
           </div>
         </div>
       </div>

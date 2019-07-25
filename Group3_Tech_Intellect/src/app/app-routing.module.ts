@@ -7,38 +7,40 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { EditprofileComponent } from './editprofile/editprofile.component';
 import { DiscussionforumComponent } from './discussionforum/discussionforum.component';
 import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
+import { AuthGuard } from './auth.guard';
 
 const routes: Routes = [
 
   {
-    path: '', component:HomepageComponent
+    path: '', component: HomepageComponent
   },
   {
-    path: 'home', component:HomepageComponent
+    path: 'home', component: HomepageComponent
   },
   {
-    path: 'login', component:LoginComponent
+    path: 'login', component: LoginComponent
   },
   {
-    path: 'register' , component:RegistrationComponent
+    path: 'register' , component: RegistrationComponent
   },
   {
-    path: 'dashboard' , component:DashboardComponent
+    path: 'dashboard' , component: DashboardComponent, canActivate: [AuthGuard]
   },
   {
-    path: 'editprofile' , component:EditprofileComponent
+    path: 'editprofile' , component: EditprofileComponent, canActivate: [AuthGuard]
   },
   {
-    path: 'discussion/:id' , component:DiscussionforumComponent
+    path: 'discussion/:id' , component: DiscussionforumComponent, canActivate: [AuthGuard]
   },
   {
-    path: '**', component:PagenotfoundComponent
+    path: '**', component: PagenotfoundComponent
   }
 
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
+  providers: [AuthGuard]
 })
 export class AppRoutingModule { }

@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { NavbarComponent } from '../navbar/navbar.component';
-import { AuthenticationService } from '../authentication/authentication.service';
 
 
 @Component({
@@ -11,11 +10,11 @@ import { AuthenticationService } from '../authentication/authentication.service'
 export class HomepageComponent implements OnInit {
 
   ngOnInit() {
-    this.authenticationService.deauthenticate();
+
   }
 
   constructor(
-    public authenticationService: AuthenticationService,
+
   ) {
   }
 }
