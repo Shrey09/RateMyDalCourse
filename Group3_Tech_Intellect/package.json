@@ -23,7 +23,7 @@
     "bomberman-node": "^2.0.0",
     "bootstrap": "^4.3.1",
     "core-js": "^2.5.4",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "jquery": "^3.4.1",
     "ng-multiselect-dropdown": "^0.2.3",
     "ngx-bootstrap": "^5.1.0",
